@@ -1,0 +1,12 @@
+parameters:
+#    bw_router.example.class: BW\RouterBundle\Example
+
+services:
+#    bw_router.example:
+#        class: %bw_router.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_router.routing_loader:
+        class: BW\RouterBundle\Routing\DatabaseLoader
+        tags:
+            - { name: routing.loader }

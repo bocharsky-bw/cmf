@@ -1,0 +1,7 @@
+bw_router:
+    resource: "@BWRouterBundle/Resources/config/routing.yml"
+    prefix:   /
+
+bw_router_database_loader:
+    resource: .
+    type: database

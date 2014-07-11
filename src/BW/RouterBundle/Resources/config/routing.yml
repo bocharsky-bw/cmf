@@ -1,0 +1,3 @@
+bw_router_homepage:
+    path:     /router
+    defaults: { _controller: BWRouterBundle:Default:index }
