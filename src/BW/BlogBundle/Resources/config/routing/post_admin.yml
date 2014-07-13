@@ -1,0 +1,26 @@
+post:
+    path:     /
+    defaults: { _controller: "BWBlogBundle:Post:index" }
+
+post_new:
+    path:     /new
+    defaults: { _controller: "BWBlogBundle:Post:new" }
+
+post_create:
+    path:     /create
+    defaults: { _controller: "BWBlogBundle:Post:create" }
+    requirements: { _method: post }
+
+post_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWBlogBundle:Post:edit" }
+
+post_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWBlogBundle:Post:update" }
+    requirements: { _method: post|put }
+
+post_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWBlogBundle:Post:delete" }
+    requirements: { _method: post|delete }

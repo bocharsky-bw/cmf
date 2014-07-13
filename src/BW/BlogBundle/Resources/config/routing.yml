@@ -1,0 +1,7 @@
+bw_blog_bundle_post_admin:
+    resource: "@BWBlogBundle/Resources/config/routing/post_admin.yml"
+    prefix:   /_admin/post
+
+bw_blog_bundle_post:
+    resource: "@BWBlogBundle/Resources/config/routing/post.yml"
+    prefix:   /post

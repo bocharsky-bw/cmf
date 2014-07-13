@@ -1,0 +1,41 @@
+BW\BlogBundle\Entity\Post:
+    type: entity
+    table: posts
+    repositoryClass: BW\BlogBundle\Entity\PostRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+        shortDescription:
+            column: short_description
+            type: text
+        description:
+            type: text
+        published:
+            type: boolean
+        created:
+            type: datetime
+        updated:
+            type: datetime
+        home:
+            type: boolean
+    manyToOne:
+        category:
+            targetEntity: BW\BlogBundle\Entity\Category
+            inversedBy: posts
+    lifecycleCallbacks: {}

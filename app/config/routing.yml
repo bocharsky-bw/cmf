@@ -1,7 +1,11 @@
+bw_skeleton:
+    resource: "@BWSkeletonBundle/Resources/config/routing.yml"
+    prefix:   /
+
+bw_blog:
+    resource: "@BWBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_router:
     resource: "@BWRouterBundle/Resources/config/routing.yml"
     prefix:   /
-
-bw_router_database_loader:
-    resource: .
-    type: database

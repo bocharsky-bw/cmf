@@ -1,0 +1,3 @@
+post_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWBlogBundle:Post:show" }

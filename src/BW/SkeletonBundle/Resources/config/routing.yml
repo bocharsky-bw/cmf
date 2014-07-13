@@ -1,0 +1,3 @@
+bw_skeleton_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BWSkeletonBundle:Default:index }
