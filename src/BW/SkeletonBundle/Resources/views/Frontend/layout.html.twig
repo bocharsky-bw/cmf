@@ -15,7 +15,7 @@
         <link href="{{ asset('libs/bootstrap-3.1.1/less/bootstrap.less') }}" type="text/css" rel="stylesheet/less">
     {% endstylesheets %}
     #}
-    <link href="{{ asset('libs/bootstrap-3.1.1/dist/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('libs/bootstrap-3/dist/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
 
@@ -38,35 +38,27 @@
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div class="navbar-header">
-                                    <a class="navbar-brand" href="{{ path('home') }}">Home</a>
+                                    <a class="navbar-brand" href="{#{ path('home') }#}">Главная</a>
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                     <ul class="nav navbar-nav">
                                         <li>
-                                            <a href="{{ path('about') }}">About</a>
+                                            <a href="{{ path('post') }}">Статьи</a>
                                         </li>
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
                                         {% if app.user %}
                                             <li>
-                                                <a href="{{ path('profile_edit') }}" title="Edit profile">Hello, <b>{{ app.user.profile
-                                                    ? (app.user.profile.name
-                                                        ? app.user.profile.name
-                                                        : app.user.username)
-                                                    : app.user.username
-                                                }}</b></a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ path('user_sign_out') }}">Sign out</a>
+                                                <a href="{#{ path('user_sign_out') }#}">Sign out</a>
                                             </li>
                                         {% else %}
                                             <li>
-                                                <a href="{{ path('user_sign_in') }}">Sign in</a>
+                                                <a href="{#{ path('user_sign_in') }#}">Sign in</a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('user_sign_up') }}">Sign up</a>
+                                                <a href="{#{ path('user_sign_up') }#}">Sign up</a>
                                             </li>
                                         {% endif %}
                                     </ul>
@@ -82,8 +74,14 @@
 
 {% block pre_content %}
     <div id="pre_content">
-        {% block pre_content_wrap %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block pre_content_wrap %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -106,28 +104,52 @@
 
 {% block content %}
     <section id="section">
-        {% block content_wrap %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block content_wrap %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock %}
 
 {% block post_content %}
     <div id="post_content">
-        {% block post_content_wrap %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block post_content_wrap %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block footer %}
     <footer id="footer">
-        {% block footer_wrap %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block footer_wrap %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </footer>
 {% endblock %}
 
 {% block overflow %}
     <div id="overflow">
-        {% block overflow_wrap %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% block overflow_wrap %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

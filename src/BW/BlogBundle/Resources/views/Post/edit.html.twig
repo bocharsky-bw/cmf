@@ -1,16 +1,16 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block body -%}
+{% block content_wrap -%}
     <h1>Post edit</h1>
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('post') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('post') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
 {% endblock %}

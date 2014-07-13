@@ -9,51 +9,32 @@
                 <th>Id</th>
                 <th>Heading</th>
                 <th>Slug</th>
-                <th>Title</th>
-                <th>Metadescription</th>
-                <th>Shortdescription</th>
-                <th>Description</th>
                 <th>Published</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Home</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.heading }}</td>
+                <td><a href="{{ path('post_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('post_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
                 <td>{{ entity.slug }}</td>
-                <td>{{ entity.title }}</td>
-                <td>{{ entity.metaDescription }}</td>
-                <td>{{ entity.shortDescription }}</td>
-                <td>{{ entity.description }}</td>
-                <td>{{ entity.published }}</td>
+                <td>{{ entity.published ? 'yes' : 'no' }}</td>
+                <td>{{ entity.home ? 'yes' : 'no' }}</td>
                 <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.home }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('post_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('post_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
+    <ul>
         <li>
             <a href="{{ path('post_new') }}">
                 Create a new entry
             </a>
         </li>
     </ul>
-    {% endblock %}
+{% endblock %}
