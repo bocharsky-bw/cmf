@@ -3,38 +3,54 @@
 {% block content_wrap -%}
     <h1>Post list</h1>
 
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success" href="{{ path('post_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Heading</th>
-                <th>Slug</th>
-                <th>Published</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Home</th>
+                <th>ID</th>
+                <th>Заголовок</th>
+                <th>Слаг</th>
+                <th>Опубликовано</th>
+                <th>Главная</th>
+                <th>Создано</th>
+                <th>Обновлено</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('post_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td><a href="{{ path('post_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
+                <td>{{ entity.id }}</td>
+                <td>
+                    <a title="Изменить запись" href="{{ path('post_edit', { 'id': entity.id }) }}">
+                        {{ entity.heading ? entity.heading : '< no heading >' }}
+                    </a>
+                </td>
                 <td>{{ entity.slug }}</td>
                 <td>{{ entity.published ? 'yes' : 'no' }}</td>
                 <td>{{ entity.home ? 'yes' : 'no' }}</td>
-                <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    {% if entity.created %}
+                        <span title="{{ entity.created|date('d/m/Y в H:i') }}">
+                            {{ entity.created|date('d/m/Y') }}
+                        </span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if entity.updated %}
+                        <span title="{{ entity.updated|date('d/m/Y в H:i') }}">
+                            {{ entity.updated|date('d/m/Y') }}
+                        </span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('post_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
 {% endblock %}
