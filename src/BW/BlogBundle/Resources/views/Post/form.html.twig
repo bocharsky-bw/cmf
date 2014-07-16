@@ -1,0 +1,41 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <ul class="list-inline">
+        {% if form.create is defined %}
+            <li>{{ form_row(form.create) }}</li>
+        {% endif %}
+        {% if form.createAndClose is defined %}
+            <li>{{ form_row(form.createAndClose) }}</li>
+        {% endif %}
+        {% if form.update is defined %}
+            <li>{{ form_row(form.update) }}</li>
+        {% endif %}
+        {% if form.updateAndClose is defined %}
+            <li>{{ form_row(form.updateAndClose) }}</li>
+        {% endif %}
+        {% if form.delete is defined %}
+            <li>{{ form_row(form.delete) }}</li>
+        {% endif %}
+        <li>
+            <a class="btn btn-default icon-ban-circle" href="{{ path('post') }}" title="Отменить несохраненные изменения">Закрыть</a>
+        </li>
+    </ul>
+
+    <div class="form-inline">
+        <div class="form-group">{{ form_row(form.published) }}</div>&nbsp;
+        <div class="form-group">{{ form_row(form.home) }}</div>&nbsp;
+    </div>
+
+    <div class="form-group">{{ form_row(form.category) }}</div>
+    <div class="form-group">{{ form_row(form.heading) }}</div>
+    <div class="form-group">{{ form_row(form.shortDescription) }}</div>
+    <div class="form-group">{{ form_row(form.description) }}</div>
+    <div class="form-group">{{ form_row(form.created) }}</div>
+
+    <h2>SEO</h2>
+    <div class="form-group">{{ form_row(form.slug) }}</div>
+    <div class="form-group">{{ form_row(form.title) }}</div>
+    <div class="form-group">{{ form_row(form.description) }}</div>
+
+{{ form_end(form) }}

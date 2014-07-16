@@ -1,7 +1,7 @@
 {% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
 {% block content_wrap -%}
-    <h1>Post list</h1>
+    <h1>Список статей</h1>
 
     <ul class="list-inline controls">
         <li>
@@ -37,16 +37,16 @@
                 <td>{{ entity.home ? 'yes' : 'no' }}</td>
                 <td>
                     {% if entity.created %}
-                        <span title="{{ entity.created|date('d/m/Y в H:i') }}">
+                        <abbr title="{{ entity.created|date('d/m/Y в H:i') }}">
                             {{ entity.created|date('d/m/Y') }}
-                        </span>
+                        </abbr>
                     {% endif %}
                 </td>
                 <td>
                     {% if entity.updated %}
-                        <span title="{{ entity.updated|date('d/m/Y в H:i') }}">
+                        <abbr title="{{ entity.updated|date('d/m/Y в H:i') }}">
                             {{ entity.updated|date('d/m/Y') }}
-                        </span>
+                        </abbr>
                     {% endif %}
                 </td>
             </tr>

@@ -1,15 +1,7 @@
 {% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
 {% block content_wrap -%}
-    <h1>Post creation</h1>
+    <h1>Создание статьи</h1>
 
-    {{ form(form) }}
-
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('post') }}">
-                Back to the list
-            </a>
-        </li>
-    </ul>
+    {% include 'BWBlogBundle:Post:form.html.twig' %}
 {% endblock %}

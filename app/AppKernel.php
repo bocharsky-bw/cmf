@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new BW\RouterBundle\BWRouterBundle(),
             new BW\BlogBundle\BWBlogBundle(),
             new BW\SkeletonBundle\BWSkeletonBundle(),
+            new BW\MainBundle\BWMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -54,8 +54,8 @@ class PostType extends AbstractType
                 //'property' => 'heading',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('c')
-                            ->orderBy('c.left', 'ASC')
-                        ;
+                        ->orderBy('c.left', 'ASC')
+                    ;
                 },
                 'required' => FALSE,
                 'empty_value' => '< Без категории >',
@@ -82,25 +82,6 @@ class PostType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            // Buttons
-            ->add('save', 'submit', array(
-                'label' => 'Сохранить',
-                'attr' => array(
-                    'class' => 'btn btn-primary',
-                ),
-            ))
-            ->add('saveAndClose', 'submit', array(
-                'label' => 'Сохранить и закрыть',
-                'attr' => array(
-                    'class' => 'btn btn-success',
-                ),
-            ))
-            ->add('delete', 'submit', array(
-                'label' => 'Удалить',
-                'attr' => array(
-                    'class' => 'btn btn-danger',
-                ),
-            ))
         ;
     }
     
@@ -121,6 +102,6 @@ class PostType extends AbstractType
      */
     public function getName()
     {
-        return 'post';
+        return 'bw_post';
     }
 }

@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Controller;
 
+use BW\SkeletonBundle\Utility\FormUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -43,7 +44,10 @@ class PostController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId())));
+            if ($form->get('createAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('post'));
+            }
+            return $this->redirect($this->generateUrl('post_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('BWBlogBundle:Post:new.html.twig', array(
@@ -65,7 +69,8 @@ class PostController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        FormUtility::addCreateButton($form);
+        FormUtility::addCreateAndCloseButton($form);
 
         return $form;
     }
@@ -119,12 +124,10 @@ class PostController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BWBlogBundle:Post:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         ));
     }
 
@@ -141,7 +144,9 @@ class PostController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        FormUtility::addUpdateButton($form);
+        FormUtility::addUpdateAndCloseButton($form);
+        FormUtility::addDeleteButton($form);
 
         return $form;
     }
@@ -159,21 +164,42 @@ class PostController extends Controller
             throw $this->createNotFoundException('Unable to find Post entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('delete')->isClicked()) {
+                $this->delete($entity->getId());
+                return $this->redirect($this->generateUrl('post'));
+            }
             $em->flush();
 
+            if ($editForm->get('updateAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('post'));
+            }
             return $this->redirect($this->generateUrl('post_edit', array('id' => $id)));
         }
 
         return $this->render('BWBlogBundle:Post:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Deletes an entity.
+     */
+    private function delete($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BWBlogBundle:Post')->find($id);
+
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Post entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
     }
 
     /**
@@ -185,15 +211,7 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BWBlogBundle:Post')->find($id);
-
-            if ( ! $entity) {
-                throw $this->createNotFoundException('Unable to find Post entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+            $this->delete($id);
         }
 
         return $this->redirect($this->generateUrl('post'));
