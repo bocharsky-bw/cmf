@@ -21,27 +21,27 @@ class PostType extends AbstractType
     {
         $builder
             ->add('published', 'checkbox', array(
-                'required' => FALSE,
+                'required' => false,
                 'label' => 'Опубликовано ',
             ))
             ->add('home', 'checkbox', array(
-                'required' => FALSE,
+                'required' => false,
                 'label' => 'Главная ',
             ))
             ->add('heading', 'text', array(
-                'required' => FALSE,
+                'required' => true,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('shortDescription', 'textarea', array(
-                'required' => FALSE,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('description', 'textarea', array(
-                'required' => FALSE,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
@@ -57,7 +57,7 @@ class PostType extends AbstractType
                         ->orderBy('c.left', 'ASC')
                     ;
                 },
-                'required' => FALSE,
+                'required' => false,
                 'empty_value' => '< Без категории >',
                 'attr' => array(
                     'class' => 'form-control',
@@ -65,19 +65,19 @@ class PostType extends AbstractType
             ))
             // Meta tags
             ->add('slug', 'text', array(
-                'required' => FALSE,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('title', 'text', array(
-                'required' => FALSE,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('metaDescription', 'textarea', array(
-                'required' => FALSE,
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
