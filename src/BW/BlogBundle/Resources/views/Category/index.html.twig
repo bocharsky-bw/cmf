@@ -1,0 +1,36 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block content_wrap -%}
+    <h1>Список категорий</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success" href="{{ path('category_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Заголовок</th>
+                <th>Синоним URL</th>
+                <th>Опубликовано</th>
+                <th>Порядок</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</a></td>
+                <td><a href="{{ path('category_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
+                <td>{{ entity.slug }}</td>
+                <td>{{ entity.published ? 'yes' : 'no' }}</td>
+                <td>{{ entity.order }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

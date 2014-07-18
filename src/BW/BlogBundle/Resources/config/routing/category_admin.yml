@@ -1,0 +1,26 @@
+category:
+    path:     /
+    defaults: { _controller: "BWBlogBundle:Category:index" }
+
+category_new:
+    path:     /new
+    defaults: { _controller: "BWBlogBundle:Category:new" }
+
+category_create:
+    path:     /create
+    defaults: { _controller: "BWBlogBundle:Category:create" }
+    requirements: { _method: post }
+
+category_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWBlogBundle:Category:edit" }
+
+category_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWBlogBundle:Category:update" }
+    requirements: { _method: post|put }
+
+category_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWBlogBundle:Category:delete" }
+    requirements: { _method: post|delete }

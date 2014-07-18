@@ -1,0 +1,7 @@
+parameters:
+#    bw_default.example.class: BW\DefaultBundle\Example
+
+services:
+#    bw_default.example:
+#        class: %bw_default.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

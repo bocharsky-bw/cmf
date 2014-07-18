@@ -1,13 +1,13 @@
-bw_main:
-    resource: "@BWMainBundle/Resources/config/routing.yml"
-    prefix:   /
-
 bw_skeleton:
     resource: "@BWSkeletonBundle/Resources/config/routing.yml"
     prefix:   /
 
 bw_blog:
     resource: "@BWBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
+bw_default:
+    resource: "@BWDefaultBundle/Resources/config/routing.yml"
     prefix:   /
 
 bw_router:

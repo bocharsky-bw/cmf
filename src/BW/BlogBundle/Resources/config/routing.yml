@@ -5,3 +5,12 @@ bw_blog_bundle_post_admin:
 bw_blog_bundle_post:
     resource: "@BWBlogBundle/Resources/config/routing/post.yml"
     prefix:   /post
+
+bw_blog_bundle_category_admin:
+    resource: "@BWBlogBundle/Resources/config/routing/category_admin.yml"
+    prefix:   /_admin/category
+
+bw_blog_bundle_category:
+    resource: "@BWBlogBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+

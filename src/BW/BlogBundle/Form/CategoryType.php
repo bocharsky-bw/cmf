@@ -21,17 +21,9 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('published', 'checkbox', array(
-                'required' => FALSE,
+                'required' => false,
+                'label' => 'Опубликовано ',
             ))
-            ->add('heading', 'text')
-            ->add('shortDescription', 'textarea', array(
-                'required' => FALSE,
-            ))
-            ->add('description', 'textarea', array(
-                'required' => FALSE,
-            ))
-            // Entities
-            // Lang
             ->add('parent', 'entity', array(
                 'class' => 'BWBlogBundle:Category',
                 //'property' => 'heading',
@@ -48,29 +40,66 @@ class CategoryType extends AbstractType
                             ->setParameter('right', $category->getRight(), \PDO::PARAM_INT)
                         ;
                 },
-                'required' => FALSE,
+                'required' => false,
+                'label' => 'Родительская категория ',
                 'empty_value' => '< Корневая категория >',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('heading', 'text', array(
+                'required' => true,
+                'label' => 'Заголовок ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('shortDescription', 'textarea', array(
+                'required' => false,
+                'label' => 'Короткое описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('description', 'textarea', array(
+                'required' => false,
+                'label' => 'Полное описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('order', 'number', array(
                 'required' => false,
+                'label' => 'Порядок ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
-            // Meta tags
+            // SEO
             ->add('slug', 'text', array(
-                'required' => FALSE,
+                'required' => false,
+                'label' => 'Синоним URL ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('title', 'text', array(
-                'required' => FALSE,
+                'required' => false,
+                'label' => 'Заголовок в браузере ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('metaDescription', 'textarea', array(
-                'required' => FALSE,
+                'required' => false,
+                'label' => 'Описание страницы ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
-            // Buttons
-            ->add('save', 'submit')
-            ->add('saveAndClose', 'submit')
-            ->add('delete', 'submit')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

@@ -1,0 +1,3 @@
+category_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWBlogBundle:Category:show" }

@@ -24,31 +24,6 @@ class PostType extends AbstractType
                 'required' => false,
                 'label' => 'Опубликовано ',
             ))
-            ->add('home', 'checkbox', array(
-                'required' => false,
-                'label' => 'Главная ',
-            ))
-            ->add('heading', 'text', array(
-                'required' => true,
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('shortDescription', 'textarea', array(
-                'required' => false,
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('description', 'textarea', array(
-                'required' => false,
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('created', 'datetime')
-            // Entities
-            // Category
             ->add('category', 'entity', array(
                 'class' => 'BWBlogBundle:Category',
                 //'property' => 'heading',
@@ -58,25 +33,58 @@ class PostType extends AbstractType
                     ;
                 },
                 'required' => false,
+                'label' => 'Категория ',
                 'empty_value' => '< Без категории >',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
-            // Meta tags
+            ->add('home', 'checkbox', array(
+                'required' => false,
+                'label' => 'Главная ',
+            ))
+            ->add('heading', 'text', array(
+                'required' => true,
+                'label' => 'Заголовок ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('shortDescription', 'textarea', array(
+                'required' => false,
+                'label' => 'Короткое описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('description', 'textarea', array(
+                'required' => false,
+                'label' => 'Полное описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('created', 'datetime', array(
+                'required' => false,
+                'label' => 'Дата создания',
+            ))
+            // SEO
             ->add('slug', 'text', array(
+                'label' => 'Синоним URL ',
                 'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('title', 'text', array(
+                'label' => 'Заголовок в браузере ',
                 'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
             ->add('metaDescription', 'textarea', array(
+                'label' => 'Описание страницы ',
                 'required' => false,
                 'attr' => array(
                     'class' => 'form-control',
