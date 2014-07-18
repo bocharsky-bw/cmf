@@ -45,7 +45,10 @@ class PostController extends Controller
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
+            } elseif ($form->get('createAndShow')->isClicked()) {
+                return $this->redirect($this->generateUrl('post_show', array('id' => $entity->getId())));
             }
+
             return $this->redirect($this->generateUrl('post_edit', array('id' => $entity->getId())));
         }
 
@@ -70,6 +73,7 @@ class PostController extends Controller
 
         FormUtility::addCreateButton($form);
         FormUtility::addCreateAndCloseButton($form);
+        FormUtility::addCreateAndShowButton($form);
 
         return $form;
     }
@@ -145,6 +149,7 @@ class PostController extends Controller
 
         FormUtility::addUpdateButton($form);
         FormUtility::addUpdateAndCloseButton($form);
+        FormUtility::addUpdateAndShowButton($form);
         FormUtility::addDeleteButton($form);
 
         return $form;
@@ -176,6 +181,8 @@ class PostController extends Controller
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
+            } elseif ($editForm->get('updateAndShow')->isClicked()) {
+                return $this->redirect($this->generateUrl('post_show', array('id' => $id)));
             }
 
             return $this->redirect($this->generateUrl('post_edit', array('id' => $id)));
