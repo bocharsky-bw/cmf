@@ -5,3 +5,9 @@ services:
 #    bw_default.example:
 #        class: %bw_default.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_default.twig.bw_extension:
+        class: BW\DefaultBundle\Twig\BWExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

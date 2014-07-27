@@ -51,6 +51,16 @@ class Category
     private $published = true;
 
     /**
+     * @var \DateTime $created
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     */
+    private $updated;
+
+    /**
      * @var integer $order
      */
     private $order = 0;
@@ -91,6 +101,8 @@ class Category
      */
     public function __construct()
     {
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
@@ -301,6 +313,52 @@ class Category
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Post
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Post
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**

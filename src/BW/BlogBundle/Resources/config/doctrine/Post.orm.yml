@@ -38,4 +38,7 @@ BW\BlogBundle\Entity\Post:
         category:
             targetEntity: BW\BlogBundle\Entity\Category
             inversedBy: posts
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
     lifecycleCallbacks: {}

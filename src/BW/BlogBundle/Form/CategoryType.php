@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Form;
 
+use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -27,7 +28,7 @@ class CategoryType extends AbstractType
             ->add('parent', 'entity', array(
                 'class' => 'BWBlogBundle:Category',
                 //'property' => 'heading',
-                'query_builder' => function(EntityRepository $er) use($options) {
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     /** @var \BW\BlogBundle\Entity\Category $category */
                     $category = $options['data'];
 
@@ -35,9 +36,9 @@ class CategoryType extends AbstractType
                             ->where('c.id != :id')
                             ->andWhere('c.left < :left OR c.left > :right')
                             ->orderBy('c.left', 'ASC')
-                            ->setParameter('id', $category->getId(), \PDO::PARAM_INT)
-                            ->setParameter('left', $category->getLeft(), \PDO::PARAM_INT)
-                            ->setParameter('right', $category->getRight(), \PDO::PARAM_INT)
+                            ->setParameter('id', (int)$category->getId(), Type::INTEGER)
+                            ->setParameter('left', (int)$category->getLeft(), Type::INTEGER)
+                            ->setParameter('right', (int)$category->getRight(), Type::INTEGER)
                         ;
                 },
                 'required' => false,
@@ -67,6 +68,10 @@ class CategoryType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control',
                 ),
+            ))
+            ->add('created', 'datetime', array(
+                'required' => false,
+                'label' => 'Дата создания',
             ))
             ->add('order', 'number', array(
                 'required' => false,

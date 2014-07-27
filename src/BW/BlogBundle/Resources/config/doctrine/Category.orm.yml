@@ -27,6 +27,10 @@ BW\BlogBundle\Entity\Category:
             type: text
         published:
             type: boolean
+        created:
+            type: datetime
+        updated:
+            type: datetime
         order:
             column: ordering
             type: integer

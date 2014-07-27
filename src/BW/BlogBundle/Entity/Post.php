@@ -2,6 +2,8 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\RouterBundle\Entity\Route;
+
 /**
  * Class Post
  * @package BW\BlogBundle\Entity
@@ -67,6 +69,11 @@ class Post
      * @var Category $category
      */
     private $category;
+
+    /**
+     * @var Route $route
+     */
+    private $route;
 
 
     /**
@@ -362,5 +369,28 @@ class Post
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \BW\RouterBundle\Entity\Route $route
+     * @return Post
+     */
+    public function setRoute(Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \BW\RouterBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

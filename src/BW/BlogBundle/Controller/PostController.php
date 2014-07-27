@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Controller;
 
+use BW\RouterBundle\Entity\Route;
 use BW\SkeletonBundle\Utility\FormUtility;
 use BW\BlogBundle\Entity\Post;
 use BW\BlogBundle\Form\PostType;
@@ -41,7 +42,7 @@ class PostController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            $em->flush();
+            $em->flush(); // сохраняем в БД чтобы получить ID элемента для роута
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
@@ -177,7 +178,31 @@ class PostController extends Controller
                 return $this->redirect($this->generateUrl('post'));
             }
 
+            /******/
+            $route = $entity->getRoute();
+            if ( ! $route) {
+                $route = new Route();
+                $entity->setRoute($route);
+                $em->persist($route);
+                $em->flush();
+            }
+
+            $segments = array();
+            $parent = $entity->getCategory();
+            while ($parent) {
+                $segments[] = $parent->getSlug();
+                $parent = $parent->getParent();
+            }
+            $query = '/' . ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $entity->getSlug();
+            $route->setPath($query);
+            $route->setSlug($query);
+            $route->setDefaults(array(
+                '_controller' => 'BWBlogBundle:Post:show',
+                'id' => $entity->getId(),
+            ));
+
             $em->flush();
+            /******/
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
