@@ -51,6 +51,8 @@ class NestedSet {
     {
         $entities = $this->em->getRepository($entityName)->findAll(); // fetch from DB
         if ($entities) {
+            $this->em->flush(); // save to DB all unsaved entities
+
             // Clear data
             $this->clear();
 
