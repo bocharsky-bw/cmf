@@ -191,9 +191,11 @@ class CategoryController extends Controller
                 return $this->redirect($this->generateUrl('category'));
             }
 
-            /* Route */
+            // Route
             $entity->getRoute()->handleEntity($entity);
-            /* /Route */
+
+            // Regenerate nested set
+            $this->get('bw_default.service.nested_set')->regenerate('BWBlogBundle:Category');
 
             $em->flush();
 

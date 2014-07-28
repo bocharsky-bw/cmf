@@ -11,3 +11,7 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: twig.extension }
+
+    bw_default.service.nested_set:
+        class: BW\DefaultBundle\Service\NestedSet
+        arguments: ["@doctrine.orm.entity_manager"]

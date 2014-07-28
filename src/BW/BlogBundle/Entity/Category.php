@@ -4,13 +4,14 @@ namespace BW\BlogBundle\Entity;
 
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
+use BW\DefaultBundle\Service\NestedSetInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Category
  * @package BW\BlogBundle\Entity
  */
-class Category implements RouteInterface
+class Category implements RouteInterface, NestedSetInterface
 {
     /**
      * @var integer $id
