@@ -2,13 +2,15 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\RouterBundle\Entity\Route;
+use BW\RouterBundle\Entity\RouteInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Category
  * @package BW\BlogBundle\Entity
  */
-class Category
+class Category implements RouteInterface
 {
     /**
      * @var integer $id
@@ -95,6 +97,11 @@ class Category
      */
     private $posts;
 
+    /**
+     * @var Route $route
+     */
+    private $route;
+
 
     /**
      * The constructor
@@ -107,11 +114,11 @@ class Category
         $this->posts = new ArrayCollection();
     }
 
-
     public function __toString()
     {
         return str_repeat('- ', $this->level) . $this->heading;
     }
+
 
     /**
      * Generate current nested level
@@ -131,6 +138,38 @@ class Category
         }
 
         return $this;
+    }
+
+    public function generatePath()
+    {
+        $segments = array();
+        $parent = $this->getParent();
+        if ($parent) {
+            $segments[] = ''; // Add slash to the end of path
+        }
+        while ($parent) {
+            if ($parent->getSlug()) {
+                $segments[] = $parent->getSlug();
+            }
+            $parent = $parent->getParent();
+        }
+
+        return '/' . implode('/', array_reverse($segments)) . $this->getSlug();
+    }
+
+    public function getDefaults()
+    {
+        if ( ! $this->getId()) {
+            throw new \RuntimeException(''
+                . 'The entity ID not defined. '
+                . 'Maybe you forgot to execute "flush" method before handle the entity?'
+            );
+        }
+
+        return array(
+            '_controller' => 'BWBlogBundle:Category:show',
+            'id' => $this->getId(),
+        );
     }
 
 
@@ -536,5 +575,28 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \BW\RouterBundle\Entity\Route $route
+     * @return Post
+     */
+    public function setRoute(Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \BW\RouterBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

@@ -19,14 +19,17 @@ class Route
     private $path = '';
 
     /**
-     * @var string $slug The query without locale
-     */
-    private $slug = '';
-
-    /**
      * @var array $defaults
      */
     private $defaults = array();
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+    }
 
 
     /**
@@ -43,11 +46,11 @@ class Route
     }
 
 
-    /**
-     * The constructor
-     */
-    public function __construct()
+    public function handleEntity(RouteInterface $entity)
     {
+        $entity->setRoute($this);
+        $this->setPath($entity->generatePath());
+        $this->setDefaults($entity->getDefaults());
     }
 
 
@@ -84,29 +87,6 @@ class Route
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Set query
-     *
-     * @param string $slug
-     * @return Route
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get query
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**

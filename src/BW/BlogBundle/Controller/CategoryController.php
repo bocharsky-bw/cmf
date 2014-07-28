@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Controller;
 
+use BW\RouterBundle\Entity\Route;
 use BW\SkeletonBundle\Utility\FormUtility;
 use BW\BlogBundle\Entity\Category;
 use BW\BlogBundle\Form\CategoryType;
@@ -45,6 +46,13 @@ class CategoryController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+
+            /* Route */
+            $route = new Route();
+            $route->handleEntity($entity);
+            $em->persist($route);
+            $em->flush();
+            /* /Route */
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
@@ -182,6 +190,10 @@ class CategoryController extends Controller
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('category'));
             }
+
+            /* Route */
+            $entity->getRoute()->handleEntity($entity);
+            /* /Route */
 
             $em->flush();
 

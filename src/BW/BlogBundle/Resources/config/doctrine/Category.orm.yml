@@ -53,6 +53,9 @@ BW\BlogBundle\Entity\Category:
         parent:
             targetEntity: BW\BlogBundle\Entity\Category
             inversedBy: children
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
     lifecycleCallbacks:
         prePersist: [generateLevel]
         preUpdate: [generateLevel]

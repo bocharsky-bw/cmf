@@ -12,9 +12,6 @@ BW\RouterBundle\Entity\Route:
             type: string
             length: 255
             unique: true
-        slug:
-            type: string
-            length: 255
         defaults:
             type: array
     lifecycleCallbacks: { }

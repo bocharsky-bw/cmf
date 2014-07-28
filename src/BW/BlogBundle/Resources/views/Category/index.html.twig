@@ -19,6 +19,7 @@
                 <th>ID</th>
                 <th>Заголовок</th>
                 <th>Синоним URL</th>
+                <th>Родительская категория</th>
                 <th>Опубликовано</th>
                 <th>Создано</th>
                 <th>Обновлено</th>
@@ -31,9 +32,25 @@
                 <td>{{ entity.id }}</a></td>
                 <td>
                     {{ '|— '|repeat(entity.level) }}
-                    <a href="{{ path('category_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a>
+                    <a href="{{ path('category_edit', { 'id': entity.id }) }}" title="Редактировать запись">
+                        {{ entity.heading }}
+                    </a><br/>
+                    <a href="{{ path('home') ~ entity.route.path }}" title="Перейти по адресу">
+                        <small>
+                            {{ entity.route.path }}
+                        </small>
+                    </a>
                 </td>
                 <td>{{ entity.slug }}</td>
+                <td>
+                    {% if entity.parent %}
+                        <a href="{{ path('category_edit', {'id': entity.parent.id}) }}" title="Редактировать запись">
+                            {{ entity.parent.heading }}
+                        </a>
+                    {% else %}
+                        {{ '< Корневая >' }}
+                    {% endif %}
+                </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td>
                     {% if entity.created %}

@@ -44,6 +44,13 @@ class PostController extends Controller
             $em->persist($entity);
             $em->flush(); // сохраняем в БД чтобы получить ID элемента для роута
 
+            /* Route */
+            $route = new Route();
+            $route->handleEntity($entity);
+            $em->persist($route);
+            $em->flush();
+            /* /Route */
+
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
             } elseif ($form->get('createAndShow')->isClicked()) {
@@ -163,6 +170,7 @@ class PostController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var \BW\BlogBundle\Entity\Post $entity */
         $entity = $em->getRepository('BWBlogBundle:Post')->find($id);
 
         if ( ! $entity) {
@@ -178,31 +186,11 @@ class PostController extends Controller
                 return $this->redirect($this->generateUrl('post'));
             }
 
-            /******/
-            $route = $entity->getRoute();
-            if ( ! $route) {
-                $route = new Route();
-                $entity->setRoute($route);
-                $em->persist($route);
-                $em->flush();
-            }
-
-            $segments = array();
-            $parent = $entity->getCategory();
-            while ($parent) {
-                $segments[] = $parent->getSlug();
-                $parent = $parent->getParent();
-            }
-            $query = '/' . ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $entity->getSlug();
-            $route->setPath($query);
-            $route->setSlug($query);
-            $route->setDefaults(array(
-                '_controller' => 'BWBlogBundle:Post:show',
-                'id' => $entity->getId(),
-            ));
+            /* Route */
+            $entity->getRoute()->handleEntity($entity);
+            /* /Route */
 
             $em->flush();
-            /******/
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));

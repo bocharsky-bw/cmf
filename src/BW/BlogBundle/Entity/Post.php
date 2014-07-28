@@ -3,12 +3,13 @@
 namespace BW\BlogBundle\Entity;
 
 use BW\RouterBundle\Entity\Route;
+use BW\RouterBundle\Entity\RouteInterface;
 
 /**
  * Class Post
  * @package BW\BlogBundle\Entity
  */
-class Post
+class Post implements RouteInterface
 {
     /**
      * @var integer $id
@@ -83,6 +84,39 @@ class Post
     {
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+    }
+
+
+    public function generatePath()
+    {
+        $segments = array();
+        $parent = $this->getCategory();
+        if ($parent) {
+            $segments[] = ''; // Add slash to the end of path
+        }
+        while ($parent) {
+            if ($parent->getSlug()) {
+                $segments[] = $parent->getSlug();
+            }
+            $parent = $parent->getParent();
+        }
+
+        return '/' . implode('/', array_reverse($segments)) . $this->getSlug();
+    }
+
+    public function getDefaults()
+    {
+        if ( ! $this->getId()) {
+            throw new \RuntimeException(''
+                . 'The entity ID not defined. '
+                . 'Maybe you forgot to execute "flush" method before handle the entity?'
+            );
+        }
+
+        return array(
+            '_controller' => 'BWBlogBundle:Post:show',
+            'id' => $this->getId(),
+        );
     }
 
 
