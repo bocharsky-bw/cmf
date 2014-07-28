@@ -34,7 +34,7 @@
                     <a href="{{ path('post_edit', { 'id': entity.id }) }}" title="Редактировать запись">
                         {{ entity.heading ? entity.heading : '< no heading >' }}
                     </a><br/>
-                    <a href="{{ path('home') ~ entity.route.path }}" title="Перейти по адресу">
+                    <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
                         <small>
                             {{ entity.route.path }}
                         </small>
