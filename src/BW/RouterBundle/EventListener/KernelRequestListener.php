@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Bridge\Monolog\Logger;
 
 class KernelRequestListener
 {
@@ -25,6 +25,11 @@ class KernelRequestListener
      */
     private $router;
 
+    /**
+     * @var \Symfony\Bridge\Monolog\Logger
+     */
+    private $logger;
+
 
     /**
      * The constructor
@@ -33,11 +38,12 @@ class KernelRequestListener
      * @param EntityManager $em
      * @param Router $router
      */
-    public function __construct(RequestStack $requestStack, EntityManager $em, Router $router)
+    public function __construct(RequestStack $requestStack, EntityManager $em, Router $router, Logger $logger)
     {
         $this->request = $requestStack->getCurrentRequest();
         $this->em = $em;
         $this->router = $router;
+        $this->logger = $logger;
     }
 
 
@@ -64,13 +70,16 @@ class KernelRequestListener
             return;
         }
 
-        /** @TODO Replace with Monolog loger */
-        var_dump('DEBUG: Search route in database');
-
         /** @var \BW\RouterBundle\Entity\Route $route */
         $route = $this->em->getRepository('BWRouterBundle:Route')->findOneBy(array(
             'path' => $this->request->getPathInfo(),
         ));
+        $this->logger->debug(''
+            . 'Notified event "' . $event->getName() . '" '
+            . 'to listener "' . __METHOD__ . '". '
+            . 'Search route in database.'
+        );
+
         if ( ! $route) {
             // don't do anything if route not found in database
             return;
