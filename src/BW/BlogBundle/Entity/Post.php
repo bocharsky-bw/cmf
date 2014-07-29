@@ -89,19 +89,27 @@ class Post implements RouteInterface
 
     public function generatePath()
     {
-        $segments = array();
-        $parent = $this->getCategory();
-        if ($parent) {
-            $segments[] = ''; // Add slash to the end of path
-        }
-        while ($parent) {
-            if ($parent->getSlug()) {
-                $segments[] = $parent->getSlug();
+        $slug = $this->getSlug();
+
+        if (0 !== strcmp('/', $slug[0])) {
+            $segments = array();
+            $parent = $this->getCategory();
+
+            if ($parent) {
+                $segments[] = ''; // Add slash to the end of path
             }
-            $parent = $parent->getParent();
+
+            while ($parent) {
+                if ($parent->getSlug()) {
+                    $segments[] = $parent->getSlug();
+                }
+                $parent = $parent->getParent();
+            }
+
+            $slug = '/' . implode('/', array_reverse($segments)) . $this->getSlug();
         }
 
-        return '/' . implode('/', array_reverse($segments)) . $this->getSlug();
+        return $slug;
     }
 
     public function getDefaults()

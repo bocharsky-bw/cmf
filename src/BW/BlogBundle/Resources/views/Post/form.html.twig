@@ -40,7 +40,15 @@
     <div class="form-group">{{ form_row(form.created) }}</div>
 
     <h2>SEO</h2>
-    <div class="form-group">{{ form_row(form.slug) }}</div>
+    {% if entity.route %}
+    <div class="form-group">
+        Адрес страницы: <code>{{ entity.route.path }}</code>
+    </div>
+    {% endif %}
+    <div class="form-group">
+        {{ form_row(form.slug) }}
+        <p class="text-muted">Используйте прямой слеш ("/") в начале синонима URL чтобы переопределить стандартное формирование.</p>
+    </div>
     <div class="form-group">{{ form_row(form.title) }}</div>
     <div class="form-group">{{ form_row(form.metaDescription) }}</div>
 
