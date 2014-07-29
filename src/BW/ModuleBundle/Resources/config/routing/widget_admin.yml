@@ -1,0 +1,30 @@
+widget:
+    path:     /
+    defaults: { _controller: "BWModuleBundle:Widget:index" }
+
+widget_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWModuleBundle:Widget:show" }
+
+widget_new:
+    path:     /new
+    defaults: { _controller: "BWModuleBundle:Widget:new" }
+
+widget_create:
+    path:     /create
+    defaults: { _controller: "BWModuleBundle:Widget:create" }
+    requirements: { _method: post }
+
+widget_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWModuleBundle:Widget:edit" }
+
+widget_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWModuleBundle:Widget:update" }
+    requirements: { _method: post|put }
+
+widget_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWModuleBundle:Widget:delete" }
+    requirements: { _method: post|delete }

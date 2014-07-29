@@ -1,0 +1,3 @@
+BWModuleBundle_widget:
+    resource: "@BWModuleBundle/Resources/config/routing/widget_admin.yml"
+    prefix:   /widget
