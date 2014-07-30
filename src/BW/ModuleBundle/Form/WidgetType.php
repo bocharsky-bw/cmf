@@ -19,6 +19,16 @@ class WidgetType extends AbstractType
                 'required' => false,
                 'label' => 'Опубликовано ',
             ))
+            ->add('position', 'entity', array(
+                'class' => 'BW\ModuleBundle\Entity\Position',
+                'property' => 'name',
+                'required' => false,
+                'label' => 'Позиция ',
+                'empty_value' => '< Без позиции >',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             ->add('heading', 'text', array(
                 'required' => true,
                 'label' => 'Заголовок ',
@@ -29,6 +39,13 @@ class WidgetType extends AbstractType
             ->add('description', 'textarea', array(
                 'required' => false,
                 'label' => 'Полное описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('order', 'number', array(
+                'required' => false,
+                'label' => 'Порядок ',
                 'attr' => array(
                     'class' => 'form-control',
                 ),

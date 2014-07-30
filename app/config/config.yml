@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: "@BWModuleBundle/Resources/config/config.yml" }
 
 framework:
     #esi:             ~
@@ -57,6 +58,7 @@ doctrine:
         # path:     "%database_path%"
 
     orm:
+        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 

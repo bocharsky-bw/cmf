@@ -30,11 +30,6 @@ class Widget
     private $published = true;
 
     /**
-     * @var integer $order
-     */
-    private $order = 0;
-
-    /**
      * @var \BW\ModuleBundle\Entity\Position
      */
     private $position;
@@ -132,29 +127,6 @@ class Widget
     }
 
     /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Widget
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
      * Set position
      *
      * @param \BW\ModuleBundle\Entity\Position $position
@@ -170,7 +142,7 @@ class Widget
     /**
      * Get position
      *
-     * @return \BW\ModuleBundle\Entity\Position
+     * @return \BW\ModuleBundle\Entity\Position 
      */
     public function getPosition()
     {

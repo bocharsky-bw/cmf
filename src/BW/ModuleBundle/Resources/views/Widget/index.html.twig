@@ -18,6 +18,8 @@
             <tr>
                 <th>ID</th>
                 <th>Название</th>
+                <th>Позиция</th>
+                <th>Порядок</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +31,8 @@
                         {{ entity.heading ? entity.heading : '< no heading >' }}
                     </a>
                 </td>
+                <td>{{ entity.position ? entity.position.name : '< Без позиции >' }}</td>
+                <td>{{ entity.order }}</td>
             </tr>
         {% endfor %}
         </tbody>

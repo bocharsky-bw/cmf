@@ -23,7 +23,10 @@ class WidgetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWModuleBundle:Widget')->findAll();
+        $entities = $em->getRepository('BWModuleBundle:Widget')->findBy(array(), array(
+            'position' => 'ASC',
+            'order' => 'ASC',
+        ));
 
         return $this->render('BWModuleBundle:Widget:index.html.twig', array(
             'entities' => $entities,

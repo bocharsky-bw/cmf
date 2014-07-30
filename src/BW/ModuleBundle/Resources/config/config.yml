@@ -1,0 +1,4 @@
+twig:
+    globals:
+        bw_position: "@bw_module.service.position"
+        bw_widget: "@bw_module.service.widget"

@@ -1,6 +1,6 @@
 BW\ModuleBundle\Entity\Widget:
     type: entity
-    table: null
+    table: widgets
     id:
         id:
             type: integer
@@ -15,4 +15,11 @@ BW\ModuleBundle\Entity\Widget:
             type: text
         published:
             type: boolean
+        order:
+            column: ordering
+            type: integer
+    manyToOne:
+        position:
+            targetEntity: BW\ModuleBundle\Entity\Position
+            inversedBy: widgets
     lifecycleCallbacks: {  }

@@ -1,6 +1,6 @@
 BW\ModuleBundle\Entity\Position:
     type: entity
-    table: null
+    table: positions
     id:
         id:
             type: integer
@@ -14,4 +14,8 @@ BW\ModuleBundle\Entity\Position:
         description:
             type: string
             length: 255
+    oneToMany:
+        widgets:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            mappedBy: position
     lifecycleCallbacks: {  }
