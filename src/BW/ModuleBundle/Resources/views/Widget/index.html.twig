@@ -19,6 +19,7 @@
                 <th>ID</th>
                 <th>Название</th>
                 <th>Позиция</th>
+                <th>Опубликовано</th>
                 <th>Порядок</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                     </a>
                 </td>
                 <td>{{ entity.position ? entity.position.name : '< Без позиции >' }}</td>
+                <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td>{{ entity.order }}</td>
             </tr>
         {% endfor %}

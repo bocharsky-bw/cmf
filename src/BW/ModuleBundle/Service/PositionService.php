@@ -35,6 +35,14 @@ class PositionService
     public function show($name)
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
+        $widgets = $this->em
+            ->getRepository('BWModuleBundle:Widget')
+            ->createQueryBuilder('w')
+            ->orderBy('w.order', 'ASC')
+            ->where('w.published = 1')
+            ->getQuery()
+            ->getResult();
+        ;
 
         if ( ! $position) {
             /** @TODO Add lo logger ID of not found entity */
@@ -43,6 +51,7 @@ class PositionService
 
         return $this->twig->render('BWModuleBundle:Position:show.html.twig', array(
             'position' => $position,
+            'widgets' => $widgets,
         ));
     }
 

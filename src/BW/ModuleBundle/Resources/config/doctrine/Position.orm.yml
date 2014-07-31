@@ -18,4 +18,6 @@ BW\ModuleBundle\Entity\Position:
         widgets:
             targetEntity: BW\ModuleBundle\Entity\Widget
             mappedBy: position
+            orderBy:
+                order: ASC
     lifecycleCallbacks: {  }
