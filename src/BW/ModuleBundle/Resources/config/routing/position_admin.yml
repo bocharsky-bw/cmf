@@ -1,0 +1,30 @@
+position:
+    path:     /
+    defaults: { _controller: "BWModuleBundle:Position:index" }
+
+position_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWModuleBundle:Position:show" }
+
+position_new:
+    path:     /new
+    defaults: { _controller: "BWModuleBundle:Position:new" }
+
+position_create:
+    path:     /create
+    defaults: { _controller: "BWModuleBundle:Position:create" }
+    requirements: { _method: post }
+
+position_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWModuleBundle:Position:edit" }
+
+position_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWModuleBundle:Position:update" }
+    requirements: { _method: post|put }
+
+position_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWModuleBundle:Position:delete" }
+    requirements: { _method: post|delete }

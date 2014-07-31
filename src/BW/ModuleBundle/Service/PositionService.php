@@ -29,6 +29,7 @@ class PositionService
     {
         $this->em = $em;
         $this->twig = $twig;
+        /** @TODO Load all widgets from DB and group them by positions */
     }
 
 

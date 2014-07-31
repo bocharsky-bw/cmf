@@ -1,0 +1,38 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список позиций{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-list-alt"></i> Список позиций</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success fas fa-plus" href="{{ path('position_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>
+                    <a href="{{ path('position_edit', { 'id': entity.id }) }}" title="Редактировать запись">
+                        {{ entity.name ? entity.name : '< no heading >' }}
+                    </a>
+                </td>
+                <td>{{ entity.description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

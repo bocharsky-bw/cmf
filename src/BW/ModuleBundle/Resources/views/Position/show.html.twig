@@ -1,5 +1,5 @@
-<div class="bw_position {{ position.name }}">
-    {% for widget in widgets %}
+<div class="bw_position">
+    {% for widget in position.widgets %}
         {% include 'BWModuleBundle:Widget:show.html.twig' %}
     {% endfor %}
 </div>
