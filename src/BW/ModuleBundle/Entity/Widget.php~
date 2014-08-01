@@ -3,6 +3,9 @@
 namespace BW\ModuleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use BW\RouterBundle\Entity\Route;
+use BW\ModuleBundle\Entity\Position;
 
 /**
  * Widget
@@ -30,9 +33,30 @@ class Widget
     private $published = true;
 
     /**
+     * @var integer $order
+     */
+    private $order = 0;
+
+    /**
+     * @var boolean $visibility
+     */
+    private $visibility = true;
+
+    /**
      * @var \BW\ModuleBundle\Entity\Position
      */
     private $position;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $widgetRoutes;
+
+
+    public function __construct()
+    {
+        $this->widgetRoutes = new ArrayCollection();
+    }
 
 
     /* SETTERS / GETTERS */
@@ -127,12 +151,58 @@ class Widget
     }
 
     /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Widget
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set visibility
+     *
+     * @param boolean $visibility
+     * @return Widget
+     */
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    /**
+     * Get visibility
+     *
+     * @return boolean
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
      * Set position
      *
      * @param \BW\ModuleBundle\Entity\Position $position
      * @return Widget
      */
-    public function setPosition(\BW\ModuleBundle\Entity\Position $position = null)
+    public function setPosition(Position $position = null)
     {
         $this->position = $position;
 
@@ -142,10 +212,12 @@ class Widget
     /**
      * Get position
      *
-     * @return \BW\ModuleBundle\Entity\Position 
+     * @return \BW\ModuleBundle\Entity\Position
      */
     public function getPosition()
     {
         return $this->position;
     }
+
+
 }

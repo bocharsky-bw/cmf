@@ -18,6 +18,12 @@ BW\ModuleBundle\Entity\Widget:
         order:
             column: ordering
             type: integer
+        visibility:
+            type: boolean
+    oneToMany:
+        widgetRoutes:
+            targetEntity: BW\ModuleBundle\Entity\WidgetRoute
+            mappedBy: widget
     manyToOne:
         position:
             targetEntity: BW\ModuleBundle\Entity\Position

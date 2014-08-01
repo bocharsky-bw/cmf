@@ -50,6 +50,18 @@ class WidgetType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('visibility', 'choice', array(
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Видимость ',
+                'choices' => array(
+                    false => 'Только на перечисленных роутах ',
+                    true => 'На всех роутах, кроме перечисленных '
+                ),
+            ))
+            /** @TODO use data transformer */
+            ->add('widgetRoutes')
         ;
     }
     

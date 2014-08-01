@@ -36,14 +36,24 @@ class PositionService
     public function show($name)
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
+
+        $currentRoute = 7;
         $widgets = $this->em
             ->getRepository('BWModuleBundle:Widget')
             ->createQueryBuilder('w')
-            ->orderBy('w.order', 'ASC')
+            ->leftJoin('w.widgetRoutes', 'wr')
+            ->leftJoin('wr.route', 'r')
             ->where('w.published = 1')
+//            ->andWhere('(r.id = :current_route OR wr.route IS NULL)') // Filter by current route or NULL route
+//            ->andWhere('(w.visibility = 0 AND wr.route IS NOT NULL AND r.id = :current_route)') // Only by listed routes WORKED
+            ->andWhere('(w.visibility = 1 AND wr.route IS NULL)')
+//            ->setParameter('current_route', $currentRoute)
+            ->groupBy('w.id')
+            ->orderBy('w.order', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
         ;
+//        print $widgets->getSQL(); die;
 
         if ( ! $position) {
             /** @TODO Add lo logger ID of not found entity */

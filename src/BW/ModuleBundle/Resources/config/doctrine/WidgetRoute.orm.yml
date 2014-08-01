@@ -1,0 +1,16 @@
+BW\ModuleBundle\Entity\WidgetRoute:
+    type: entity
+    table: widget_route
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        widget:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            inversedBy: widgetRoutes
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+    lifecycleCallbacks: {  }
