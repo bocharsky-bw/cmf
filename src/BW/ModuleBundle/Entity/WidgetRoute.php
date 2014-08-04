@@ -27,7 +27,7 @@ class WidgetRoute
 
     public function __toString()
     {
-        return (string)$this->getRoute()->getPath();
+        return (string)($this->getRoute()->getId() . ' - ' . $this->getRoute()->getPath());
     }
 
 

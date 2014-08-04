@@ -4,6 +4,7 @@ namespace BW\ModuleBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\Query\Expr\Join;
 
 class PositionService
 {
@@ -37,17 +38,29 @@ class PositionService
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
 
-        $currentRoute = 7;
-        $widgets = $this->em
+        /** @TODO Get current route ID from service, not directly and not by new query from DB */
+        $currentRoute = 6;
+        $qb = $this->em
             ->getRepository('BWModuleBundle:Widget')
             ->createQueryBuilder('w')
+        ;
+        $widgets = $qb
             ->leftJoin('w.widgetRoutes', 'wr')
-            ->leftJoin('wr.route', 'r')
-            ->where('w.published = 1')
-//            ->andWhere('(r.id = :current_route OR wr.route IS NULL)') // Filter by current route or NULL route
-//            ->andWhere('(w.visibility = 0 AND wr.route IS NOT NULL AND r.id = :current_route)') // Only by listed routes WORKED
-            ->andWhere('(w.visibility = 1 AND wr.route IS NULL)')
-//            ->setParameter('current_route', $currentRoute)
+            ->leftJoin('w.widgetRoutes', 'wr2', Join::WITH, $qb->expr()->andx(
+                $qb->expr()->eq('wr2.widget', 'w.id'),
+                $qb->expr()->eq('wr2.route', $currentRoute)
+            ))
+            ->where($qb->expr()->eq('w.published', '1'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('w.visibility', 0),
+                    $qb->expr()->eq('wr.route', $currentRoute)
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->eq('w.visibility', 1),
+                    $qb->expr()->isNull('wr2.id')
+                )
+            ))
             ->groupBy('w.id')
             ->orderBy('w.order', 'ASC')
             ->getQuery()
