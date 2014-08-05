@@ -71,6 +71,8 @@ class WidgetController extends Controller
         $form = $this->createForm(new WidgetType(), $entity, array(
             'action' => $this->generateUrl('widget_create'),
             'method' => 'POST',
+            'em' => $this->getDoctrine()->getManager(),
+            'entity' => $entity,
         ));
 
         FormUtility::addCreateButton($form);
@@ -148,6 +150,8 @@ class WidgetController extends Controller
         $form = $this->createForm(new WidgetType(), $entity, array(
             'action' => $this->generateUrl('widget_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'em' => $this->getDoctrine()->getManager(),
+            'entity' => $entity,
         ));
 
         FormUtility::addUpdateButton($form);
@@ -178,6 +182,11 @@ class WidgetController extends Controller
             if ($editForm->get('delete')->isClicked()) {
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('widget'));
+            }
+            /* Route to Widget binding */
+            if ($widgetRouteId = $request->request->getInt('deleteWidgetRoute')) {
+                $widgetRoute = $em->getRepository('BWModuleBundle:WidgetRoute')->find($widgetRouteId);
+                $em->remove($widgetRoute);
             }
 
             $em->flush();

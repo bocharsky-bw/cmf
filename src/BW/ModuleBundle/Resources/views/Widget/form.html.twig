@@ -43,4 +43,33 @@
 
     <div class="form-group">{{ form_row(form.widgetRoutes) }}</div>
 
+    {% if entity.widgetRoutes.count %}
+        <div class="form-group">
+            <div><b>Список роутов</b></div>
+            <table class="table table-striped">
+                <tr>
+                    <th width="20px">ID</th>
+                    <th>Роут</th>
+                    <th width="50px">Удалить</th>
+                </tr>
+                {% for widgetRoute in entity.widgetRoutes %}
+                    <tr>
+                        <td>{{ widgetRoute.route.id }}</td>
+                        <td>
+                            <code>{{ widgetRoute.route.path }}</code>
+                            <a class="btn btn-link" href="{{ app.request.getUriForPath(widgetRoute.route.path) }}">
+                                <span class="fa fa-share-square-o" title="Просмотреть виджет на текущем роуте"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="submit" name="deleteWidgetRoute" value="{{ widgetRoute.id }}" class="close" title="Удалить запись"  onclick="return confirm('Удалить запись?')">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Удалить запись</span>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
 {{ form_end(form) }}
