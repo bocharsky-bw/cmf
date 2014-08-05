@@ -45,6 +45,9 @@ class UrlToWidgetRoutesTransformer implements DataTransformerInterface
 
     /**
      * Transforms a string (number) to an object (issue).
+     *
+     * @param string $url
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function reverseTransform($url)
     {

@@ -19,17 +19,27 @@ class PositionService
      */
     private $twig;
 
+    /**
+     * @var \BW\RouterBundle\EventListener\KernelRequestListener
+     */
+    private $kernelRequestListener;
+
 
     /**
      * The constructor
      *
      * @param EntityManager $em
      * @param \Twig_Environment $twig
+     * @param \BW\RouterBundle\EventListener\KernelRequestListener
      */
-    public function __construct(EntityManager $em, \Twig_Environment $twig)
-    {
+    public function __construct(
+        EntityManager $em,
+        \Twig_Environment $twig,
+        \BW\RouterBundle\EventListener\KernelRequestListener $kernelRequestListener
+    ){
         $this->em = $em;
         $this->twig = $twig;
+        $this->kernelRequestListener = $kernelRequestListener ;
         /** @TODO Load all widgets from DB and group them by positions */
     }
 
@@ -38,9 +48,9 @@ class PositionService
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
 
-        /** @TODO Get current route ID from service, not directly and not by new query from DB */
-        $currentRoute = 6;
-        $qb = $this->em
+        $currentRoute = $this->kernelRequestListener->getCurrentRoute(); // Get current Route object
+        $currentRouteId = $currentRoute ? $currentRoute->getId() : 0; // Get current Route object ID
+            $qb = $this->em
             ->getRepository('BWModuleBundle:Widget')
             ->createQueryBuilder('w')
         ;
@@ -48,13 +58,13 @@ class PositionService
             ->leftJoin('w.widgetRoutes', 'wr')
             ->leftJoin('w.widgetRoutes', 'wr2', Join::WITH, $qb->expr()->andx(
                 $qb->expr()->eq('wr2.widget', 'w.id'),
-                $qb->expr()->eq('wr2.route', $currentRoute)
+                $qb->expr()->eq('wr2.route', $currentRouteId)
             ))
             ->where($qb->expr()->eq('w.published', '1'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->andX(
                     $qb->expr()->eq('w.visibility', 0),
-                    $qb->expr()->eq('wr.route', $currentRoute)
+                    $qb->expr()->eq('wr.route', $currentRouteId)
                 ),
                 $qb->expr()->andX(
                     $qb->expr()->eq('w.visibility', 1),
@@ -66,10 +76,9 @@ class PositionService
             ->getQuery()
             ->getResult()
         ;
-//        print $widgets->getSQL(); die;
 
         if ( ! $position) {
-            /** @TODO Add lo logger ID of not found entity */
+            /** @TODO Add lo logger ID of not found Position entity */
             throw new EntityNotFoundException('Unable to find Position entity');
         }
 
