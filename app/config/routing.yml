@@ -1,3 +1,7 @@
+bw_user:
+    resource: "@BWUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_module:
     resource: "@BWModuleBundle/Resources/config/routing.yml"
     prefix:   /

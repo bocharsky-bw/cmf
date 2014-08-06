@@ -1,7 +1,7 @@
-BWModuleBundle_position:
+bw_module_bundle_position:
     resource: "@BWModuleBundle/Resources/config/routing/position_admin.yml"
     prefix:   /_admin/position
 
-BWModuleBundle_widget:
+bw_module_bundle_widget:
     resource: "@BWModuleBundle/Resources/config/routing/widget_admin.yml"
     prefix:   /_admin/widget
