@@ -1,16 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block body -%}
-    <h1>User edit</h1>
+{% block title %}Редактирование пользователя{% endblock %}
 
-    {{ form(edit_form) }}
+{% block content_wrap -%}
+    <h1><i class="fa fa-plus-square-o"></i> Редактирование пользователя</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    {% include 'BWUserBundle:User:form.html.twig' %}
 {% endblock %}

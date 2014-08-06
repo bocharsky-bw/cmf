@@ -1,63 +1,72 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block body -%}
-    <h1>User list</h1>
+{% block title %}Список пользователей{% endblock %}
 
-    <table class="records_list">
+{% block content_wrap -%}
+    <h1><i class="fa fa-list-alt"></i> Список пользователей</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success fas fa-plus" href="{{ path('user_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Salt</th>
-                <th>Email</th>
-                <th>Enabled</th>
-                <th>Confirmed</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Hash</th>
-                <th>Facebookid</th>
-                <th>Googleid</th>
-                <th>Vkid</th>
-                <th>Actions</th>
+                <th>ID</th>
+                <th>Логин</th>
+                <th>E-mail</th>
+                <th>Роли</th>
+                <th>Активный</th>
+                <th>Подтвержденный</th>
+                <th>Создан</th>
+                <th>Обновлен</th>
+                <th>Соц. сети</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.username }}</td>
-                <td>{{ entity.password }}</td>
-                <td>{{ entity.salt }}</td>
+                <td>{{ entity.id }}</td>
+                <td><a href="{{ path('user_edit', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
                 <td>{{ entity.email }}</td>
-                <td>{{ entity.enabled }}</td>
-                <td>{{ entity.confirmed }}</td>
-                <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.hash }}</td>
-                <td>{{ entity.facebookId }}</td>
-                <td>{{ entity.googleId }}</td>
-                <td>{{ entity.vkId }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('user_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('user_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    {% if entity.roles %}
+                        {% for role in entity.roles %}
+                            {{ role.name }}{{ not loop.last ? ', ' }}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td><span class="{{ entity.enabled ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td><span class="{{ entity.confirmed ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td>
+                    {% if entity.created %}
+                        <abbr title="{{ entity.created|date('d/m/Y в H:i') }}">
+                            {{ entity.created|date('d/m/Y') }}
+                        </abbr>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if entity.updated %}
+                        <abbr title="{{ entity.updated|date('d/m/Y в H:i') }}">
+                            {{ entity.updated|date('d/m/Y') }}
+                        </abbr>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if entity.facebookId and entity.googleId and entity.vkId %}
+                        {% if entity.facebookId %}Facebook ID: {{ entity.facebookId }}<br/>{% endif %}
+                        {% if entity.googleId %}Google ID: {{ entity.googleId }}<br/>{% endif %}
+                        {% if entity.vkId %}ВКонтакте ID: {{ entity.vkId }}<br/>{% endif %}
+                    {% else %}
+                        < не привязаны >
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('user_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% endblock %}

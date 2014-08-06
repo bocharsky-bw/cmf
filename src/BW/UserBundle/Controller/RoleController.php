@@ -2,6 +2,7 @@
 
 namespace BW\UserBundle\Controller;
 
+use BW\SkeletonBundle\Utility\FormUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -9,15 +10,14 @@ use BW\UserBundle\Entity\Role;
 use BW\UserBundle\Form\RoleType;
 
 /**
- * Role controller.
- *
+ * Class RoleController
+ * @package BW\UserBundle\Controller
  */
 class RoleController extends Controller
 {
 
     /**
      * Lists all Role entities.
-     *
      */
     public function indexAction()
     {
@@ -29,9 +29,9 @@ class RoleController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Role entity.
-     *
      */
     public function createAction(Request $request)
     {
@@ -44,7 +44,11 @@ class RoleController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('role_show', array('id' => $entity->getId())));
+            if ($form->get('createAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('role'));
+            }
+
+            return $this->redirect($this->generateUrl('role_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('BWUserBundle:Role:new.html.twig', array(
@@ -57,7 +61,6 @@ class RoleController extends Controller
      * Creates a form to create a Role entity.
      *
      * @param Role $entity The entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Role $entity)
@@ -67,14 +70,14 @@ class RoleController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        FormUtility::addCreateButton($form);
+        FormUtility::addCreateAndCloseButton($form);
 
         return $form;
     }
 
     /**
      * Displays a form to create a new Role entity.
-     *
      */
     public function newAction()
     {
@@ -89,7 +92,6 @@ class RoleController extends Controller
 
     /**
      * Finds and displays a Role entity.
-     *
      */
     public function showAction($id)
     {
@@ -97,7 +99,7 @@ class RoleController extends Controller
 
         $entity = $em->getRepository('BWUserBundle:Role')->find($id);
 
-        if (!$entity) {
+        if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
@@ -119,7 +121,7 @@ class RoleController extends Controller
 
         $entity = $em->getRepository('BWUserBundle:Role')->find($id);
 
-        if (!$entity) {
+        if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
@@ -127,19 +129,18 @@ class RoleController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BWUserBundle:Role:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a Role entity.
-    *
-    * @param Role $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Role entity.
+     *
+     * @param Role $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Role $entity)
     {
         $form = $this->createForm(new RoleType(), $entity, array(
@@ -147,13 +148,15 @@ class RoleController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        FormUtility::addUpdateButton($form);
+        FormUtility::addUpdateAndCloseButton($form);
+        FormUtility::addDeleteButton($form);
 
         return $form;
     }
+
     /**
      * Edits an existing Role entity.
-     *
      */
     public function updateAction(Request $request, $id)
     {
@@ -161,7 +164,7 @@ class RoleController extends Controller
 
         $entity = $em->getRepository('BWUserBundle:Role')->find($id);
 
-        if (!$entity) {
+        if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
@@ -170,7 +173,16 @@ class RoleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('delete')->isClicked()) {
+                $this->delete($id);
+                return $this->redirect($this->generateUrl('role'));
+            }
+
             $em->flush();
+
+            if ($editForm->get('updateAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('role'));
+            }
 
             return $this->redirect($this->generateUrl('role_edit', array('id' => $id)));
         }
@@ -181,9 +193,22 @@ class RoleController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    private function delete($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BWUserBundle:Role')->find($id);
+
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Role entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+    }
+
     /**
      * Deletes a Role entity.
-     *
      */
     public function deleteAction(Request $request, $id)
     {
@@ -191,15 +216,7 @@ class RoleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BWUserBundle:Role')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Role entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+            $this->delete($id);
         }
 
         return $this->redirect($this->generateUrl('role'));
@@ -209,7 +226,6 @@ class RoleController extends Controller
      * Creates a form to delete a Role entity by id.
      *
      * @param mixed $id The entity id
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)

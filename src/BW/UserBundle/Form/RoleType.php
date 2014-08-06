@@ -8,16 +8,27 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RoleType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('role')
-            ->add('users')
+            ->add('name', 'text', array(
+                'required' => true,
+                'label' => 'Название',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('role', 'text', array(
+                'required' => true,
+                'label' => 'Роль',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
         ;
     }
     
@@ -36,6 +47,6 @@ class RoleType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_userbundle_role';
+        return 'bw_role';
     }
 }

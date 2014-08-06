@@ -1,15 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block body -%}
-    <h1>User creation</h1>
+{% block title %}Создание пользователя{% endblock %}
 
-    {{ form(form) }}
+{% block content_wrap -%}
+    <h1><i class="fa fa-plus-square-o"></i> Создание пользователя</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('user') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    {% include 'BWUserBundle:User:form.html.twig' %}
 {% endblock %}
