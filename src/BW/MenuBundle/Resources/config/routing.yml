@@ -1,0 +1,3 @@
+bw_menu_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BWMenuBundle:Default:index }
