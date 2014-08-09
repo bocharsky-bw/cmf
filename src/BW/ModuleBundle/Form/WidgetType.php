@@ -51,7 +51,7 @@ class WidgetType extends AbstractType
                 ),
             ))
             ->add('visibility', 'choice', array(
-                'required' => true,
+                'required' => false,
                 'expanded' => true,
                 'multiple' => false,
                 'label' => 'Видимость ',
@@ -60,8 +60,6 @@ class WidgetType extends AbstractType
                     true => 'На всех роутах, кроме перечисленных '
                 ),
             ))
-            /** @TODO use data transformer */
-            ->add('widgetRoutes')
         ;
     }
     

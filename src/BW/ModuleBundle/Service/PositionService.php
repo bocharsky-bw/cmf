@@ -38,22 +38,28 @@ class PositionService
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
 
         $currentRoute = 7;
-        $widgets = $this->em
+        $qb = $this->em
             ->getRepository('BWModuleBundle:Widget')
             ->createQueryBuilder('w')
+        ;
+        $widgets = $qb
             ->leftJoin('w.widgetRoutes', 'wr')
             ->leftJoin('wr.route', 'r')
             ->where('w.published = 1')
+            ->andWhere('(r.id IS NULL OR r.id = 3 OR w.visibility = 1)')
+            ->andWhere('(w.visibility = 1 AND ((r.id IS NULL OR r.id != 3) AND NOT (r.id IS NULL AND r.id != 3)))')
+            //->andWhere('(w.visibility = 1 AND (r.id IS NULL XOR r.id != 3))') // WORKED
+            // p XOR q = ( p OR q ) AND NOT ( p AND q )
 //            ->andWhere('(r.id = :current_route OR wr.route IS NULL)') // Filter by current route or NULL route
 //            ->andWhere('(w.visibility = 0 AND wr.route IS NOT NULL AND r.id = :current_route)') // Only by listed routes WORKED
-            ->andWhere('(w.visibility = 1 AND wr.route IS NULL)')
+//            ->andWhere('(w.visibility = 1 AND wr.route IS NULL)')
 //            ->setParameter('current_route', $currentRoute)
-            ->groupBy('w.id')
+//            ->groupBy('w.id')
             ->orderBy('w.order', 'ASC')
             ->getQuery()
-            ->getResult()
+//            ->getResult()
         ;
-//        print $widgets->getSQL(); die;
+        print $widgets->getSQL(); die;
 
         if ( ! $position) {
             /** @TODO Add lo logger ID of not found entity */
