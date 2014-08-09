@@ -1,0 +1,9 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Создание пункта меню{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-plus-square-o"></i> Создание пункта меню</h1>
+
+    {% include 'BWMenuBundle:Item:form.html.twig' %}
+{% endblock %}

@@ -19,42 +19,42 @@ class Item implements NestedSetInterface
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $url;
+    private $url = '';
 
     /**
      * @var string
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string
      */
-    private $class;
+    private $class = '';
 
     /**
      * @var integer
      */
-    private $order;
+    private $order = 0;
 
     /**
      * @var integer
      */
-    private $level;
+    private $level = 0;
 
     /**
      * @var integer
      */
-    private $left;
+    private $left = 0;
 
     /**
      * @var integer
      */
-    private $right;
+    private $right = 0;
 
     /**
      * @var \BW\MenuBundle\Entity\Menu

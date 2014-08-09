@@ -1,0 +1,43 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Редактирование меню{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-edit"></i> Редактирование меню</h1>
+
+    {% include 'BWMenuBundle:Menu:form.html.twig' %}
+
+    <h2><i class="fa fa-list-alt"></i> Пункты меню</h2>
+
+    <ul class="list-inline">
+        <li>
+            <a class="btn btn-primary fas fa-plus" href="{{ path('item_new', {'menu_id': entity.id}) }}"> Создать пункт меню</a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Адрес URL</th>
+                <th>Всплывающая подсказка</th>
+                <th>Класс CSS</th>
+                <th>Порядок</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td><a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}">{{ item.name }}</a></td>
+                <td>{{ item.url }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.class }}</td>
+                <td>{{ item.order }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

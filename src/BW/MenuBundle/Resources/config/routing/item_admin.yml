@@ -1,0 +1,30 @@
+item:
+    path:     /
+    defaults: { _controller: "BWMenuBundle:Item:index" }
+
+item_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWMenuBundle:Item:show" }
+
+item_new:
+    path:     /new
+    defaults: { _controller: "BWMenuBundle:Item:new" }
+
+item_create:
+    path:     /create
+    defaults: { _controller: "BWMenuBundle:Item:create" }
+    requirements: { _method: post }
+
+item_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWMenuBundle:Item:edit" }
+
+item_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWMenuBundle:Item:update" }
+    requirements: { _method: post|put }
+
+item_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWMenuBundle:Item:delete" }
+    requirements: { _method: post|delete }

@@ -1,3 +1,7 @@
-bw_menu_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: BWMenuBundle:Default:index }
+bw_menu_bundle_menu_admin:
+    resource: "@BWMenuBundle/Resources/config/routing/menu_admin.yml"
+    prefix:   /_admin/menu
+
+bw_menu_bundle_item_admin:
+    resource: "@BWMenuBundle/Resources/config/routing/item_admin.yml"
+    prefix:   /_admin/menu/{menu_id}/item

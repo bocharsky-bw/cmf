@@ -18,12 +18,12 @@ class Menu
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $alias;
+    private $alias = '';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
