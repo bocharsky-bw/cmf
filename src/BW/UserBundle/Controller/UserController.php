@@ -1,44 +1,40 @@
 <?php
 
-namespace BW\ModuleBundle\Controller;
+namespace BW\UserBundle\Controller;
 
 use BW\SkeletonBundle\Utility\FormUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use BW\ModuleBundle\Entity\Widget;
-use BW\ModuleBundle\Form\WidgetType;
+use BW\UserBundle\Entity\User;
+use BW\UserBundle\Form\UserType;
 
 /**
- * Class WidgetController
- * @package BW\ModuleBundle\Controller
+ * Class UserController
+ * @package BW\UserBundle\Controller
  */
-class WidgetController extends Controller
+class UserController extends Controller
 {
 
     /**
-     * Lists all Widget entities.
+     * Lists all User entities.
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWModuleBundle:Widget')->findBy(array(), array(
-            'position' => 'ASC',
-            'order' => 'ASC',
-        ));
+        $entities = $em->getRepository('BWUserBundle:User')->findAll();
 
-        return $this->render('BWModuleBundle:Widget:index.html.twig', array(
+        return $this->render('BWUserBundle:User:index.html.twig', array(
             'entities' => $entities,
         ));
     }
 
     /**
-     * Creates a new Widget entity.
+     * Creates a new User entity.
      */
     public function createAction(Request $request)
     {
-        $entity = new Widget();
+        $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -48,31 +44,29 @@ class WidgetController extends Controller
             $em->flush();
 
             if ($form->get('createAndClose')->isClicked()) {
-                return $this->redirect($this->generateUrl('widget'));
+                return $this->redirect($this->generateUrl('user'));
             }
 
-            return $this->redirect($this->generateUrl('widget_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('user_edit', array('id' => $entity->getId())));
         }
 
-        return $this->render('BWModuleBundle:Widget:new.html.twig', array(
+        return $this->render('BWUserBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Widget entity.
+     * Creates a form to create a User entity.
      *
-     * @param Widget $entity The entity
+     * @param User $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Widget $entity)
+    private function createCreateForm(User $entity)
     {
-        $form = $this->createForm(new WidgetType(), $entity, array(
-            'action' => $this->generateUrl('widget_create'),
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
-            'em' => $this->getDoctrine()->getManager(),
-            'entity' => $entity,
         ));
 
         FormUtility::addCreateButton($form);
@@ -82,57 +76,57 @@ class WidgetController extends Controller
     }
 
     /**
-     * Displays a form to create a new Widget entity.
+     * Displays a form to create a new User entity.
      */
     public function newAction()
     {
-        $entity = new Widget();
+        $entity = new User();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('BWModuleBundle:Widget:new.html.twig', array(
+        return $this->render('BWUserBundle:User:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Widget entity.
+     * Finds and displays a User entity.
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
+        $entity = $em->getRepository('BWUserBundle:User')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('BWModuleBundle:Widget:show.html.twig', array(
+        return $this->render('BWUserBundle:User:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Widget entity.
+     * Displays a form to edit an existing User entity.
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
+        $entity = $em->getRepository('BWUserBundle:User')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('BWModuleBundle:Widget:edit.html.twig', array(
+        return $this->render('BWUserBundle:User:edit.html.twig', array(
             'entity' => $entity,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -140,18 +134,16 @@ class WidgetController extends Controller
     }
 
     /**
-    * Creates a form to edit a Widget entity.
-    *
-    * @param Widget $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Widget $entity)
+     * Creates a form to edit a User entity.
+     *
+     * @param User $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(User $entity)
     {
-        $form = $this->createForm(new WidgetType(), $entity, array(
-            'action' => $this->generateUrl('widget_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
             'method' => 'PUT',
-            'em' => $this->getDoctrine()->getManager(),
-            'entity' => $entity,
         ));
 
         FormUtility::addUpdateButton($form);
@@ -162,16 +154,16 @@ class WidgetController extends Controller
     }
 
     /**
-     * Edits an existing Widget entity.
+     * Edits an existing User entity.
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
+        $entity = $em->getRepository('BWUserBundle:User')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -180,41 +172,33 @@ class WidgetController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($entity->getId());
-                return $this->redirect($this->generateUrl('widget'));
-            }
-            /* Route to Widget binding */
-            if ($widgetRouteId = $request->request->getInt('deleteWidgetRoute')) {
-                $widgetRoute = $em->getRepository('BWModuleBundle:WidgetRoute')->find($widgetRouteId);
-                $em->remove($widgetRoute);
+                $this->delete($id);
+                return $this->redirect($this->generateUrl('user'));
             }
 
             $em->flush();
 
             if ($editForm->get('updateAndClose')->isClicked()) {
-                return $this->redirect($this->generateUrl('widget'));
+                return $this->redirect($this->generateUrl('user'));
             }
 
-            return $this->redirect($this->generateUrl('widget_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
 
-        return $this->render('BWModuleBundle:Widget:edit.html.twig', array(
+        return $this->render('BWUserBundle:User:edit.html.twig', array(
             'entity' => $entity,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
-     * Deletes a Widget entity.
-     */
     private function delete($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
+        $entity = $em->getRepository('BWUserBundle:User')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Widget entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $em->remove($entity);
@@ -222,7 +206,7 @@ class WidgetController extends Controller
     }
 
     /**
-     * Deletes a Widget entity.
+     * Deletes a User entity.
      */
     public function deleteAction(Request $request, $id)
     {
@@ -233,11 +217,11 @@ class WidgetController extends Controller
             $this->delete($id);
         }
 
-        return $this->redirect($this->generateUrl('widget'));
+        return $this->redirect($this->generateUrl('user'));
     }
 
     /**
-     * Creates a form to delete a Widget entity by id.
+     * Creates a form to delete a User entity by id.
      *
      * @param mixed $id The entity id
      * @return \Symfony\Component\Form\Form The form
@@ -245,7 +229,7 @@ class WidgetController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('widget_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -1,0 +1,7 @@
+parameters:
+#    bw_menu.example.class: BW\MenuBundle\Example
+
+services:
+#    bw_menu.example:
+#        class: %bw_menu.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

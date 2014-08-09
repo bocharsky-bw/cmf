@@ -1,0 +1,45 @@
+BW\MenuBundle\Entity\Item:
+    type: entity
+    table: items
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        url:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        class:
+            type: string
+            length: 255
+        order:
+            column: ordering
+            type: integer
+        level:
+            type: integer
+        left:
+            column: lft
+            type: integer
+        right:
+            column: rgt
+            type: integer
+    oneToMany:
+        children:
+            targetEntity: BW\MenuBundle\Entity\Item
+            mappedBy: parent
+    manyToOne:
+        menu:
+            targetEntity: BW\MenuBundle\Entity\Menu
+            inversedBy: items
+        parent:
+            targetEntity: BW\MenuBundle\Entity\Item
+            inversedBy: children
+    lifecycleCallbacks: {  }

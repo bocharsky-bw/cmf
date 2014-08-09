@@ -1,0 +1,34 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список ролей{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-list-alt"></i> Список ролей</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success fas fa-plus" href="{{ path('role_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Роль</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td><a href="{{ path('role_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{{ entity.role }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace BW\ModuleBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\Query\Expr\Join;
 
 class PositionService
 {
@@ -18,17 +19,27 @@ class PositionService
      */
     private $twig;
 
+    /**
+     * @var \BW\RouterBundle\EventListener\KernelRequestListener
+     */
+    private $kernelRequestListener;
+
 
     /**
      * The constructor
      *
      * @param EntityManager $em
      * @param \Twig_Environment $twig
+     * @param \BW\RouterBundle\EventListener\KernelRequestListener
      */
-    public function __construct(EntityManager $em, \Twig_Environment $twig)
-    {
+    public function __construct(
+        EntityManager $em,
+        \Twig_Environment $twig,
+        \BW\RouterBundle\EventListener\KernelRequestListener $kernelRequestListener
+    ){
         $this->em = $em;
         $this->twig = $twig;
+        $this->kernelRequestListener = $kernelRequestListener ;
         /** @TODO Load all widgets from DB and group them by positions */
     }
 
@@ -37,32 +48,37 @@ class PositionService
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
 
-        $currentRoute = 7;
-        $qb = $this->em
+        $currentRoute = $this->kernelRequestListener->getCurrentRoute(); // Get current Route object
+        $currentRouteId = $currentRoute ? $currentRoute->getId() : 0; // Get current Route object ID
+            $qb = $this->em
             ->getRepository('BWModuleBundle:Widget')
             ->createQueryBuilder('w')
         ;
         $widgets = $qb
             ->leftJoin('w.widgetRoutes', 'wr')
-            ->leftJoin('wr.route', 'r')
-            ->where('w.published = 1')
-            ->andWhere('(r.id IS NULL OR r.id = 3 OR w.visibility = 1)')
-            ->andWhere('(w.visibility = 1 AND ((r.id IS NULL OR r.id != 3) AND NOT (r.id IS NULL AND r.id != 3)))')
-            //->andWhere('(w.visibility = 1 AND (r.id IS NULL XOR r.id != 3))') // WORKED
-            // p XOR q = ( p OR q ) AND NOT ( p AND q )
-//            ->andWhere('(r.id = :current_route OR wr.route IS NULL)') // Filter by current route or NULL route
-//            ->andWhere('(w.visibility = 0 AND wr.route IS NOT NULL AND r.id = :current_route)') // Only by listed routes WORKED
-//            ->andWhere('(w.visibility = 1 AND wr.route IS NULL)')
-//            ->setParameter('current_route', $currentRoute)
-//            ->groupBy('w.id')
+            ->leftJoin('w.widgetRoutes', 'wr2', Join::WITH, $qb->expr()->andx(
+                $qb->expr()->eq('wr2.widget', 'w.id'),
+                $qb->expr()->eq('wr2.route', $currentRouteId)
+            ))
+            ->where($qb->expr()->eq('w.published', '1'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('w.visibility', 0),
+                    $qb->expr()->eq('wr.route', $currentRouteId)
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->eq('w.visibility', 1),
+                    $qb->expr()->isNull('wr2.id')
+                )
+            ))
+            ->groupBy('w.id')
             ->orderBy('w.order', 'ASC')
             ->getQuery()
-//            ->getResult()
+            ->getResult()
         ;
-        print $widgets->getSQL(); die;
 
         if ( ! $position) {
-            /** @TODO Add lo logger ID of not found entity */
+            /** @TODO Add lo logger ID of not found Position entity */
             throw new EntityNotFoundException('Unable to find Position entity');
         }
 

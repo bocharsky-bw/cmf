@@ -30,6 +30,11 @@ class KernelRequestListener
      */
     private $logger;
 
+    /**
+     * @var \BW\RouterBundle\Entity\Route
+     */
+    private $currentRoute;
+
 
     /**
      * The constructor
@@ -46,6 +51,16 @@ class KernelRequestListener
         $this->logger = $logger;
     }
 
+
+    /**
+     * Get current route object
+     *
+     * @return \BW\RouterBundle\Entity\Route
+     */
+    public function getCurrentRoute()
+    {
+        return $this->currentRoute;
+    }
 
     /**
      * Search route match in database
@@ -85,6 +100,7 @@ class KernelRequestListener
             return;
         }
 
+        $this->currentRoute = $route;
         $this->request->attributes->replace($route->getDefaults());
     }
 

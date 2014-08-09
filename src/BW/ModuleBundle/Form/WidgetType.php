@@ -8,12 +8,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class WidgetType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // this assumes that the entity manager was passed in as an option
+        $entityManager = $options['em'];
+        $entity = $options['entity'];
+        $transformer = new UrlToWidgetRoutesTransformer($entityManager, $entity);
+
         $builder
             ->add('published', 'checkbox', array(
                 'required' => false,
@@ -61,6 +66,19 @@ class WidgetType extends AbstractType
                 ),
             ))
         ;
+
+        // add a normal text field, but add your transformer to it
+        $builder->add(
+            $builder->create('widgetRoutes', 'url', array(
+                'required' => false,
+                'label' => 'Привязать к роуту ',
+                'attr' => array(
+                    'class' => 'form-control',
+                    'placeholder' => 'http://example.com/contacts',
+                ),
+            ))
+            ->addModelTransformer($transformer)
+        );
     }
     
     /**
@@ -68,9 +86,23 @@ class WidgetType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'BW\ModuleBundle\Entity\Widget'
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class' => 'BW\ModuleBundle\Entity\Widget'
+            ))
+            ->setRequired(array(
+                'em',
+            ))
+            ->setAllowedTypes(array(
+                'em' => 'Doctrine\Common\Persistence\ObjectManager',
+            ))
+            ->setRequired(array(
+                'entity',
+            ))
+            ->setAllowedTypes(array(
+                'entity' => 'BW\ModuleBundle\Entity\Widget',
+            ));
+        ;
     }
 
     /**

@@ -1,0 +1,72 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-list-alt"></i> Список пользователей</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            <a class="btn btn-success fas fa-plus" href="{{ path('user_new') }}">
+                Создать
+            </a>
+        </li>
+    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Логин</th>
+                <th>E-mail</th>
+                <th>Роли</th>
+                <th>Активный</th>
+                <th>Подтвержденный</th>
+                <th>Создан</th>
+                <th>Обновлен</th>
+                <th>Соц. сети</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td><a href="{{ path('user_edit', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                <td>{{ entity.email }}</td>
+                <td>
+                    {% if entity.roles %}
+                        {% for role in entity.roles %}
+                            {{ role.name }}{{ not loop.last ? ', ' }}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td><span class="{{ entity.enabled ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td><span class="{{ entity.confirmed ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td>
+                    {% if entity.created %}
+                        <abbr title="{{ entity.created|date('d/m/Y в H:i') }}">
+                            {{ entity.created|date('d/m/Y') }}
+                        </abbr>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if entity.updated %}
+                        <abbr title="{{ entity.updated|date('d/m/Y в H:i') }}">
+                            {{ entity.updated|date('d/m/Y') }}
+                        </abbr>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if entity.facebookId and entity.googleId and entity.vkId %}
+                        {% if entity.facebookId %}Facebook ID: {{ entity.facebookId }}<br/>{% endif %}
+                        {% if entity.googleId %}Google ID: {{ entity.googleId }}<br/>{% endif %}
+                        {% if entity.vkId %}ВКонтакте ID: {{ entity.vkId }}<br/>{% endif %}
+                    {% else %}
+                        < не привязаны >
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

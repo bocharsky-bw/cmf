@@ -3,6 +3,7 @@
 namespace BW\ModuleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use BW\RouterBundle\Entity\Route;
 
 /**
  * WidgetRoute
@@ -27,7 +28,7 @@ class WidgetRoute
 
     public function __toString()
     {
-        return (string)$this->getRoute()->getPath();
+        return (string)($this->getRoute()->getId() . ' - ' . $this->getRoute()->getPath());
     }
 
 

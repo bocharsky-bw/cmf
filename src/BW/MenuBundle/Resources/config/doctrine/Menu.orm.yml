@@ -1,0 +1,21 @@
+BW\MenuBundle\Entity\Menu:
+    type: entity
+    table: menus
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        alias:
+            type: string
+            length: 255
+    oneToMany:
+        items:
+            targetEntity: BW\MenuBundle\Entity\Item
+            mappedBy: menu
+    lifecycleCallbacks: {  }
