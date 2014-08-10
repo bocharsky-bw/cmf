@@ -42,4 +42,6 @@ BW\MenuBundle\Entity\Item:
         parent:
             targetEntity: BW\MenuBundle\Entity\Item
             inversedBy: children
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [generateLevel]
+        preUpdate: [generateLevel]

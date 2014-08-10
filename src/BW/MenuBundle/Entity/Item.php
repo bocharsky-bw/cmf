@@ -81,6 +81,33 @@ class Item implements NestedSetInterface
     }
 
 
+    public function __toString()
+    {
+        return str_repeat('- ', $this->level) . $this->name;
+    }
+
+
+    /**
+     * Generate current nested level
+     *
+     * ORM\PrePersist
+     * ORM\PreUpdate
+     * @return integer
+     */
+    public function generateLevel()
+    {
+        $this->level = 0;
+        $parent = $this->getParent();
+
+        while ($parent) {
+            $this->level++;
+            $parent = $parent->getParent();
+        }
+
+        return $this;
+    }
+
+
     /* SETTERS / GETTERS */
 
     /**

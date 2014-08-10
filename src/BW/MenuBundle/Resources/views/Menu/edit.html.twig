@@ -20,7 +20,6 @@
             <tr>
                 <th>ID</th>
                 <th>Название</th>
-                <th>Адрес URL</th>
                 <th>Всплывающая подсказка</th>
                 <th>Класс CSS</th>
                 <th>Порядок</th>
@@ -30,8 +29,17 @@
         {% for item in items %}
             <tr>
                 <td>{{ item.id }}</td>
-                <td><a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}">{{ item.name }}</a></td>
-                <td>{{ item.url }}</td>
+                <td>
+                    {{ '|— '|repeat(item.level) }}
+                    <a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}" title="Редактировать запись">
+                        {{ item.name }}
+                    </a><br/>
+                    <a href="{{ app.request.getUriForPath('/') }}" title="Перейти по адресу">
+                        <small>
+                            {{ item.url }}
+                        </small>
+                    </a>
+                </td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.class }}</td>
                 <td>{{ item.order }}</td>
