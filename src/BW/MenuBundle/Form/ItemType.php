@@ -16,42 +16,14 @@ class ItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \BW\MenuBundle\Entity\Item $entity */
+        $entity = $options['data'];
+        $uri = $entity->getRoute()
+            ? $entity->getRoute()->getPath()
+            : $entity->getUri()
+        ;
+
         $builder
-            ->add('name', 'text', array(
-                'required' => true,
-                'label' => 'Название ',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('url', 'url', array(
-                'required' => false,
-                'label' => 'Адрес URL ',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('title', 'text', array(
-                'required' => false,
-                'label' => 'Всплывающая подсказка ',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('class', 'text', array(
-                'required' => false,
-                'label' => 'Класс CSS ',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('order', 'number', array(
-                'required' => false,
-                'label' => 'Порядок ',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
             ->add('menu', 'entity', array(
                 'class' => 'BW\MenuBundle\Entity\Menu',
                 'property' => 'name',
@@ -80,6 +52,42 @@ class ItemType extends AbstractType
                 'required' => false,
                 'label' => 'Родительский пункт меню ',
                 'empty_value' => '< Корневой пункт меню >',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('name', 'text', array(
+                'required' => true,
+                'label' => 'Название ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('uri', 'text', array(
+                'required' => false,
+                'label' => 'Адрес URL ',
+                'data' => $uri,
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('title', 'text', array(
+                'required' => false,
+                'label' => 'Всплывающая подсказка ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('class', 'text', array(
+                'required' => false,
+                'label' => 'Класс CSS ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('order', 'number', array(
+                'required' => false,
+                'label' => 'Порядок ',
                 'attr' => array(
                     'class' => 'form-control',
                 ),

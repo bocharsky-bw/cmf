@@ -11,7 +11,7 @@ BW\MenuBundle\Entity\Item:
         name:
             type: string
             length: 255
-        url:
+        uri:
             type: string
             length: 255
         title:
@@ -42,6 +42,8 @@ BW\MenuBundle\Entity\Item:
         parent:
             targetEntity: BW\MenuBundle\Entity\Item
             inversedBy: children
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
     lifecycleCallbacks:
         prePersist: [generateLevel]
         preUpdate: [generateLevel]

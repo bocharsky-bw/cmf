@@ -2,6 +2,7 @@
 
 namespace BW\MenuBundle\Entity;
 
+use BW\RouterBundle\Entity\Route;
 use BW\DefaultBundle\Service\NestedSetInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +25,7 @@ class Item implements NestedSetInterface
     /**
      * @var string
      */
-    private $url = '';
+    private $uri = '';
 
     /**
      * @var string
@@ -70,6 +71,11 @@ class Item implements NestedSetInterface
      * @var \Doctrine\Common\Collections\Collection
      */
     private $children;
+
+    /**
+     * @var \BW\RouterBundle\Entity\Route
+     */
+    private $route;
 
 
     /**
@@ -144,26 +150,26 @@ class Item implements NestedSetInterface
     }
 
     /**
-     * Set url
+     * Set uri
      *
-     * @param string $url
+     * @param string $uri
      * @return Item
      */
-    public function setUrl($url)
+    public function setUri($uri)
     {
-        $this->url = $url;
+        $this->uri = $uri;
 
         return $this;
     }
 
     /**
-     * Get url
+     * Get uri
      *
      * @return string 
      */
-    public function getUrl()
+    public function getUri()
     {
-        return $this->url;
+        return $this->uri;
     }
 
     /**
@@ -381,5 +387,32 @@ class Item implements NestedSetInterface
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \BW\RouterBundle\Entity\Route $route
+     * @return Item
+     */
+    public function setRoute(Route $route = null)
+    {
+        $this->route = $route;
+
+        if ($this->route) {
+            $this->uri = '';
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \BW\RouterBundle\Entity\Route 
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

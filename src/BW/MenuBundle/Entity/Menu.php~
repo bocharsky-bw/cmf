@@ -2,6 +2,7 @@
 
 namespace BW\MenuBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,12 +18,26 @@ class Menu
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $alias;
+    private $alias = '';
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $items;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
 
     /* SETTERS / GETTERS */
@@ -81,5 +96,38 @@ class Menu
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * Add items
+     *
+     * @param \BW\MenuBundle\Entity\Item $items
+     * @return Menu
+     */
+    public function addItem(\BW\MenuBundle\Entity\Item $items)
+    {
+        $this->items[] = $items;
+
+        return $this;
+    }
+
+    /**
+     * Remove items
+     *
+     * @param \BW\MenuBundle\Entity\Item $items
+     */
+    public function removeItem(\BW\MenuBundle\Entity\Item $items)
+    {
+        $this->items->removeElement($items);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

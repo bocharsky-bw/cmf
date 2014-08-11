@@ -44,7 +44,13 @@ class ItemController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $this->assignRoute($entity, $request);
             $em->persist($entity);
+
+            // Regenerate nested set
+            $this->get('bw_default.service.nested_set')->regenerate('BWMenuBundle:Item');
+
             $em->flush();
 
             if ($form->get('createAndClose')->isClicked()) {
@@ -189,6 +195,11 @@ class ItemController extends Controller
                 )));
             }
 
+            $this->assignRoute($entity, $request);
+
+            // Regenerate nested set
+            $this->get('bw_default.service.nested_set')->regenerate('BWMenuBundle:Item');
+
             $em->flush();
 
             if ($editForm->get('updateAndClose')->isClicked()) {
@@ -257,5 +268,38 @@ class ItemController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * Assign Route to Item entity
+     *
+     * @param Item $entity
+     * @param Request $request
+     */
+    private function assignRoute(Item $entity, Request $request)
+    {
+        // Get path from URI
+        if (preg_match('@^/[^/]?@', $entity->getUri())) {
+            $path = $entity->getUri();
+        } elseif (preg_match(
+            '@^' . str_replace('.', '\.', $request->getUriForPath('')) . '(?<path>.*)@',
+            $entity->getUri(),
+            $matches
+        )) {
+            $path = $matches['path'];
+        }
+
+        // Get route from path
+        if (isset($path)) {
+            $route = $this->getDoctrine()->getRepository('BWRouterBundle:Route')->findOneBy(array(
+                'path' => $path,
+            ));
+            $entity->setUri($path); // make link relative by main domain
+        } else {
+            $route = null;
+        }
+
+        // Save founded route
+        $entity->setRoute($route);
     }
 }

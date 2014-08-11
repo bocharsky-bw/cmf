@@ -28,6 +28,25 @@
         </li>
     </ul>
 
+    <div class="form-group">{{ form_row(form.menu) }}</div>
+
+    <div class="form-group">{{ form_row(form.parent) }}</div>
+
     <div class="form-group">{{ form_row(form.name) }}</div>
+
+    <div class="form-group">
+        {{ form_row(form.uri) }}
+        {% if entity.route %}
+            <div class="alert alert-success" role="alert"><b>URL</b> привязан к роуту</div>
+        {% else %}
+            <div class="alert alert-danger" role="alert"><b>URL</b> не привязан к роуту</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">{{ form_row(form.title) }}</div>
+
+    <div class="form-group">{{ form_row(form.class) }}</div>
+
+    <div class="form-group">{{ form_row(form.order) }}</div>
 
 {{ form_end(form) }}

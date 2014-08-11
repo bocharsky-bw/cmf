@@ -20,6 +20,7 @@
             <tr>
                 <th>ID</th>
                 <th>Название</th>
+                <th>Адрес URL</th>
                 <th>Всплывающая подсказка</th>
                 <th>Класс CSS</th>
                 <th>Порядок</th>
@@ -33,12 +34,13 @@
                     {{ '|— '|repeat(item.level) }}
                     <a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}" title="Редактировать запись">
                         {{ item.name }}
-                    </a><br/>
-                    <a href="{{ app.request.getUriForPath('/') }}" title="Перейти по адресу">
-                        <small>
-                            {{ item.url }}
-                        </small>
                     </a>
+                </td>
+                <td>
+                    <a href="{{ app.request.getUriForPath(item.route ? item.route.path : item.uri) }}" title="Перейти по адресу">
+                        <span class="fa fa-share-square-o" title="Перейти на страницу пункта меню"></span>
+                    </a>
+                    <small>{{ item.route ? item.route.path : item.uri }}</small>
                 </td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.class }}</td>
