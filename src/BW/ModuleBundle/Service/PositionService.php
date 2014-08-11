@@ -20,9 +20,9 @@ class PositionService
     private $twig;
 
     /**
-     * @var \BW\RouterBundle\EventListener\KernelRequestListener
+     * @var \BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener
      */
-    private $kernelRequestListener;
+    private $databaseRouteLoading;
 
 
     /**
@@ -30,16 +30,16 @@ class PositionService
      *
      * @param EntityManager $em
      * @param \Twig_Environment $twig
-     * @param \BW\RouterBundle\EventListener\KernelRequestListener
+     * @param \BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener
      */
     public function __construct(
         EntityManager $em,
         \Twig_Environment $twig,
-        \BW\RouterBundle\EventListener\KernelRequestListener $kernelRequestListener
+        \BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener $databaseRouteLoading
     ){
         $this->em = $em;
         $this->twig = $twig;
-        $this->kernelRequestListener = $kernelRequestListener ;
+        $this->databaseRouteLoading = $databaseRouteLoading;
         /** @TODO Load all widgets from DB and group them by positions */
     }
 
@@ -48,7 +48,7 @@ class PositionService
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
 
-        $currentRoute = $this->kernelRequestListener->getCurrentRoute(); // Get current Route object
+        $currentRoute = $this->databaseRouteLoading->getCurrentRoute(); // Get current Route object
         $currentRouteId = $currentRoute ? $currentRoute->getId() : 0; // Get current Route object ID
             $qb = $this->em
             ->getRepository('BWModuleBundle:Widget')
@@ -78,7 +78,7 @@ class PositionService
         ;
 
         if ( ! $position) {
-            /** @TODO Add lo logger ID of not found Position entity */
+            /** @TODO Add to logger ID of not found Position entity */
             throw new EntityNotFoundException('Unable to find Position entity');
         }
 
