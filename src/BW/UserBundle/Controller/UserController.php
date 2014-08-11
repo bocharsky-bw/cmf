@@ -41,6 +41,7 @@ class UserController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+
             $em->flush();
 
             if ($form->get('createAndClose')->isClicked()) {
@@ -235,4 +236,5 @@ class UserController extends Controller
             ->getForm()
         ;
     }
+
 }

@@ -5,3 +5,10 @@ services:
 #    bw_user.example:
 #        class: %bw_user.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_user.event_listener.password_encode:
+        class: BW\UserBundle\EventListener\PasswordEncodeEventListener
+        arguments: ["@security.encoder_factory"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

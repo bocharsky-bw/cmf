@@ -30,11 +30,15 @@ class UserType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('password', 'text', array(
-                'required' => true,
-                'label' => 'Пароль',
-                'attr' => array(
-                    'class' => 'form-control',
+            ->add('password', 'repeated', array(
+                'type' => 'password',
+                'first_options'  => array('label' => 'Пароль '),
+                'second_options' => array('label' => 'Подтверждение пароля '),
+                'required' => false,
+                'options' => array(
+                    'attr' => array(
+                        'class' => 'form-control',
+                    ),
                 ),
             ))
             ->add('email', 'text', array(
