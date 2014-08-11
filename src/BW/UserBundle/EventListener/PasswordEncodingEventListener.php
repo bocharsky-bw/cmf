@@ -9,10 +9,10 @@ use BW\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class DoctrineEventListener
+ * Class PasswordEncodingEventListener
  * @package BW\UserBundle\EventListener
  */
-class PasswordEncodeEventListener {
+class PasswordEncodingEventListener {
 
     /**
      * @var EncoderFactory

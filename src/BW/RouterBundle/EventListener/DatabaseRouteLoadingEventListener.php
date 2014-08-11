@@ -9,11 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
- * Class KernelRequestListener
+ * Class DatabaseRouteLoadingEventListener
  * @package BW\RouterBundle\EventListener
- * @TODO Rename to FindDatabaseRouteEventListener or LoadDatabaseRouteEventListener
  */
-class KernelRequestListener
+class DatabaseRouteLoadingEventListener
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
