@@ -6,17 +6,17 @@ services:
 #        class: %bw_blog.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
         
-    bw_blog.nested_set:
-        class: BW\BlogBundle\Service\NestedSet
-        arguments: ["@service_container"]
-    
-    bw_blog.widget:
-        class: BW\BlogBundle\Service\Widget
-        arguments: ["@service_container"]
-    
-    bw_blog.transliter:
-        class: BW\BlogBundle\Service\Transliter
-        arguments: ["@service_container"]
+#    bw_blog.nested_set:
+#        class: BW\BlogBundle\Service\NestedSet
+#        arguments: ["@service_container"]
+#
+#    bw_blog.widget:
+#        class: BW\BlogBundle\Service\Widget
+#        arguments: ["@service_container"]
+#
+#    bw_blog.transliter:
+#        class: BW\BlogBundle\Service\Transliter
+#        arguments: ["@service_container"]
 #        tags:
 #            - { name: doctrine.event_listener, event: prePersist }
 #            - { name: doctrine.event_listener, event: preUpdate }

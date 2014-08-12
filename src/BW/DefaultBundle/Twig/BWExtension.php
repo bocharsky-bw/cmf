@@ -2,6 +2,7 @@
 
 namespace BW\DefaultBundle\Twig;
 
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BWExtension extends \Twig_Extension
@@ -13,10 +14,21 @@ class BWExtension extends \Twig_Extension
      */
     protected $container;
 
+    /**
+     * @var Logger
+     */
+    private $logger;
 
-    public function __construct(ContainerInterface $container)
+
+
+    public function __construct(ContainerInterface $container, Logger $logger)
     {
         $this->container = $container;
+        $this->logger = $logger;
+        $this->logger->debug(sprintf(
+            'Loaded twig extension "%s".',
+            __METHOD__
+        ));
     }
 
 

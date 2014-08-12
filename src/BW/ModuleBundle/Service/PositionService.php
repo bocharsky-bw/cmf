@@ -2,6 +2,9 @@
 
 namespace BW\ModuleBundle\Service;
 
+use BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener;
+use Symfony\Bridge\Monolog\Logger;
+use Twig_Environment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Query\Expr\Join;
@@ -24,6 +27,11 @@ class PositionService
      */
     private $databaseRouteLoading;
 
+    /**
+     * @var Logger
+     */
+    private $logger;
+
 
     /**
      * The constructor
@@ -34,19 +42,32 @@ class PositionService
      */
     public function __construct(
         EntityManager $em,
-        \Twig_Environment $twig,
-        \BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener $databaseRouteLoading
+        Twig_Environment $twig,
+        DatabaseRouteLoadingEventListener $databaseRouteLoading,
+        Logger $logger
     ){
         $this->em = $em;
         $this->twig = $twig;
         $this->databaseRouteLoading = $databaseRouteLoading;
-        /** @TODO Load all widgets from DB and group them by positions */
+        $this->logger = $logger;
+        $this->logger->debug(sprintf(
+            'Loaded service "%s".',
+            __METHOD__
+        ));
+        /** @TODO Maybe better load all widgets from DB at once and group them by positions? */
     }
 
 
     public function show($name)
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
+        if ( ! $position) {
+            $this->logger->alert(sprintf(
+                'Unable to find Position entity with name "%s".',
+                $name
+            ));
+            throw new EntityNotFoundException();
+        }
 
         $currentRoute = $this->databaseRouteLoading->getCurrentRoute(); // Get current Route object
         $currentRouteId = $currentRoute ? $currentRoute->getId() : 0; // Get current Route object ID
@@ -76,11 +97,6 @@ class PositionService
             ->getQuery()
             ->getResult()
         ;
-
-        if ( ! $position) {
-            /** @TODO Add to logger ID of not found Position entity */
-            throw new EntityNotFoundException('Unable to find Position entity');
-        }
 
         return $this->twig->render('BWModuleBundle:Position:show.html.twig', array(
             'position' => $position,

@@ -2,6 +2,7 @@
 
 namespace BW\UserBundle\EventListener;
 
+use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -20,18 +21,33 @@ class PasswordEncodingEventListener
      */
     private $encoderFactory;
 
+    /**
+     * @var Logger
+     */
+    private $logger;
+
 
     /**
      * The constructor
      *
      * @param EncoderFactory $encoderFactory
      */
-    public function __construct(EncoderFactory $encoderFactory) {
+    public function __construct(EncoderFactory $encoderFactory, Logger $logger) {
         $this->encoderFactory = $encoderFactory;
+        $this->logger = $logger;
+        $this->logger->debug(sprintf(
+            'Loaded event listener "%s".',
+            __METHOD__
+        ));
     }
 
 
     public function prePersist(LifecycleEventArgs $args) {
+        $this->logger->debug(sprintf(
+            'Notified event "prePersist" to listener "%s".',
+            __METHOD__
+        ));
+
         /** @var UserInterface $entity */
         $entity = $args->getEntity();
         //$em = $args->getEntityManager();
@@ -49,6 +65,11 @@ class PasswordEncodingEventListener
     }
 
     public function preUpdate(PreUpdateEventArgs $args) {
+        $this->logger->debug(sprintf(
+            'Notified event "preUpdate" to listener "%s".',
+            __METHOD__
+        ));
+
         /** @var UserInterface $entity */
         $entity = $args->getEntity();
         //$em = $args->getEntityManager();

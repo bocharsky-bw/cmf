@@ -2,6 +2,7 @@
 
 namespace BW\ModuleBundle\Service;
 
+use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -18,6 +19,11 @@ class WidgetService
      */
     private $twig;
 
+    /**
+     * @var Logger
+     */
+    private $logger;
+
 
     /**
      * The constructor
@@ -25,10 +31,15 @@ class WidgetService
      * @param EntityManager $em
      * @param \Twig_Environment $twig
      */
-    public function __construct(EntityManager $em, \Twig_Environment $twig)
+    public function __construct(EntityManager $em, \Twig_Environment $twig, Logger $logger)
     {
         $this->em = $em;
         $this->twig = $twig;
+        $this->logger = $logger;
+        $this->logger->debug(sprintf(
+            'Loaded service "%s".',
+            __METHOD__
+        ));
     }
 
 
@@ -44,8 +55,11 @@ class WidgetService
         $widget = $this->em->getRepository('BWModuleBundle:Widget')->find($id);
 
         if ( ! $widget) {
-            /** @TODO Add lo logger ID of entity */
-            throw new EntityNotFoundException('Unable to find Widget entity');
+            $this->logger->alert(sprintf(
+                'Unable to find Widget entity with ID "%d".',
+                $id
+            ));
+            throw new EntityNotFoundException();
         }
 
         return $this->twig->render('BWModuleBundle:Widget:show.html.twig', array(
@@ -65,8 +79,11 @@ class WidgetService
         $widget = $this->em->getRepository('BWModuleBundle:Widget')->find($id);
 
         if ( ! $widget) {
-            /** @TODO Add lo logger ID of not found entity */
-            throw new EntityNotFoundException('Unable to find Widget entity');
+            $this->logger->alert(sprintf(
+                'Unable to find Widget entity with ID "%d".',
+                $id
+            ));
+            throw new EntityNotFoundException();
         }
 
         return $widget;

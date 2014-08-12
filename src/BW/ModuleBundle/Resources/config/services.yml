@@ -8,8 +8,8 @@ services:
 
     bw_module.service.position:
         class: BW\ModuleBundle\Service\PositionService
-        arguments: ["@doctrine.orm.entity_manager", "@twig", "@bw_router.event_listener.database_route_loading"]
+        arguments: ["@doctrine.orm.entity_manager", "@twig", "@bw_router.event_listener.database_route_loading", "@logger"]
 
     bw_module.service.widget:
         class: BW\ModuleBundle\Service\WidgetService
-        arguments: ["@doctrine.orm.entity_manager", "@twig"]
+        arguments: ["@doctrine.orm.entity_manager", "@twig", "@logger"]

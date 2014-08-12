@@ -8,10 +8,10 @@ services:
 
     bw_default.twig.bw_extension:
         class: BW\DefaultBundle\Twig\BWExtension
-        arguments: ["@service_container"]
+        arguments: ["@service_container", "@logger"]
         tags:
             - { name: twig.extension }
 
     bw_default.service.nested_set:
         class: BW\DefaultBundle\Service\NestedSet
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@logger"]

@@ -8,7 +8,7 @@ services:
 
     bw_user.event_listener.password_encoding:
         class: BW\UserBundle\EventListener\PasswordEncodingEventListener
-        arguments: ["@security.encoder_factory"]
+        arguments: ["@security.encoder_factory", "@logger"]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

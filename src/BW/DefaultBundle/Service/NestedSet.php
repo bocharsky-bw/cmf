@@ -2,6 +2,7 @@
 
 namespace BW\DefaultBundle\Service;
 
+use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -30,15 +31,25 @@ class NestedSet {
      */
     private $nestedEntities = array();
 
+    /**
+     * @var Logger
+     */
+    private $logger;
+
 
     /**
      * The constructor
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Logger $logger)
     {
         $this->em = $em;
+        $this->logger = $logger;
+        $this->logger->debug(sprintf(
+            'Loaded service "%s".',
+            __METHOD__
+        ));
     }
 
 
