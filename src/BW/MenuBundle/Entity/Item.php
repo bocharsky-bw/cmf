@@ -400,7 +400,7 @@ class Item implements NestedSetInterface
         $this->route = $route;
 
         if ($this->route) {
-            $this->uri = '';
+            $this->uri = ''; // Clear URI when assign route
         }
 
         return $this;

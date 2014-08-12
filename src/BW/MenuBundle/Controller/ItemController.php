@@ -23,7 +23,9 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWMenuBundle:Item')->findAll();
+        $entities = $em->getRepository('BWMenuBundle:Item')->findBy(array(), array(
+            'left' => 'ASC',
+        ));
 
         return $this->render('BWMenuBundle:Item:index.html.twig', array(
             'entities' => $entities,

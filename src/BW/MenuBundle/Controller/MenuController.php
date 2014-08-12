@@ -121,7 +121,10 @@ class MenuController extends Controller
         $entity = $em->getRepository('BWMenuBundle:Menu')->find($id);
         $items = $em->getRepository('BWMenuBundle:Item')->findBy(array(
             'menu' => $entity,
+        ), array(
+            'left' => 'ASC',
         ));
+
 
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Menu entity.');

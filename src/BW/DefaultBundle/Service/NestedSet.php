@@ -49,10 +49,12 @@ class NestedSet {
      */
     public function regenerate($entityName)
     {
-        $entities = $this->em->getRepository($entityName)->findAll(); // fetch from DB
-        if ($entities) {
-            $this->em->flush(); // save to DB all unsaved entities
+        $this->em->flush(); // save to DB all unsaved entities
 
+        $entities = $this->em->getRepository($entityName)->findBy(array(), array(
+            'order' => 'ASC',
+        )); // fetch from DB
+        if ($entities) {
             // Clear data
             $this->clear();
 
