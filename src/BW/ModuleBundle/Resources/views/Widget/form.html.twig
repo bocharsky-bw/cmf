@@ -56,10 +56,10 @@
                     <tr>
                         <td>{{ widgetRoute.route.id }}</td>
                         <td>
-                            <code>{{ widgetRoute.route.path }}</code>
-                            <a class="btn btn-link" href="{{ app.request.getUriForPath(widgetRoute.route.path) }}">
+                            <a href="{{ app.request.getUriForPath(widgetRoute.route.path) }}">
                                 <span class="fa fa-share-square-o" title="Просмотреть виджет на текущем роуте"></span>
                             </a>
+                            <code>{{ widgetRoute.route.path }}</code>
                         </td>
                         <td>
                             <button type="submit" name="deleteWidgetRoute" value="{{ widgetRoute.id }}" class="close" title="Удалить запись"  onclick="return confirm('Удалить запись?')">

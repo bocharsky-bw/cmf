@@ -57,7 +57,7 @@ class UrlToWidgetRoutesTransformer implements DataTransformerInterface
             return $this->entity->getWidgetRoutes();
         }
 
-        if ( ! filter_var($url, FILTER_VALIDATE_URL)) {
+        if ( ! (filter_var($url, FILTER_VALIDATE_URL) || 0 !== strpos('/', $url))) {
             return $this->entity->getWidgetRoutes();
         }
 

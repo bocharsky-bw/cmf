@@ -69,7 +69,7 @@ class WidgetType extends AbstractType
 
         // add a normal text field, but add your transformer to it
         $builder->add(
-            $builder->create('widgetRoutes', 'url', array(
+            $builder->create('widgetRoutes', 'text', array(
                 'required' => false,
                 'label' => 'Привязать к роуту ',
                 'attr' => array(
