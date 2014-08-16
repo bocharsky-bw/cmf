@@ -20,6 +20,8 @@ BW\MenuBundle\Entity\Item:
         class:
             type: string
             length: 255
+        published:
+            type: boolean
         order:
             column: ordering
             type: integer

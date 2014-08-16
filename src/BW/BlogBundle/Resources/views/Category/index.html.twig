@@ -36,7 +36,7 @@
                         {{ entity.heading }}
                     </a><br/>
                     <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
-                        <small>
+                        <small class="fa fa-share-square-o" title="Перейти на страницу">
                             {{ entity.route.path }}
                         </small>
                     </a>
@@ -54,14 +54,14 @@
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td>
                     {% if entity.created %}
-                        <abbr title="{{ entity.created|date('d/m/Y в H:i') }}">
+                        <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
                             {{ entity.created|date('d/m/Y') }}
                         </abbr>
                     {% endif %}
                 </td>
                 <td>
                     {% if entity.updated %}
-                        <abbr title="{{ entity.updated|date('d/m/Y в H:i') }}">
+                        <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
                             {{ entity.updated|date('d/m/Y') }}
                         </abbr>
                     {% endif %}

@@ -18,12 +18,17 @@ class Position
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $description;
+    private $alias = '';
+
+    /**
+     * @var string
+     */
+    private $description = '';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -37,6 +42,11 @@ class Position
     public function __construct()
     {
         $this->widgets = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() . ' (' . $this->getAlias() . ')';
     }
 
 
@@ -73,6 +83,29 @@ class Position
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return Position
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 
     /**

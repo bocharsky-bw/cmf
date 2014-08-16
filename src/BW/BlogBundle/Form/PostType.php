@@ -68,6 +68,13 @@ class PostType extends AbstractType
                 'required' => false,
                 'label' => 'Дата создания',
             ))
+            ->add('order', 'number', array(
+                'required' => false,
+                'label' => 'Порядок ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             // SEO
             ->add('slug', 'text', array(
                 'label' => 'Синоним URL ',

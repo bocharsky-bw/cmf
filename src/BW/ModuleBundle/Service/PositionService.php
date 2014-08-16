@@ -58,13 +58,13 @@ class PositionService
     }
 
 
-    public function show($name)
+    public function show($alias)
     {
-        $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByName($name);
+        $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByAlias($alias);
         if ( ! $position) {
             $this->logger->alert(sprintf(
-                'Unable to find Position entity with name "%s".',
-                $name
+                'Unable to find Position entity with alias "%s".',
+                $alias
             ));
             throw new EntityNotFoundException();
         }

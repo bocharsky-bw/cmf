@@ -32,7 +32,13 @@
                         {{ entity.heading ? entity.heading : '< no heading >' }}
                     </a>
                 </td>
-                <td>{{ entity.position ? entity.position.name : '< Без позиции >' }}</td>
+                <td>
+                    {% if entity.position  %}
+                        <abbr title="{{ entity.position.alias }}">{{ entity.position.name }}</abbr>
+                    {% else %}
+                        < Без позиции >
+                    {% endif %}
+                </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td>{{ entity.order }}</td>
             </tr>

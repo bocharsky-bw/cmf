@@ -71,7 +71,7 @@ class WidgetType extends AbstractType
         $builder->add(
             $builder->create('widgetRoutes', 'text', array(
                 'required' => false,
-                'label' => 'Привязать к роуту ',
+                'label' => 'Привязка к роуту ',
                 'attr' => array(
                     'class' => 'form-control',
                     'placeholder' => 'http://example.com/contacts',

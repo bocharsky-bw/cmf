@@ -22,6 +22,13 @@ class PositionType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('alias', 'text', array(
+                'required' => true,
+                'label' => 'Алиас ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             ->add('description', 'textarea', array(
                 'required' => false,
                 'label' => 'Описание ',

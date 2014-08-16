@@ -32,57 +32,73 @@
 {% block header %}
     <header id="header">
         {% block header_wrap %}
-            <div class="container">
+            <div class="_container">
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-default" role="navigation">
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div class="navbar-header">
-                                    <a class="navbar-brand" href="{#{ path('home') }#}">Главная</a>
+                                    <a class="navbar-brand" href="{{ path('admin') }}">
+                                        <i class="fa fa-home"></i> Главная
+                                    </a>
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                     <ul class="nav navbar-nav">
                                         <li>
-                                            <a href="{{ path('post') }}">Статьи</a>
+                                            <a href="{{ path('post') }}">
+                                                <i class="fa fa-file-text"></i> Статьи
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('category') }}">Категории</a>
+                                            <a href="{{ path('category') }}">
+                                                <i class="fa fa-folder"></i> Категории
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('position') }}">Позиции</a>
+                                            <a href="{{ path('position') }}">
+                                                <i class="fa fa-compass"></i> Позиции
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('widget') }}">Виджеты</a>
+                                            <a href="{{ path('widget') }}">
+                                                <i class="fa fa-cubes"></i> Виджеты
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('user') }}">Пользователи</a>
+                                            <a href="{{ path('user') }}">
+                                                <i class="fa fa-user"></i> Пользователи
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('role') }}">Роли</a>
+                                            <a href="{{ path('role') }}">
+                                                <i class="fa fa-group"></i> Роли
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('menu') }}">Меню</a>
+                                            <a href="{{ path('menu') }}">
+                                                <i class="fa fa-navicon"></i> Меню
+                                            </a>
                                         </li>
                                         {#<li>#}
                                             {#<a href="{{ path('item') }}">Пункты меню</a>#}
                                         {#</li>#}
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
-                                        {% if app.user %}
+                                        <li>
+                                            <a href="{{ path('home') }}">
+                                                <i class="fa fa-share-square-o"></i> Просмотр сайта
+                                            </a>
+                                        </li>
+                                        {#% if app.user %#}
                                             <li>
-                                                <a href="{#{ path('user_sign_out') }#}">Sign out</a>
+                                                <a href="{#{ path('user_sign_out') }#}">
+                                                    <i class="fa fa-sign-out"></i> Выход
+                                                </a>
                                             </li>
-                                        {% else %}
-                                            <li>
-                                                <a href="{#{ path('user_sign_in') }#}">Sign in</a>
-                                            </li>
-                                            <li>
-                                                <a href="{#{ path('user_sign_up') }#}">Sign up</a>
-                                            </li>
-                                        {% endif %}
+                                        {#{% endif %}#}
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
                             </div><!-- /.container-fluid -->

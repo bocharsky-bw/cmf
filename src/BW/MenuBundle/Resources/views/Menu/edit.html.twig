@@ -21,8 +21,8 @@
                 <th>ID</th>
                 <th>Название</th>
                 <th>Адрес URL</th>
-                <th>Всплывающая подсказка</th>
                 <th>Класс CSS</th>
+                <th>Опубликовано</th>
                 <th>Порядок</th>
             </tr>
         </thead>
@@ -37,13 +37,13 @@
                     </a>
                 </td>
                 <td>
-                    <a href="{{ app.request.getUriForPath(item.route ? item.route.path : item.uri) }}" title="Перейти по адресу">
-                        <span class="fa fa-share-square-o" title="Перейти на страницу пункта меню"></span>
+                    <a href="{{ app.request.getUriForPath(item.route ? item.route.path : item.uri) }}" title="Перейти на страницу пункта меню">
+                        <span class="fa fa-share-square-o"></span>
                     </a>
                     <small>{{ item.route ? item.route.path : item.uri }}</small>
                 </td>
-                <td>{{ item.title }}</td>
                 <td>{{ item.class }}</td>
+                <td><span class="{{ item.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td>{{ item.order }}</td>
             </tr>
         {% endfor %}

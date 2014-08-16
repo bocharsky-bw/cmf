@@ -18,6 +18,7 @@
             <tr>
                 <th>ID</th>
                 <th>Название</th>
+                <th>Алиас</th>
                 <th>Описание</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                         {{ entity.name ? entity.name : '< no heading >' }}
                     </a>
                 </td>
+                <td>{{ entity.alias }}</td>
                 <td>{{ entity.description }}</td>
             </tr>
         {% endfor %}

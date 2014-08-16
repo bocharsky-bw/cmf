@@ -38,6 +38,11 @@ class Item implements NestedSetInterface
     private $class = '';
 
     /**
+     * @var boolean
+     */
+    private $published = true;
+
+    /**
      * @var integer
      */
     private $order = 0;
@@ -216,6 +221,25 @@ class Item implements NestedSetInterface
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param boolean $published
+     * @return Item
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
     }
 
     /**

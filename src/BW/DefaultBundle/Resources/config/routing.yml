@@ -1,3 +1,7 @@
+admin:
+    path:     /_admin/
+    defaults: { _controller: BWDefaultBundle:Default:admin }
+
 home:
     path:     /
     defaults: { _controller: BWDefaultBundle:Default:index }

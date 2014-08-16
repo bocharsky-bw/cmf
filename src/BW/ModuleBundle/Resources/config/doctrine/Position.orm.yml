@@ -11,6 +11,9 @@ BW\ModuleBundle\Entity\Position:
         name:
             type: string
             length: 255
+        alias:
+            type: string
+            length: 255
         description:
             type: string
             length: 255
