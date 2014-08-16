@@ -4,6 +4,7 @@ namespace BW\BlogBundle\Entity;
 
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
+use BW\UploadBundle\Entity\Image;
 
 /**
  * Class Post
@@ -80,6 +81,11 @@ class Post implements RouteInterface
      * @var Route $route
      */
     private $route;
+
+    /**
+     * @var \BW\UploadBundle\Entity\Image
+     */
+    private $image;
 
 
     /**
@@ -176,8 +182,8 @@ class Post implements RouteInterface
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
-    
+        $this->slug = isset($slug) ? $slug : '';
+
         return $this;
     }
 
@@ -199,7 +205,7 @@ class Post implements RouteInterface
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = isset($title) ? $title : '';
     
         return $this;
     }
@@ -222,7 +228,7 @@ class Post implements RouteInterface
      */
     public function setMetaDescription($metaDescription)
     {
-        $this->metaDescription = $metaDescription;
+        $this->metaDescription = isset($metaDescription) ? $metaDescription : '';
     
         return $this;
     }
@@ -245,7 +251,7 @@ class Post implements RouteInterface
      */
     public function setShortDescription($shortDescription)
     {
-        $this->shortDescription = $shortDescription;
+        $this->shortDescription = isset($shortDescription) ? $shortDescription : '';
     
         return $this;
     }
@@ -268,7 +274,7 @@ class Post implements RouteInterface
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = isset($description) ? $description : '';
     
         return $this;
     }
@@ -462,5 +468,31 @@ class Post implements RouteInterface
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \BW\UploadBundle\Entity\Image $image
+     * @return Post
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+        if ( ! $this->image->getFile()) {
+            $this->image = null;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \BW\UploadBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

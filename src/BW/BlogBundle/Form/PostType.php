@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Form;
 
+use BW\UploadBundle\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -74,6 +75,10 @@ class PostType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control',
                 ),
+            ))
+            ->add('image', new ImageType('posts'), array(
+                'required' => false,
+                'label' => ' ',
             ))
             // SEO
             ->add('slug', 'text', array(

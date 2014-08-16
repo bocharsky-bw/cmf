@@ -18,4 +18,5 @@ BW\MenuBundle\Entity\Menu:
         items:
             targetEntity: BW\MenuBundle\Entity\Item
             mappedBy: menu
+            cascade: [remove]
     lifecycleCallbacks: {  }

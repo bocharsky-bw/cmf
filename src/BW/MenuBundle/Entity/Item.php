@@ -162,7 +162,7 @@ class Item implements NestedSetInterface
      */
     public function setUri($uri)
     {
-        $this->uri = $uri;
+        $this->uri = isset($uri) ? $uri : '';
 
         return $this;
     }
@@ -185,7 +185,7 @@ class Item implements NestedSetInterface
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = isset($title) ? $title : '';
 
         return $this;
     }
@@ -208,7 +208,7 @@ class Item implements NestedSetInterface
      */
     public function setClass($class)
     {
-        $this->class = $class;
+        $this->class = isset($class) ? $class : '';
 
         return $this;
     }

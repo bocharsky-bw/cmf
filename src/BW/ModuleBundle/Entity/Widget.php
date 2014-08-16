@@ -103,7 +103,7 @@ class Widget
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = isset($description) ? $description : '';
 
         return $this;
     }

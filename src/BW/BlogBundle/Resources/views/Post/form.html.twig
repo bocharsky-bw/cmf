@@ -39,6 +39,12 @@
     <div class="form-group">{{ form_row(form.description) }}</div>
     <div class="form-group">{{ form_row(form.order) }}</div>
     <div class="form-group">{{ form_row(form.created) }}</div>
+    <div class="form-group">
+        {% if form.image.vars.data %}
+            <img style="max-width: 100px; max-height: 100px;" src="{{ asset(form.image.vars.data.webPath) }}" title="{{ form.image.vars.data.title }}" alt="{{ form.image.vars.data.alt }}" />
+        {% endif %}
+        {{ form_row(form.image) }}
+    </div>
 
     <h2><i class="fa fa-sliders"></i> SEO</h2>
     {% if entity.route %}

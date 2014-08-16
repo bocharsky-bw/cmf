@@ -42,6 +42,10 @@ BW\BlogBundle\Entity\Category:
         right:
             column: rgt
             type: integer
+    oneToOne:
+        image:
+            targetEntity: BW\UploadBundle\Entity\Image
+            cascade: [persist, remove]
     oneToMany:
         children:
             targetEntity: BW\BlogBundle\Entity\Category

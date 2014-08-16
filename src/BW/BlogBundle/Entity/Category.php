@@ -5,6 +5,7 @@ namespace BW\BlogBundle\Entity;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
 use BW\DefaultBundle\Service\NestedSetInterface;
+use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -102,6 +103,11 @@ class Category implements RouteInterface, NestedSetInterface
      * @var Route $route
      */
     private $route;
+
+    /**
+     * @var \BW\UploadBundle\Entity\Image
+     */
+    private $image;
 
 
     /**
@@ -225,7 +231,7 @@ class Category implements RouteInterface, NestedSetInterface
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = isset($slug) ? $slug : '';
     
         return $this;
     }
@@ -248,7 +254,7 @@ class Category implements RouteInterface, NestedSetInterface
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = isset($title) ? $title : '';
     
         return $this;
     }
@@ -271,7 +277,7 @@ class Category implements RouteInterface, NestedSetInterface
      */
     public function setMetaDescription($metaDescription)
     {
-        $this->metaDescription = $metaDescription;
+        $this->metaDescription = isset($metaDescription) ? $metaDescription : '';
     
         return $this;
     }
@@ -294,11 +300,7 @@ class Category implements RouteInterface, NestedSetInterface
      */
     public function setShortDescription($shortDescription)
     {
-        if (isset($shortDescription)) {
-            $this->shortDescription = $shortDescription;
-        } else {
-            $this->shortDescription = '';
-        }
+        $this->shortDescription = isset($shortDescription) ? $shortDescription : '';
 
         return $this;
     }
@@ -321,11 +323,7 @@ class Category implements RouteInterface, NestedSetInterface
      */
     public function setDescription($description)
     {
-        if (isset($description)) {
-            $this->description = $description;
-        } else {
-            $this->description = '';
-        }
+        $this->description = isset($description) ? $description : '';
 
         return $this;
     }
@@ -607,5 +605,31 @@ class Category implements RouteInterface, NestedSetInterface
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \BW\UploadBundle\Entity\Image $image
+     * @return Category
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+        if ( ! $this->image->getFile()) {
+            $this->image = null;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \BW\UploadBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

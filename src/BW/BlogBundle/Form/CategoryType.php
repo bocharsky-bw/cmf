@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Form;
 
+use BW\UploadBundle\Form\ImageType;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -79,6 +80,10 @@ class CategoryType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control',
                 ),
+            ))
+            ->add('image', new ImageType('categories'), array(
+                'required' => false,
+                'label' => ' ',
             ))
             // SEO
             ->add('slug', 'text', array(

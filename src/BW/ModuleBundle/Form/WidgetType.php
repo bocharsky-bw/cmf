@@ -56,7 +56,7 @@ class WidgetType extends AbstractType
                 ),
             ))
             ->add('visibility', 'choice', array(
-                'required' => false,
+                'required' => true,
                 'expanded' => true,
                 'multiple' => false,
                 'label' => 'Видимость ',
