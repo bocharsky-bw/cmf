@@ -2,7 +2,8 @@
 
 namespace BW\UploadBundle\Service;
 
-use BW\UploadBundle\File\Image;
+use BW\UploadBundle\File\DestinationImage;
+use BW\UploadBundle\File\SourceImage;
 
 /**
  * The OOP abstract layout works with JPG, PNG & GIF image types with GD library functions
@@ -13,9 +14,14 @@ use BW\UploadBundle\File\Image;
 class ImageResizingService
 {
     /**
-     * @var Image
+     * @var \BW\UploadBundle\File\SourceImage The source Image file object
      */
-    private $image;
+    private $srcImage;
+
+    /**
+     * @var \BW\UploadBundle\File\DestinationImage The destination Image object
+     */
+    private $dstImage;
 
 
     /**
@@ -27,129 +33,134 @@ class ImageResizingService
     {
     }
 
-
     /**
-     * The initialize Image object
+     * The initialize the image objects
      *
-     * @param Image $image
+     * @param string $filename
+     * @return $this
      */
-    public function init(Image $image)
+    public function init($filename)
     {
-        $this->image = $image;
+        $this->setSrcImage(new SourceImage($filename));
+        $this->setDstImage(new DestinationImage());
+
+        return $this;
     }
 
-    /**
-     * @param int $width The width in pixels
-     * @param int $height The height in pixels
-     */
-    public function resize($width, $height)
-    {
-        $width = (int)$width;
-        $height = (int)$height;
-        if (0 >= $width || 0 >= $height) {
-            throw new \InvalidArgumentException(sprintf(
-                'The width/height must be greater then 0, %d/%d given.', $width, $height
-            ));
-        }
-        $this->process($width, $height);
-    }
 
     /**
-     * @param int $width The width in pixels
-     */
-    public function resizeToWidth($width)
-    {
-        $width = (int)$width;
-        if (0 >= $width) {
-            throw new \InvalidArgumentException(sprintf(
-                'The width must be greater then 0, %d given.', $width
-            ));
-        }
-        $divider = $this->image->getWidth() / $this->image->getHeight();
-        $height = (int)($width / $divider);
-        $height = 0 < $height ? $height : 0;
-
-        $this->process($width, $height);
-    }
-
-    /**
-     * @param int $height The height in pixels
-     * @throws \InvalidArgumentException
-     */
-    public function resizeToHeight($height)
-    {
-        $height = (int)$height;
-        if (0 >= $height) {
-            throw new \InvalidArgumentException(sprintf(
-                'The height must be greater then 0, %d given.', $height
-            ));
-        }
-        $factor = $this->image->getWidth() / $this->image->getHeight();
-        $width = (int)($height * $factor);
-        $width = 0 < $width ? $width : 0;
-
-        $this->process($width, $height);
-    }
-
-    /**
-     * Crop the image
+     * Crop the image to width and height
      *
      * @param int $width The width in pixels
      * @param int $height The height in pixels
+     * @return $this
      * @throws \InvalidArgumentException
      * @throws \Exception
      * @TODO Maybe to add mode for cropping with scale or without scale
      */
     public function crop($width, $height)
     {
-        $dstQuality = 75;
-        $dstOffsetX = 0;
-        $dstOffsetY = 0;
+        $this->getDstImage()->setWidth($width);
+        $this->getDstImage()->setHeight($height);
 
-        $width = (int)$width;
-        $height = (int)$height;
-        if (0 >= $width || 0 >= $height) {
-            throw new \InvalidArgumentException(sprintf(
-                'The width/height must be greater then 0, %d/%d given.', $width, $height
-            ));
-        }
-
-        if ($this->image->getWidth()/$width > $this->image->getHeight()/$height) {
+        if ($this->getSrcImage()->getWidth() / $this->getDstImage()->getWidth()
+            > $this->getSrcImage()->getHeight() / $this->getDstImage()->getHeight()
+        ) {
             // resize to height
-            $factor = $height / $this->image->getHeight();
-            $dstWidth = (int)($this->image->getWidth() * $factor);
-            $dstHeight = (int)($this->image->getHeight() * $factor);
-            $dstOffsetX = (int)(($width - $dstWidth) / 2);
+            $factor = $height / $this->getSrcImage()->getHeight();
+            $this->getDstImage()->setWidth(
+                $this->getSrcImage()->getWidth() * $factor
+            );
+            $this->getDstImage()->setHeight(
+                $this->getSrcImage()->getHeight() * $factor
+            );
+            $this->getDstImage()->setOffsetX(
+                ($width - $this->getDstImage()->getWidth()) / 2
+            );
         } else {
             // resize to width
-            $factor = $width / $this->image->getWidth();
-            $dstHeight = (int)($this->image->getHeight() * $factor);
-            $dstWidth = (int)($this->image->getWidth() * $factor);
-            $dstOffsetY = (int)(($height - $dstHeight) / 2);
+            $factor = $width / $this->getSrcImage()->getWidth();
+            $this->getDstImage()->setHeight(
+                $this->getSrcImage()->getHeight() * $factor
+            );
+            $this->getDstImage()->setWidth(
+                $this->getSrcImage()->getWidth() * $factor
+            );
+            $this->getDstImage()->setOffsetY(
+                ($height - $this->getDstImage()->getHeight()) / 2
+            );
         }
 
-        $srcResource = imagecreatefromjpeg($this->image->getRealPath()); // The source resource
-        $dstResource = imagecreatetruecolor($width, $height); // The destination resource
+        $this->getDstImage()->createResource($width, $height);
+        $this->resampling();
 
-        imagecopyresampled($dstResource, $srcResource, $dstOffsetX, $dstOffsetY, 0, 0, $dstWidth, $dstHeight, $this->image->getWidth(), $this->image->getHeight());
-
-        $dstFilename = $this->image->getFilename() . '_';
-        $dstPath = $this->image->getPath();
-        if ( ! is_dir($dstPath)) {
-            // Создание необходимых дирекотрий перед сохранением, если их нет
-            if ( ! mkdir($dstPath, 0755, true)) {
-                throw new \Exception(sprintf(
-                    'could not create a folder "%s"', $dstPath
-                ));
-            }
-        }
-        $dstPathname = $dstPath . DIRECTORY_SEPARATOR . $dstFilename;
-
-        imagejpeg($dstResource, $dstPathname, $dstQuality); // создание JPG изображения и его сохранение в целевой директории
+        return $this;
     }
 
     /**
-     * @param int|float $scale The scale in em
+     * Resize the image to width and height
+     *
+     * @param int $width The width in pixels
+     * @param int $height The height in pixels
+     * @return $this
+     */
+    public function resize($width, $height)
+    {
+        $this->getDstImage()->setWidth($width);
+        $this->getDstImage()->setHeight($height);
+
+        $this->getDstImage()->createResource();
+        $this->resampling();
+
+        return $this;
+    }
+
+    /**
+     * Resize the image to width
+     *
+     * @param int $width The width in pixels
+     * @return $this
+     */
+    public function resizeToWidth($width)
+    {
+        $this->getDstImage()->setWidth($width);
+        $divider = $this->getSrcImage()->getWidth() / $this->getSrcImage()->getHeight();
+        $this->getDstImage()->setHeight(
+            $this->getDstImage()->getWidth() / $divider
+        );
+
+        $this->getDstImage()->createResource();
+        $this->resampling();
+
+        return $this;
+    }
+
+    /**
+     * Resize the image to height
+     *
+     * @param int $height The height in pixels
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function resizeToHeight($height)
+    {
+        $this->getDstImage()->setHeight($height);
+        $factor = $this->getSrcImage()->getWidth() / $this->getSrcImage()->getHeight();
+        $this->getDstImage()->setWidth(
+            $this->getDstImage()->getHeight() * $factor
+        );
+
+        $this->getDstImage()->createResource();
+        $this->resampling();
+
+        return $this;
+    }
+
+    /**
+     * Scale the image
+     *
+     * @param int|float $scale The scale in relative units
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function scale($scale)
@@ -160,38 +171,111 @@ class ImageResizingService
                 'The scale must be greater then 0, %d given.', $scale
             ));
         }
+        $this->getDstImage()->setWidth(
+            $this->getSrcImage()->getWidth() * $factor
+        );
+        $this->getDstImage()->setHeight(
+            $this->getSrcImage()->getHeight() * $factor
+        );
 
-        $width = (int)($this->image->getWidth() * $factor);
-        $height = (int)($this->image->getHeight() * $factor);
+        $this->getDstImage()->createResource();
+        $this->resampling();
 
-        $this->process($width, $height);
+        return $this;
     }
 
     /**
-     * @param int $width
-     * @param int $height
+     * The Image resampling
+     *
+     * @return bool
      * @throws \Exception
      */
-    private function process($width, $height)
+    private function resampling()
     {
-        $dstQuality = 75;
-        $srcResource = imagecreatefromjpeg($this->image->getRealPath()); // Ресурс исходного JPG изображения
-        $dstResource = imagecreatetruecolor($width, $height); // Ресурс целевого изображения
+        $success = imagecopyresampled(
+            $this->getDstImage()->getResource(), /** @TODO Maybe check if resource is null - create them */
+            $this->getSrcImage()->createResource()->getResource(),
+            $this->getDstImage()->getOffsetX(),
+            $this->getDstImage()->getOffsetY(),
+            $this->getSrcImage()->getOffsetX(),
+            $this->getSrcImage()->getOffsetY(),
+            $this->getDstImage()->getWidth(),
+            $this->getDstImage()->getHeight(),
+            $this->getSrcImage()->getWidth(),
+            $this->getSrcImage()->getHeight()
+        );
 
-        imagecopyresampled($dstResource, $srcResource, 0, 0, 0, 0, $width, $height, $this->image->getWidth(), $this->image->getHeight());
+        if ( ! $success) {
+            throw new \RuntimeException('The destination image resampling failed.');
+        }
 
-        $dstFilename = $this->image->getFilename() . '_';
-        $dstPath = $this->image->getPath();
-        if ( ! is_dir($dstPath)) {
-            // Создание необходимых дирекотрий перед сохранением, если их нет
-            if ( ! mkdir($dstPath, 0755, true)) {
+        return $success;
+    }
+
+    /**
+     * Save the Image to the host
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function save()
+    {
+        $this->getDstImage()->setFilename(
+            $this->getSrcImage()->getFilename() . '_'
+        );
+        $this->getDstImage()->setPath(
+            $this->getSrcImage()->getPath()
+        );
+        if ( ! is_dir($this->getDstImage()->getPath())) {
+            // Create not exists folders recursively
+            if ( ! mkdir($this->getDstImage()->getPath(), 0755, true)) {
                 throw new \Exception(sprintf(
-                    'could not create a folder "%s"', $dstPath
+                    'Could not create a folder "%s"', $this->getDstImage()->getPath()
                 ));
             }
         }
-        $dstPathname = $dstPath . DIRECTORY_SEPARATOR . $dstFilename;
 
-        imagejpeg($dstResource, $dstPathname, $dstQuality); // создание JPG изображения и его сохранение в целевой директории
+        $success = imagejpeg(
+            $this->getDstImage()->getResource(),
+            $this->getDstImage()->getPathname(),
+            $this->getDstImage()->getQuality()
+        );
+
+        return $success;
+    }
+
+
+    /* SETTERS / GETTERS */
+
+    /**
+     * @return SourceImage
+     */
+    public function getSrcImage()
+    {
+        return $this->srcImage;
+    }
+
+    /**
+     * @param SourceImage $srcImage
+     */
+    public function setSrcImage(SourceImage $srcImage)
+    {
+        $this->srcImage = $srcImage;
+    }
+
+    /**
+     * @return DestinationImage
+     */
+    public function getDstImage()
+    {
+        return $this->dstImage;
+    }
+
+    /**
+     * @param DestinationImage $dstImage
+     */
+    public function setDstImage(DestinationImage $dstImage)
+    {
+        $this->dstImage = $dstImage;
     }
 }

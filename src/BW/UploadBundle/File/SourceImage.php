@@ -3,10 +3,10 @@
 namespace BW\UploadBundle\File;
 
 /**
- * Class Image
+ * Class SourceImage
  * @package BW\UploadBundle\File
  */
-class Image extends \SplFileInfo
+class SourceImage extends \SplFileInfo
 {
     /**
      * @var int
@@ -17,6 +17,16 @@ class Image extends \SplFileInfo
      * @var int
      */
     private $height;
+
+    /**
+     * @var int The destination image offset by X
+     */
+    private $offsetX = 0;
+
+    /**
+     * @var int The destination image offset by Y
+     */
+    private $offsetY = 0;
 
     /**
      * @var int The IMAGETYPE_XXX constant number
@@ -43,6 +53,11 @@ class Image extends \SplFileInfo
      */
     private $mimeType;
 
+    /**
+     * @var resource The image resource
+     */
+    private $resource;
+
 
     /**
      * The constructor
@@ -52,17 +67,17 @@ class Image extends \SplFileInfo
     public function __construct($filename)
     {
         parent::__construct($filename);
-        $this->init();
-    }
+        if ( ! $this->isFile()) {
+            throw new \InvalidArgumentException(sprintf(
+                'File does not exist at the specified path.'
+            ));
+        }
 
-
-    /**
-     * Init Image object
-     */
-    private function init()
-    {
-        $info = getimagesize($this->getRealPath());
-        if (is_array($info)) {
+        try {
+            $info = getimagesize($this->getRealPath());
+            if ( ! is_array($info)) {
+                throw new \Exception();
+            }
             $this
                 ->setWidth($info[0])
                 ->setHeight($info[1])
@@ -72,7 +87,27 @@ class Image extends \SplFileInfo
                 ->setChannels($info['channels'])
                 ->setMimeType($info['mime'])
             ;
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException(sprintf(
+                'File is not an image.'
+            ));
         }
+    }
+
+
+    /**
+     * Create the Image resource
+     *
+     * @return $this
+     */
+    public function createResource()
+    {
+        /** @TODO Need to create resource based on mime type */
+        $resource = imagecreatefromjpeg($this->getRealPath());
+
+        $this->setResource($resource);
+
+        return $this;
     }
 
 
@@ -114,6 +149,38 @@ class Image extends \SplFileInfo
         $this->height = (int)$height;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffsetX()
+    {
+        return $this->offsetX;
+    }
+
+    /**
+     * @param int $offsetX
+     */
+    public function setOffsetX($offsetX)
+    {
+        $this->offsetX = (int)$offsetX;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffsetY()
+    {
+        return $this->offsetY;
+    }
+
+    /**
+     * @param int $offsetY
+     */
+    public function setOffsetY($offsetY)
+    {
+        $this->offsetY = (int)$offsetY;
     }
 
     /**
@@ -211,4 +278,19 @@ class Image extends \SplFileInfo
         return $this;
     }
 
+    /**
+     * @return resource
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * @param resource $resource
+     */
+    private function setResource($resource)
+    {
+        $this->resource = $resource;
+    }
 }

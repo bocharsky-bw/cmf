@@ -2,6 +2,7 @@
 
 namespace BW\DefaultBundle\Controller;
 
+use BW\UploadBundle\File\SourceImage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
