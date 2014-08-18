@@ -34,22 +34,22 @@ class SourceImage extends \SplFileInfo
     private $type;
 
     /**
-     * @var string
+     * @var string The HTML string of size
      */
     private $sizeForHtml;
 
     /**
-     * @var integer
+     * @var integer The bits
      */
     private $bits;
 
     /**
-     * @var integer
+     * @var integer The channels
      */
     private $channels;
 
     /**
-     * @var string
+     * @var string The MIME type
      */
     private $mimeType;
 
@@ -58,15 +58,23 @@ class SourceImage extends \SplFileInfo
      */
     private $resource;
 
+    /**
+     * @var string The image pathname relative web dir
+     */
+    private $webPathname;
+
 
     /**
      * The constructor
      *
-     * @param string $filename
+     * @param $webRootDir
+     * @param $webPathname
      */
-    public function __construct($filename)
+    public function __construct($webRootDir, $webPathname)
     {
-        parent::__construct($filename);
+        $this->setWebPathname($webPathname);
+        $pathname = $webRootDir . $this->getWebPathname();
+        parent::__construct($pathname);
         if ( ! $this->isFile()) {
             throw new \InvalidArgumentException(sprintf(
                 'File does not exist at the specified path.'
@@ -102,8 +110,31 @@ class SourceImage extends \SplFileInfo
      */
     public function createResource()
     {
-        /** @TODO Need to create resource based on mime type */
-        $resource = imagecreatefromjpeg($this->getRealPath());
+        switch ($this->getType()) {
+            case IMAGETYPE_JPEG: {
+                $resource = imagecreatefromjpeg($this->getRealPath());
+
+                break;
+            }
+
+            case IMAGETYPE_PNG: {
+                $resource = imagecreatefrompng($this->getRealPath());
+
+                break;
+            }
+
+            case IMAGETYPE_GIF: {
+                $resource = imagecreatefromgif($this->getRealPath());
+
+                break;
+            }
+
+            default: {
+                throw new \Exception(sprintf(
+                    'Undefined source image type "%d".', $this->getType()
+                ));
+            }
+        }
 
         $this->setResource($resource);
 
@@ -292,5 +323,21 @@ class SourceImage extends \SplFileInfo
     private function setResource($resource)
     {
         $this->resource = $resource;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPathname()
+    {
+        return $this->webPathname;
+    }
+
+    /**
+     * @param string $webPathname
+     */
+    public function setWebPathname($webPathname)
+    {
+        $this->webPathname = (string)$webPathname;
     }
 }

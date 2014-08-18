@@ -14,6 +14,11 @@ use BW\UploadBundle\File\SourceImage;
 class ImageResizingService
 {
     /**
+     * @var string
+     */
+    private $webRootDir;
+
+    /**
      * @var \BW\UploadBundle\File\SourceImage The source Image file object
      */
     private $srcImage;
@@ -31,17 +36,18 @@ class ImageResizingService
      */
     public function __construct(array $config = array())
     {
+        $this->setWebRootDir(__DIR__ . '/../../../../web');
     }
 
     /**
      * The initialize the image objects
      *
-     * @param string $filename
+     * @param string $webPathname
      * @return $this
      */
-    public function init($filename)
+    public function init($webPathname)
     {
-        $this->setSrcImage(new SourceImage($filename));
+        $this->setSrcImage(new SourceImage($this->getWebRootDir(), $webPathname));
         $this->setDstImage(new DestinationImage());
 
         return $this;
@@ -193,8 +199,14 @@ class ImageResizingService
     private function resampling()
     {
         $success = imagecopyresampled(
-            $this->getDstImage()->getResource(), /** @TODO Maybe check if resource is null - create them */
-            $this->getSrcImage()->createResource()->getResource(),
+            (null !== $this->getDstImage()->getResource()
+                ? $this->getDstImage()->getResource()
+                : $this->getDstImage()->createResource()->getResource()
+            ),
+            (null !== $this->getSrcImage()->getResource()
+                ? $this->getSrcImage()->getResource()
+                : $this->getSrcImage()->createResource()->getResource()
+            ),
             $this->getDstImage()->getOffsetX(),
             $this->getDstImage()->getOffsetY(),
             $this->getSrcImage()->getOffsetX(),
@@ -220,11 +232,17 @@ class ImageResizingService
      */
     public function save()
     {
-        $this->getDstImage()->setFilename(
-            $this->getSrcImage()->getFilename() . '_'
-        );
-        $this->getDstImage()->setPath(
-            $this->getSrcImage()->getPath()
+//        $this->getDstImage()->setFilename(
+//            $this->getSrcImage()->getFilename()
+//        );
+        $this->getDstImage()->setPathname(''
+            . $this->getWebRootDir()
+            . '/cache/'
+            . $this->getDstImage()->getWidth()
+            . 'x'
+            . $this->getDstImage()->getHeight()
+            . '/'
+            . $this->getSrcImage()->getWebPathname()
         );
         if ( ! is_dir($this->getDstImage()->getPath())) {
             // Create not exists folders recursively
@@ -235,17 +253,64 @@ class ImageResizingService
             }
         }
 
-        $success = imagejpeg(
-            $this->getDstImage()->getResource(),
-            $this->getDstImage()->getPathname(),
-            $this->getDstImage()->getQuality()
-        );
+        switch ($this->getSrcImage()->getType()) {
+            case IMAGETYPE_JPEG: {
+                $success = imagejpeg(
+                    $this->getDstImage()->getResource(),
+                    $this->getDstImage()->getPathname(),
+                    $this->getDstImage()->getQuality()
+                );
+
+                break;
+            }
+
+            case IMAGETYPE_PNG: {
+                $success = imagepng(
+                    $this->getDstImage()->getResource(),
+                    $this->getDstImage()->getPathname(),
+                    $this->getDstImage()->getQuality()
+                );
+
+                break;
+            }
+
+            case IMAGETYPE_GIF: {
+                $success = imagegif(
+                    $this->getDstImage()->getResource(),
+                    $this->getDstImage()->getPathname()
+                );
+
+                break;
+            }
+
+            default: {
+                throw new \Exception(sprintf(
+                    'Undefined source image type "%d".', $this->getSrcImage()->getType()
+                ));
+            }
+        }
 
         return $success;
     }
 
 
     /* SETTERS / GETTERS */
+
+    /**
+     * @return string
+     */
+    public function getWebRootDir()
+    {
+        return $this->webRootDir;
+    }
+
+    /**
+     * @param string $webRootDir
+     */
+    private function setWebRootDir($webRootDir)
+    {
+        $this->webRootDir = (string)$webRootDir;
+    }
 
     /**
      * @return SourceImage

@@ -182,16 +182,16 @@ class DestinationImage
      */
     public function getPath()
     {
-        return $this->path;
+        return dirname($this->pathname);
     }
 
-    /**
-     * @param string $path
-     */
-    public function setPath($path)
-    {
-        $this->path = (string)$path;
-    }
+//    /**
+//     * @param string $path
+//     */
+//    public function setPath($path)
+//    {
+//        $this->path = (string)$path;
+//    }
 
     /**
      * @return string
@@ -214,16 +214,17 @@ class DestinationImage
      */
     public function getPathname()
     {
-        return $this->getPath() . DIRECTORY_SEPARATOR . $this->getFilename();
+//        return $this->getPath() . DIRECTORY_SEPARATOR . $this->getFilename();
+        return $this->pathname;
     }
 
-//    /**
-//     * @param string $pathname
-//     */
-//    public function setPathname($pathname)
-//    {
-//        $this->pathname = (string)$pathname;
-//    }
+    /**
+     * @param string $pathname
+     */
+    public function setPathname($pathname)
+    {
+        $this->pathname = (string)$pathname;
+    }
 
     /**
      * @return resource
