@@ -1,5 +1,8 @@
 parameters:
 #    bw_default.example.class: BW\DefaultBundle\Example
+    bw_default.service.transliterating.alphabet_overridden: {"А": "A"}
+    bw_default.event_listener.sluggable.denied_characters: '/[^0-9A-Za-z_-]/'
+    bw_default.event_listener.sluggable.to_lower: true
 
 services:
 #    bw_default.example:
@@ -15,3 +18,17 @@ services:
     bw_default.service.nested_set:
         class: BW\DefaultBundle\Service\NestedSet
         arguments: ["@doctrine.orm.entity_manager", "@logger"]
+
+    bw_default.service.transliterating:
+        class: BW\DefaultBundle\Service\TransliteratingService
+        arguments: ["%bw_default.service.transliterating.alphabet_overridden%"]
+
+    bw_default.event_listener.sluggable:
+        class: BW\DefaultBundle\EventListener\SluggableEventListener
+        arguments:
+            - "@bw_default.service.transliterating"
+            - "%bw_default.event_listener.sluggable.denied_characters%"
+            - "%bw_default.event_listener.sluggable.to_lower%"
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

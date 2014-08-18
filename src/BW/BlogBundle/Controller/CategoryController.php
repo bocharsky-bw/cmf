@@ -194,6 +194,7 @@ class CategoryController extends Controller
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('category'));
             }
+            $em->flush();
 
             // Route
             $entity->getRoute()->handleEntity($entity);

@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\DefaultBundle\EventListener\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
 use BW\UploadBundle\Entity\Image;
@@ -10,7 +11,7 @@ use BW\UploadBundle\Entity\Image;
  * Class Post
  * @package BW\BlogBundle\Entity
  */
-class Post implements RouteInterface
+class Post implements RouteInterface, SluggableInterface
 {
     /**
      * @var integer $id
@@ -136,6 +137,11 @@ class Post implements RouteInterface
             '_controller' => 'BWBlogBundle:Post:show',
             'id' => $this->getId(),
         );
+    }
+
+    public function getStringForSlug()
+    {
+        return $this->getHeading();
     }
 
 

@@ -185,6 +185,7 @@ class PostController extends Controller
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('post'));
             }
+            $em->flush();
 
             /* Route */
             $entity->getRoute()->handleEntity($entity);

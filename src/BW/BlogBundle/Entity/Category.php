@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\DefaultBundle\EventListener\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
 use BW\DefaultBundle\Service\NestedSetInterface;
@@ -12,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Class Category
  * @package BW\BlogBundle\Entity
  */
-class Category implements RouteInterface, NestedSetInterface
+class Category implements RouteInterface, NestedSetInterface, SluggableInterface
 {
     /**
      * @var integer $id
@@ -185,6 +186,11 @@ class Category implements RouteInterface, NestedSetInterface
             '_controller' => 'BWBlogBundle:Category:show',
             'id' => $this->getId(),
         );
+    }
+
+    public function getStringForSlug()
+    {
+        return $this->getHeading();
     }
 
 

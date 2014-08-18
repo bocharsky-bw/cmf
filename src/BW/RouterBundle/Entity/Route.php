@@ -5,6 +5,7 @@ namespace BW\RouterBundle\Entity;
 /**
  * Class Route
  * @package BW\RouterBundle\Entity
+ * @TODO Create EventListener and store route automatically
  */
 class Route
 {
