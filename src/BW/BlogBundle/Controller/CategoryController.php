@@ -115,16 +115,29 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWBlogBundle:Category')->find($id);
-
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWBlogBundle:Post')->createQueryBuilder('p');
+        $qb
+            ->addSelect('c')
+            ->addSelect('r')
+            ->innerJoin('p.category', 'c')
+            ->innerJoin('p.route', 'r')
+            ->where($qb->expr()->andX(
+                $qb->expr()->gte('c.left', ':left'),
+                $qb->expr()->lt('c.left', ':right')
+            ))
+            ->setParameter('left', $entity->getLeft())
+            ->setParameter('right', $entity->getRight())
+        ;
+        $posts = $qb->getQuery()->getResult();
 
         return $this->render('BWBlogBundle:Category:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'posts' => $posts,
         ));
     }
 

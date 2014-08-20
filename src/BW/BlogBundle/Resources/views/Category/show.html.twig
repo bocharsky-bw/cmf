@@ -1,74 +1,35 @@
 {% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}{{ entity.title ? entity.title : entity.heading }}{% endblock %}
+
+{% block description %}{{ entity.metaDescription ? entity.metaDescription }}{% endblock %}
 
 {% block content_wrap -%}
-    <h1>Category</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Heading</th>
-                <td>{{ entity.heading }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ entity.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Metadescription</th>
-                <td>{{ entity.metaDescription }}</td>
-            </tr>
-            <tr>
-                <th>Shortdescription</th>
-                <td>{{ entity.shortDescription }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Published</th>
-                <td>{{ entity.published }}</td>
-            </tr>
-            <tr>
-                <th>Order</th>
-                <td>{{ entity.order }}</td>
-            </tr>
-            <tr>
-                <th>Level</th>
-                <td>{{ entity.level }}</td>
-            </tr>
-            <tr>
-                <th>Left</th>
-                <td>{{ entity.left }}</td>
-            </tr>
-            <tr>
-                <th>Right</th>
-                <td>{{ entity.right }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('category') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('category_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <div class="category">
+        <h1>{{ entity.heading }}</h1>
+        <div class="description">
+            {{ entity.description }}
+        </div>
+    </div>
+    {% if posts is defined %}
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post">
+                    <h2>
+                        <a href="{{ app.request.getUriForPath(post.route.path) }}">
+                            {{ post.heading }}
+                        </a>
+                    </h2>
+                    <div class="short_description">
+                        {{ post.shortDescription|raw }}
+                    </div>
+                    <div class="more">
+                        <a class="btn btn-primary" href="{{ app.request.getUriForPath(post.route.path) }}">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
