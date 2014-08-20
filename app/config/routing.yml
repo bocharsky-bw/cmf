@@ -29,3 +29,6 @@ bw_default:
 bw_router:
     resource: "@BWRouterBundle/Resources/config/routing.yml"
     prefix:   /
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
