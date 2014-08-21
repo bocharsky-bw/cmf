@@ -18,14 +18,27 @@ class UserController extends Controller
     /**
      * Lists all User entities.
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWUserBundle:User')->findAll();
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWUserBundle:User')->createQueryBuilder('u');
+        $qb
+            ->addSelect('p')
+            ->addSelect('r')
+            ->leftJoin('u.profile', 'p')
+            ->leftJoin('u.roles', 'r')
+        ;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWUserBundle:User:index.html.twig', array(
-            'entities' => $entities,
+            'pagination' => $pagination,
         ));
     }
 

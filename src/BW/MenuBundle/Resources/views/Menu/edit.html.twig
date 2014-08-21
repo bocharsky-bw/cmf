@@ -18,29 +18,30 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Адрес URL</th>
+                <th class="{{ pagination.isSorted('i.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'i.id') }}</th>
+                <th class="{{ pagination.isSorted('i.name') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Название', 'i.name') }}</th>
                 <th>Класс CSS</th>
                 <th>Опубликовано</th>
                 <th>Порядок</th>
             </tr>
         </thead>
         <tbody>
-        {% for item in items %}
+        {% for item in pagination %}
             <tr>
-                <td>{{ item.id }}</td>
-                <td>
+                <td class="{{ pagination.isSorted('i.id') ? 'active' }}">{{ item.id }}</td>
+                <td class="{{ pagination.isSorted('i.name') ? 'active' }}">
                     {{ '|— '|repeat(item.level) }}
                     <a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}" title="Редактировать запись">
                         {{ item.name }}
+                    </a><br/>
+                    <a href="{{ item.isInternalUri()
+                        ? app.request.getUriForPath(item.route ? item.route.path : item.uri)
+                        : item.uri
+                    }}" title="Перейти по адресу">
+                        <small class="fa fa-share-square-o">
+                            {{ item.route ? item.route.path : item.uri }}
+                        </small>
                     </a>
-                </td>
-                <td>
-                    <a href="{{ app.request.getUriForPath(item.route ? item.route.path : item.uri) }}" title="Перейти на страницу пункта меню">
-                        <span class="fa fa-share-square-o"></span>
-                    </a>
-                    <small>{{ item.route ? item.route.path : item.uri }}</small>
                 </td>
                 <td>{{ item.class }}</td>
                 <td><span class="{{ item.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
@@ -49,5 +50,10 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="count">
+        Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
+    </div>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

@@ -12,31 +12,30 @@
             </a>
         </li>
     </ul>
-
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Заголовок</th>
+                <th class="{{ pagination.isSorted('p.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'p.id') }}</th>
+                <th class="{{ pagination.isSorted('p.heading') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Заголовок', 'p.heading') }}</th>
                 <th>Синоним URL</th>
                 <th>Категория</th>
                 <th>Опубликовано</th>
                 <th>Главная</th>
-                <th>Создано</th>
-                <th>Обновлено</th>
+                <th class="{{ pagination.isSorted('p.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'p.created') }}</th>
+                <th class="{{ pagination.isSorted('p.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'p.updated') }}</th>
                 <th>Порядок</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for entity in pagination %}
             <tr>
-                <td>{{ entity.id }}</td>
-                <td>
+                <td class="{{ pagination.isSorted('p.id') ? 'active' }}">{{ entity.id }}</td>
+                <td class="{{ pagination.isSorted('p.heading') ? 'active' }}">
                     <a href="{{ path('post_edit', { 'id': entity.id }) }}" title="Редактировать запись">
                         {{ entity.heading ? entity.heading : '< no heading >' }}
                     </a><br/>
                     <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
-                        <small class="fa fa-share-square-o" title="Перейти на страницу">
+                        <small class="fa fa-share-square-o">
                             {{ entity.route.path }}
                         </small>
                     </a>
@@ -53,14 +52,14 @@
                 </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td><span class="{{ entity.home ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td>
+                <td class="{{ pagination.isSorted('p.created') ? 'active' }}">
                     {% if entity.created %}
                         <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
                             {{ entity.created|date('d/m/Y') }}
                         </abbr>
                     {% endif %}
                 </td>
-                <td>
+                <td class="{{ pagination.isSorted('p.updated') ? 'active' }}">
                     {% if entity.updated %}
                         <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
                             {{ entity.updated|date('d/m/Y') }}
@@ -72,4 +71,10 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="count">
+        Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
+    </div>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

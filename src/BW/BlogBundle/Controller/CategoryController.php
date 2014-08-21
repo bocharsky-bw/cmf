@@ -20,16 +20,26 @@ class CategoryController extends Controller
     /**
      * Lists all Category entities.
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWBlogBundle:Category')->findBy(array(), array(
-            'left' => 'ASC',
-        ));
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWBlogBundle:Category')->createQueryBuilder('c');
+        $qb
+            ->addSelect('r')
+            ->innerJoin('c.route', 'r')
+            ->orderBy('c.left', 'ASC')
+        ;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWBlogBundle:Category:index.html.twig', array(
-            'entities' => $entities,
+            'pagination' => $pagination,
         ));
     }
 

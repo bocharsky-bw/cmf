@@ -114,28 +114,34 @@ class MenuController extends Controller
     /**
      * Displays a form to edit an existing Menu entity.
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWMenuBundle:Menu')->find($id);
-        $items = $em->getRepository('BWMenuBundle:Item')->findBy(array(
-            'menu' => $entity,
-        ), array(
-            'left' => 'ASC',
-        ));
-
-
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Menu entity.');
         }
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWMenuBundle:Item')->createQueryBuilder('i');
+        $qb
+            ->where($qb->expr()->eq('i.menu', $entity->getId()))
+            ->orderBy('i.left', 'ASC')
+        ;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BWMenuBundle:Menu:edit.html.twig', array(
             'entity' => $entity,
-            'items' => $items,
+            'pagination' => $pagination,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

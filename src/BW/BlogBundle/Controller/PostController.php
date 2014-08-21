@@ -19,14 +19,27 @@ class PostController extends Controller
     /**
      * Lists all Post entities.
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWBlogBundle:Post')->findAll();
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWBlogBundle:Post')->createQueryBuilder('p');
+        $qb
+            ->addSelect('c')
+            ->addSelect('r')
+            ->leftJoin('p.category', 'c')
+            ->innerJoin('p.route', 'r')
+        ;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWBlogBundle:Post:index.html.twig', array(
-            'entities' => $entities,
+            'pagination' => $pagination,
         ));
     }
 

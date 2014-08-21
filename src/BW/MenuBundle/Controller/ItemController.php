@@ -16,21 +16,21 @@ use BW\MenuBundle\Form\ItemType;
 class ItemController extends Controller
 {
 
-    /**
-     * Lists all Item entities.
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('BWMenuBundle:Item')->findBy(array(), array(
-            'left' => 'ASC',
-        ));
-
-        return $this->render('BWMenuBundle:Item:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
+//    /**
+//     * Lists all Item entities.
+//     */
+//    public function indexAction()
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entities = $em->getRepository('BWMenuBundle:Item')->findBy(array(), array(
+//            'left' => 'ASC',
+//        ));
+//
+//        return $this->render('BWMenuBundle:Item:index.html.twig', array(
+//            'entities' => $entities,
+//        ));
+//    }
 
     /**
      * Creates a new Item entity.

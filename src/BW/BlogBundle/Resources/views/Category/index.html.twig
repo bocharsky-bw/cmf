@@ -16,21 +16,21 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Заголовок</th>
+                <th class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'c.id') }}</th>
+                <th class="{{ pagination.isSorted('c.heading') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Заголовок', 'c.heading') }}</th>
                 <th>Синоним URL</th>
                 <th>Родительская категория</th>
                 <th>Опубликовано</th>
-                <th>Создано</th>
-                <th>Обновлено</th>
+                <th class="{{ pagination.isSorted('c.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'c.created') }}</th>
+                <th class="{{ pagination.isSorted('c.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'c.updated') }}</th>
                 <th>Порядок</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for entity in pagination %}
             <tr>
-                <td>{{ entity.id }}</a></td>
-                <td>
+                <td class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ entity.id }}</a></td>
+                <td class="{{ pagination.isSorted('c.heading') ? 'active' }}">
                     {{ '|— '|repeat(entity.level) }}
                     <a href="{{ path('category_edit', { 'id': entity.id }) }}" title="Редактировать запись">
                         {{ entity.heading }}
@@ -52,14 +52,14 @@
                     {% endif %}
                 </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td>
+                <td class="{{ pagination.isSorted('c.created') ? 'active' }}">
                     {% if entity.created %}
                         <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
                             {{ entity.created|date('d/m/Y') }}
                         </abbr>
                     {% endif %}
                 </td>
-                <td>
+                <td class="{{ pagination.isSorted('c.updated') ? 'active' }}">
                     {% if entity.updated %}
                         <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
                             {{ entity.updated|date('d/m/Y') }}
@@ -71,4 +71,10 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="count">
+        Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
+    </div>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

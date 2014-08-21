@@ -8,7 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Item
+ * Class Item
+ * @package BW\MenuBundle\Entity
  */
 class Item implements NestedSetInterface
 {
@@ -116,6 +117,16 @@ class Item implements NestedSetInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Whether URI is internal
+     *
+     * @return bool
+     */
+    public function isInternalUri()
+    {
+        return ! ($this->getUri() && preg_match('@^https?://@', $this->getUri()));
     }
 
 
