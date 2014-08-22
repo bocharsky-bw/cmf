@@ -60,14 +60,14 @@ class CategoryType extends AbstractType
                 'required' => false,
                 'label' => 'Короткое описание ',
                 'attr' => array(
-                    'class' => 'form-control',
+                    'class' => 'form-control ckeditor',
                 ),
             ))
             ->add('description', 'textarea', array(
                 'required' => false,
                 'label' => 'Полное описание ',
                 'attr' => array(
-                    'class' => 'form-control',
+                    'class' => 'form-control ckeditor',
                 ),
             ))
             ->add('created', 'datetime', array(

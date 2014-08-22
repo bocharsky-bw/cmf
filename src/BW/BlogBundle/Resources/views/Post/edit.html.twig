@@ -2,6 +2,15 @@
 
 {% block title %}Редактирование статьи{% endblock %}
 
+{% block js %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var ckeditor = $('textarea.ckeditor').ckeditor();
+        });
+    </script>
+{% endblock %}
+
 {% block content_wrap -%}
     <h1><i class="fa fa-edit"></i> Редактирование статьи</h1>
 

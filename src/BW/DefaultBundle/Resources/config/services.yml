@@ -1,7 +1,7 @@
 parameters:
 #    bw_default.example.class: BW\DefaultBundle\Example
     bw_default.service.transliterating.alphabet_overridden: {"А": "A"}
-    bw_default.event_listener.sluggable.denied_characters: '/[^0-9A-Za-z_-]/'
+    bw_default.event_listener.sluggable.denied_characters: '*[^#/0-9A-Za-z_-]*'
     bw_default.event_listener.sluggable.to_lower: true
 
 services:

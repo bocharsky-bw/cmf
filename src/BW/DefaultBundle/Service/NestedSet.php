@@ -2,6 +2,7 @@
 
 namespace BW\DefaultBundle\Service;
 
+use BW\DefaultBundle\Entity\NestedSetInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\EntityManager;
 
