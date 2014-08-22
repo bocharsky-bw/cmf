@@ -47,5 +47,5 @@ BW\BlogBundle\Entity\Post:
             inversedBy: posts
         route:
             targetEntity: BW\RouterBundle\Entity\Route
-            cascade: [remove]
+            cascade: [persist, remove]
     lifecycleCallbacks: {}

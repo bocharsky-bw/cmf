@@ -61,13 +61,6 @@ class CategoryController extends Controller
 
             $em->flush();
 
-            /* Route */
-            $route = new Route();
-            $route->handleEntity($entity);
-            $em->persist($route);
-            $em->flush();
-            /* /Route */
-
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
             } elseif ($form->get('createAndShow')->isClicked()) {
@@ -217,10 +210,6 @@ class CategoryController extends Controller
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('category'));
             }
-            $em->flush();
-
-            // Route
-            $entity->getRoute()->handleEntity($entity);
 
             // Regenerate nested set
             $this->get('bw_default.service.nested_set')->regenerate('BWBlogBundle:Category');

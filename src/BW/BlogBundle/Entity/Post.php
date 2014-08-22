@@ -102,8 +102,9 @@ class Post implements RouteInterface, SluggableInterface
     public function generatePath()
     {
         $slug = $this->getSlug();
+        $first = isset($slug[0]) ? $slug[0] : '';
 
-        if (0 !== strcmp('/', $slug[0])) {
+        if (0 !== strcmp('/', $first)) {
             $segments = array();
             $parent = $this->getCategory();
 

@@ -55,14 +55,7 @@ class PostController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-            $em->flush(); // сохраняем в БД чтобы получить ID элемента для роута
-
-            /* Route */
-            $route = new Route();
-            $route->handleEntity($entity);
-            $em->persist($route);
             $em->flush();
-            /* /Route */
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('post'));
@@ -198,11 +191,6 @@ class PostController extends Controller
                 $this->delete($entity->getId());
                 return $this->redirect($this->generateUrl('post'));
             }
-            $em->flush();
-
-            /* Route */
-            $entity->getRoute()->handleEntity($entity);
-            /* /Route */
 
             $em->flush();
 
