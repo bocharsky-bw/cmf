@@ -2,7 +2,7 @@
 
 namespace BW\DefaultBundle\EventListener;
 
-use BW\DefaultBundle\EventListener\SluggableInterface;
+use BW\DefaultBundle\Entity\SluggableInterface;
 use BW\DefaultBundle\Service\TransliteratingService;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;

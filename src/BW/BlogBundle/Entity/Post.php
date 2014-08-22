@@ -2,7 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
-use BW\DefaultBundle\EventListener\SluggableInterface;
+use BW\DefaultBundle\Entity\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
 use BW\UploadBundle\Entity\Image;

@@ -3,7 +3,7 @@
 namespace BW\MenuBundle\Entity;
 
 use BW\RouterBundle\Entity\Route;
-use BW\DefaultBundle\Service\NestedSetInterface;
+use BW\DefaultBundle\Entity\NestedSetInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 

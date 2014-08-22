@@ -103,8 +103,8 @@ class NestedSet {
         foreach ($entities as $entity) {
             if ( ! ($entity instanceof NestedSetInterface)) {
                 throw new \UnexpectedValueException(''
-                    . 'The entity must implement a "BW\DefaultBundle\Service\NestedSetInterface" interface '
-                    . 'for determine positions'
+                    . 'The entity must implement a "BW\DefaultBundle\Entity\NestedSetInterface" interface '
+                    . 'for determine positions.'
                 );
             }
             $entity_id = (int)$entity->getId();
@@ -146,8 +146,8 @@ class NestedSet {
         foreach ($nodes as $node) {
             if ( ! ($node['entity'] instanceof NestedSetInterface)) {
                 throw new \UnexpectedValueException(''
-                    . 'The entity must implement a "BW\DefaultBundle\Service\NestedSetInterface" interface '
-                    . 'to determine positions'
+                    . 'The entity must implement a "BW\DefaultBundle\Entity\NestedSetInterface" interface '
+                    . 'to determine positions.'
                 );
             }
             if ($node['children']) { // If children exists

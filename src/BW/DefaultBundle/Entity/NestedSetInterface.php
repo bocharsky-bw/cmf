@@ -1,7 +1,11 @@
 <?php
 
-namespace BW\DefaultBundle\Service;
+namespace BW\DefaultBundle\Entity;
 
+/**
+ * Interface NestedSetInterface
+ * @package BW\DefaultBundle\Entity
+ */
 interface NestedSetInterface
 {
     /**

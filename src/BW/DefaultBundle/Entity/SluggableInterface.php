@@ -1,10 +1,10 @@
 <?php
 
-namespace BW\DefaultBundle\EventListener;
+namespace BW\DefaultBundle\Entity;
 
 /**
  * Interface SluggableInterface
- * @package BW\DefaultBundle\Service
+ * @package BW\DefaultBundle\Entity
  */
 interface SluggableInterface
 {

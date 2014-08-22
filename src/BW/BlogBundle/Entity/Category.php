@@ -2,10 +2,10 @@
 
 namespace BW\BlogBundle\Entity;
 
-use BW\DefaultBundle\EventListener\SluggableInterface;
+use BW\DefaultBundle\Entity\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
-use BW\DefaultBundle\Service\NestedSetInterface;
+use BW\DefaultBundle\Entity\NestedSetInterface;
 use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 
