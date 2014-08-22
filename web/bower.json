@@ -1,0 +1,30 @@
+{
+  "name": "cmf",
+  "version": "1.0.0",
+  "homepage": "https://github.com/bocharsky-bw/cmf",
+  "authors": [
+    "victor <bocharsky.bw@gmail.com>"
+  ],
+  "description": "The CMF sandbox based on Symfony Standart Edition",
+  "main": "app.php",
+  "keywords": [
+    "cmf",
+    "cms",
+    "symfony",
+    "sandbox"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.2.0",
+    "fontawesome": "~4.1.0",
+    "ckeditor": "~4.4.4"
+  }
+}

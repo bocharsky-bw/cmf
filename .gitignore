@@ -13,5 +13,6 @@
 *.DS_Store
 *~
 /.idea/
+/web/bower_components/
 /web/cache/
 /web/uploads/
