@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        var ckeditor = [];
+        var ckfinder = [];
+        $('textarea.ckeditor').each(function(){
+            var id = $(this).attr('id'); // Get ID of current field
+            // Instantiating CKEditor
+            ckeditor[id] = $(this).ckeditor();
+            // Instantiating CKFinder with bind to CKEditor instance
+            ckfinder[id] = CKFinder.setupCKEditor(ckeditor[id].editor, '{{ asset('libs/ckfinder/') }}');
+        });
+    });
+</script>

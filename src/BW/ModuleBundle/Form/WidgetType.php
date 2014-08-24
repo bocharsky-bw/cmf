@@ -45,7 +45,7 @@ class WidgetType extends AbstractType
                 'required' => false,
                 'label' => 'Полное описание ',
                 'attr' => array(
-                    'class' => 'form-control',
+                    'class' => 'form-control ckeditor',
                 ),
             ))
             ->add('order', 'number', array(

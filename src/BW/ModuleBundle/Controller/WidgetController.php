@@ -84,8 +84,10 @@ class WidgetController extends Controller
     /**
      * Displays a form to create a new Widget entity.
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
+        $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
+
         $entity = new Widget();
         $form   = $this->createCreateForm($entity);
 
@@ -119,8 +121,9 @@ class WidgetController extends Controller
     /**
      * Displays a form to edit an existing Widget entity.
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
+        $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);

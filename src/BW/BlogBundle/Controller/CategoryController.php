@@ -99,8 +99,10 @@ class CategoryController extends Controller
     /**
      * Displays a form to create a new Category entity.
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
+        $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
+
         $entity = new Category();
         $form   = $this->createCreateForm($entity);
 
@@ -147,8 +149,9 @@ class CategoryController extends Controller
     /**
      * Displays a form to edit an existing Category entity.
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
+        $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWBlogBundle:Category')->find($id);

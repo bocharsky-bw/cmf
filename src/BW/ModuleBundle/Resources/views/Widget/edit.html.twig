@@ -2,6 +2,11 @@
 
 {% block title %}Редактирование виджета{% endblock %}
 
+{% block js %}
+    {{ parent() }}
+    {% include 'BWDefaultBundle:CKSource:ckeditor-with-ckfinder.html.twig' %}
+{% endblock %}
+
 {% block content_wrap -%}
     <h1><i class="fa fa-edit"></i> Редактирование виджета</h1>
 
