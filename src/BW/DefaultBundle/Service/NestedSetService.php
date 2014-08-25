@@ -10,13 +10,8 @@ use Doctrine\ORM\EntityManager;
  * Class NestedSetService
  * @package BW\DefaultBundle\Service
  */
-class NestedSetService {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager The Doctrine entity manager object
-     */
-    private $em;
-
+class NestedSetService
+{
     /**
      * @var array The entity array, grouped by parent ID
      */
@@ -43,9 +38,8 @@ class NestedSetService {
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em, Logger $logger)
+    public function __construct(Logger $logger)
     {
-        $this->em = $em;
         $this->logger = $logger;
         $this->logger->debug(sprintf(
             'Loaded service "%s".',
@@ -59,11 +53,11 @@ class NestedSetService {
      *
      * @param string $entityName The entity name, like <b>AcmeDemoBundle:EntityName</b>
      */
-    public function regenerate($entityName)
+    public function regenerate(EntityManager $em, $entityName)
     {
-        $this->em->flush(); // save to DB all unsaved entities
+        $em->flush(); // save to DB all unsaved entities
 
-        $entities = $this->em->getRepository($entityName)->findBy(array(), array(
+        $entities = $em->getRepository($entityName)->findBy(array(), array(
             'order' => 'ASC',
         )); // fetch from DB
         if ($entities) {
@@ -83,7 +77,7 @@ class NestedSetService {
 
             // Order entities
             $this->order($this->nestedEntities);
-            $this->em->flush(); // save to DB
+            $em->flush(); // save to DB
         }
     }
 

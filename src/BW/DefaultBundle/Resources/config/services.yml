@@ -17,7 +17,7 @@ services:
 
     bw_default.service.nested_set:
         class: BW\DefaultBundle\Service\NestedSetService
-        arguments: ["@doctrine.orm.entity_manager", "@logger"]
+        arguments: ["@logger"]
 
     bw_default.service.transliterating:
         class: BW\DefaultBundle\Service\TransliteratingService
@@ -32,3 +32,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+#    bw_default.event_listener.nested_set_generating:
+#        class: BW\DefaultBundle\EventListener\NestedSetGeneratingEventListener
+#        arguments: ["@bw_default.service.nested_set", "@logger"]
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist }
+#            - { name: doctrine.event_listener, event: postUpdate }

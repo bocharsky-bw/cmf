@@ -57,7 +57,7 @@ class CategoryController extends Controller
             $em->persist($entity);
 
             // Regenerate nested set
-            $this->get('bw_default.service.nested_set')->regenerate('BWBlogBundle:Category');
+            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
 
@@ -215,7 +215,7 @@ class CategoryController extends Controller
             }
 
             // Regenerate nested set
-            $this->get('bw_default.service.nested_set')->regenerate('BWBlogBundle:Category');
+            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
 

@@ -63,16 +63,12 @@ class RoutingEventListener
     private function handleEntity(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $em = $args->getEntityManager();
         if ($entity instanceof RouteInterface) {
             if (null === $entity->getRoute()) {
                 $entity->setRoute(new Route());
-                $em->persist($entity);
             }
 
             $entity->getRoute()->handleEntity($entity);
-
-            $em->flush();
         }
     }
 }
