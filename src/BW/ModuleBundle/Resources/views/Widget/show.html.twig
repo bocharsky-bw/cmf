@@ -1,2 +1,7 @@
-<h3>{{ widget.heading }}</h3>
+<h3>
+    {{ widget.heading }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('widget_edit', {'id': widget.id}) }}"><i class="fa fa-edit"></i></a>
+    {% endif %}
+</h3>
 <div>{{ widget.description|raw }}</div>
