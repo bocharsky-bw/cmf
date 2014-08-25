@@ -64,7 +64,7 @@ class CategoryController extends Controller
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
             } elseif ($form->get('createAndShow')->isClicked()) {
-                return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+                return $this->redirect($request->getUriForPath($entity->getRoute()->getPath()));
             }
 
             return $this->redirect($this->generateUrl('category_edit', array('id' => $entity->getId())));
@@ -222,7 +222,7 @@ class CategoryController extends Controller
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
             } elseif ($editForm->get('updateAndShow')->isClicked()) {
-                return $this->redirect($this->generateUrl('category_show', array('id' => $id)));
+                return $this->redirect($request->getUriForPath($entity->getRoute()->getPath()));
             }
 
             return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
