@@ -76,22 +76,29 @@ class PositionService
             ->createQueryBuilder('w')
         ;
         $widgets = $qb
+            ->addSelect('p')
+            ->addSelect('wr')
+            ->addSelect('wr2')
+            ->innerJoin('w.position', 'p')
             ->leftJoin('w.widgetRoutes', 'wr')
             ->leftJoin('w.widgetRoutes', 'wr2', Join::WITH, $qb->expr()->andx(
                 $qb->expr()->eq('wr2.widget', 'w.id'),
                 $qb->expr()->eq('wr2.route', $currentRouteId)
             ))
-            ->where($qb->expr()->eq('w.published', '1'))
+            ->where($qb->expr()->eq('w.published', 1))
+            ->andWhere($qb->expr()->eq('w.position', ':position'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->andX(
                     $qb->expr()->eq('w.visibility', 0),
-                    $qb->expr()->eq('wr.route', $currentRouteId)
+                    $qb->expr()->eq('wr.route', ':route_id')
                 ),
                 $qb->expr()->andX(
                     $qb->expr()->eq('w.visibility', 1),
                     $qb->expr()->isNull('wr2.id')
                 )
             ))
+            ->setParameter('position', $position)
+            ->setParameter('route_id', $currentRouteId)
             ->groupBy('w.id')
             ->orderBy('w.order', 'ASC')
             ->getQuery()
