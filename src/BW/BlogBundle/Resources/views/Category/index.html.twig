@@ -21,6 +21,7 @@
                 <th>Синоним URL</th>
                 <th>Родительская категория</th>
                 <th>Опубликовано</th>
+                <th>Главная</th>
                 <th class="{{ pagination.isSorted('c.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'c.created') }}</th>
                 <th class="{{ pagination.isSorted('c.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'c.updated') }}</th>
                 <th>Порядок</th>
@@ -52,6 +53,7 @@
                     {% endif %}
                 </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td><span class="{{ '/' ~ home_page_path  == entity.route.path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td class="{{ pagination.isSorted('c.created') ? 'active' }}">
                     {% if entity.created %}
                         <abbr title="{{ entity.created|date('Создано в H:i:s') }}">

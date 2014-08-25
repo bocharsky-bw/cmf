@@ -58,7 +58,7 @@ class CategoryType extends AbstractType
             ))
             ->add('shortDescription', 'textarea', array(
                 'required' => false,
-                'label' => 'Короткое описание ',
+                'label' => 'Краткое описание ',
                 'attr' => array(
                     'class' => 'form-control ckeditor',
                 ),

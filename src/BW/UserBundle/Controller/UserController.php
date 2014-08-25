@@ -256,7 +256,7 @@ class UserController extends Controller
     public function signUpAction(Request $request)
     {
         if ($this->getUser()) {
-            return $this->redirect($this->generateUrl('home'));
+            return $this->redirect($this->generateUrl('index'));
         }
 
         $user = new User();
@@ -292,7 +292,7 @@ class UserController extends Controller
     public function signInAction(Request $request)
     {
         if ($this->getUser()) {
-            return $this->redirect($this->generateUrl('home'));
+            return $this->redirect($this->generateUrl('index'));
         }
 
         $session = $request->getSession();
@@ -324,6 +324,6 @@ class UserController extends Controller
 
     public function signInCheckAction()
     {
-        return $this->redirect($this->generateUrl('home'));
+        return $this->redirect($this->generateUrl('index'));
     }
 }

@@ -2,6 +2,10 @@ admin:
     path:     /_admin/
     defaults: { _controller: BWDefaultBundle:Default:admin }
 
-home:
+index:
     path:     /
     defaults: { _controller: BWDefaultBundle:Default:index }
+
+home:
+    path:     /%home_page_path%
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: index, permanent: true }

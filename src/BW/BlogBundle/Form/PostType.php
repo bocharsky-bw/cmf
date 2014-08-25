@@ -40,10 +40,6 @@ class PostType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('home', 'checkbox', array(
-                'required' => false,
-                'label' => 'Главная ',
-            ))
             ->add('heading', 'text', array(
                 'required' => true,
                 'label' => 'Заголовок ',
@@ -53,7 +49,7 @@ class PostType extends AbstractType
             ))
             ->add('shortDescription', 'textarea', array(
                 'required' => false,
-                'label' => 'Короткое описание ',
+                'label' => 'Краткое описание ',
                 'attr' => array(
                     'class' => 'form-control ckeditor',
                 ),

@@ -51,7 +51,7 @@
                     {% endif %}
                 </td>
                 <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td><span class="{{ entity.home ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td><span class="{{ '/' ~ home_page_path == entity.route.path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                 <td class="{{ pagination.isSorted('p.created') ? 'active' }}">
                     {% if entity.created %}
                         <abbr title="{{ entity.created|date('Создано в H:i:s') }}">

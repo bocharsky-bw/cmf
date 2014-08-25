@@ -54,11 +54,6 @@ class Post implements RouteInterface, SluggableInterface
     private $published = true;
 
     /**
-     * @var boolean $home
-     */
-    private $home = false;
-
-    /**
      * @var integer $order
      */
     private $order = 0;
@@ -332,39 +327,6 @@ class Post implements RouteInterface, SluggableInterface
     public function getPublished()
     {
         return $this->published;
-    }
-
-    /**
-     * Set home
-     *
-     * @param boolean $home
-     * @return Post
-     */
-    public function setHome($home)
-    {
-        $this->home = $home;
-
-        return $this;
-    }
-
-    /**
-     * Is home
-     *
-     * @return boolean
-     */
-    public function isHome()
-    {
-        return $this->home;
-    }
-
-    /**
-     * Get home
-     *
-     * @return boolean
-     */
-    public function getHome()
-    {
-        return $this->home;
     }
 
     /**

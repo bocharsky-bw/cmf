@@ -1,0 +1,3 @@
+twig:
+    globals:
+        home_page_path: %home_page_path%
