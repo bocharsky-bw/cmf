@@ -137,7 +137,7 @@ class Position
      * @param \BW\ModuleBundle\Entity\Widget $widgets
      * @return Position
      */
-    public function addWidget(\BW\ModuleBundle\Entity\Widget $widgets)
+    public function addWidget(Widget $widgets)
     {
         $this->widgets[] = $widgets;
 
@@ -149,7 +149,7 @@ class Position
      *
      * @param \BW\ModuleBundle\Entity\Widget $widgets
      */
-    public function removeWidget(\BW\ModuleBundle\Entity\Widget $widgets)
+    public function removeWidget(Widget $widgets)
     {
         $this->widgets->removeElement($widgets);
     }

@@ -26,6 +26,11 @@ class Menu
     private $alias = '';
 
     /**
+     * @var string
+     */
+    private $description = '';
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $items;
@@ -99,12 +104,35 @@ class Menu
     }
 
     /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Menu
+     */
+    public function setDescription($description)
+    {
+        $this->description = isset($description) ? $description : '';
+
+        return $this;
+    }
+
+    /**
      * Add items
      *
      * @param \BW\MenuBundle\Entity\Item $items
      * @return Menu
      */
-    public function addItem(\BW\MenuBundle\Entity\Item $items)
+    public function addItem(Item $items)
     {
         $this->items[] = $items;
 
@@ -116,7 +144,7 @@ class Menu
      *
      * @param \BW\MenuBundle\Entity\Item $items
      */
-    public function removeItem(\BW\MenuBundle\Entity\Item $items)
+    public function removeItem(Item $items)
     {
         $this->items->removeElement($items);
     }

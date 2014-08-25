@@ -11,6 +11,8 @@ BW\ModuleBundle\Entity\Widget:
         heading:
             type: string
             length: 255
+        shortDescription:
+            type: text
         description:
             type: text
         published:
@@ -28,4 +30,4 @@ BW\ModuleBundle\Entity\Widget:
         position:
             targetEntity: BW\ModuleBundle\Entity\Position
             inversedBy: widgets
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

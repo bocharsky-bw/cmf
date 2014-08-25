@@ -27,6 +27,11 @@ class Role implements RoleInterface
     private $role = '';
 
     /**
+     * @var string $description
+     */
+    private $description = '';
+
+    /**
      * @var ArrayCollection $users
      */
     private $users;
@@ -95,6 +100,29 @@ class Role implements RoleInterface
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Role
+     */
+    public function setDescription($description)
+    {
+        $this->description = isset($description) ? $description : '';
+
+        return $this;
     }
 
     /**

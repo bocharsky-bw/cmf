@@ -50,26 +50,28 @@
                                     <ul class="nav navbar-nav">
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
-                                        <li>
-                                            <a href="{{ path('admin') }}">
-                                                <i class="fa fa-windows"></i> Панель управления
-                                            </a>
-                                        </li>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li>
+                                                <a href="{{ path('admin') }}">
+                                                    <i class="fa fa-apple"></i> Панель управления
+                                                </a>
+                                            </li>
+                                        {% endif %}
                                         {% if app.user %}
                                             <li>
-                                                <a href="{#{ path('user_sign_out') }#}">
-                                                    <i class="fa fa-sign-out"></i> Sign out
+                                                <a href="{{ path('user_sign_out') }}">
+                                                    <i class="fa fa-sign-out"></i> Выйти
                                                 </a>
                                             </li>
                                         {% else %}
                                             <li>
-                                                <a href="{#{ path('user_sign_in') }#}">
-                                                    <i class="fa fa-sign-in"></i> Sign in
+                                                <a href="{{ path('user_sign_in') }}">
+                                                    <i class="fa fa-sign-in"></i> Войти
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{#{ path('user_sign_up') }#}">
-                                                    <i class="fa fa-key"></i> Sign up
+                                                <a href="{{ path('user_sign_up') }}">
+                                                    <i class="fa fa-key"></i> Зарегистрироваться
                                                 </a>
                                             </li>
                                         {% endif %}

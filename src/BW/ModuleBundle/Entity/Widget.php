@@ -26,6 +26,11 @@ class Widget
     /**
      * @var string
      */
+    private $shortDescription = '';
+
+    /**
+     * @var string
+     */
     private $description = '';
 
     /**
@@ -93,6 +98,29 @@ class Widget
     public function getHeading()
     {
         return $this->heading;
+    }
+
+    /**
+     * Get shortDescription
+     *
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * Set shortDescription
+     *
+     * @param string $shortDescription
+     * @return Widget
+     */
+    public function setShortDescription($shortDescription)
+    {
+        $this->shortDescription = isset($shortDescription) ? $shortDescription : '';
+
+        return $this;
     }
 
     /**

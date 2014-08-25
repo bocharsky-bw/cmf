@@ -23,4 +23,4 @@ BW\ModuleBundle\Entity\Position:
             mappedBy: position
             orderBy:
                 order: ASC
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

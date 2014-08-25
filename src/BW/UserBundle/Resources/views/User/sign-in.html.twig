@@ -1,0 +1,41 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Авторизация{% endblock %}
+
+{% block content_wrap -%}
+    <div class="col-lg-6 col-lg-offset-3">
+        <h1>Авторизация</h1>
+
+        <form action="{{ path('user_sign_in_check') }}" method="post">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.message }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="username">Логин / E-mail</label>
+                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input class="form-control" type="password" id="password" name="_password" required="required" />
+            </div>
+
+            <div class="form-group">
+                {#<input type="hidden" name="_target_path" value="home" />#}
+                <input class="btn btn-primary" type="submit" name="login" value="Авторизоваться" />
+            </div>
+
+            <div>
+                <p>
+                    <a href="{#{ path('user_password_reset') }#}">Забыли пароль?</a>
+                </p>
+                <p>
+                    <a href="{{ path('user_sign_up') }}">Зарегистрироваться</a> как новый пользователь.
+                </p>
+            </div>
+        </form>
+    </div>
+{% endblock %}

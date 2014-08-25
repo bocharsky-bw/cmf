@@ -3,7 +3,7 @@
 {% block title %}Список ролей{% endblock %}
 
 {% block content_wrap -%}
-    <h1><i class="fa fa-list-alt"></i> Список ролей</h1>
+    <h1><i class="fa fa-lock"></i> Список ролей</h1>
 
     <ul class="list-inline controls">
         <li>
@@ -23,6 +23,7 @@
                 <th>ID</th>
                 <th>Название</th>
                 <th>Роль</th>
+                <th>Описание</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                 <td>{{ entity.id }}</td>
                 <td><a href="{{ path('role_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.role }}</td>
+                <td>{{ entity.description }}</td>
             </tr>
         {% endfor %}
         </tbody>

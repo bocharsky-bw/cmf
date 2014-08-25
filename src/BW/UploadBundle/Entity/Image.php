@@ -61,14 +61,16 @@ class Image
     {
         return null === $this->filename
             ? null
-            : $this->getUploadRootDir() . '/' . $this->filename;
+            : $this->getUploadRootDir() . '/' . $this->filename
+        ;
     }
 
     public function getWebPath()
     {
         return null === $this->filename
             ? null
-            : $this->getUploadDir() . '/' . $this->filename;
+            : $this->getUploadDir() . '/' . $this->filename
+        ;
     }
 
     protected function getUploadRootDir()
@@ -235,11 +237,7 @@ class Image
      */
     public function setTitle($title)
     {
-        if(isset($title)) {
-            $this->title = $title;
-        } else {
-            $this->title = '';
-        }
+        $this->title = isset($title) ? $title : '';
 
         return $this;
     }
@@ -262,11 +260,7 @@ class Image
      */
     public function setAlt($alt)
     {
-        if(isset($alt)) {
-            $this->alt = $alt;
-        } else {
-            $this->alt = '';
-        }
+        $this->alt = isset($alt) ? $alt : '';
 
         return $this;
     }

@@ -99,6 +99,11 @@ class Post implements RouteInterface, SluggableInterface
     }
 
 
+    public function generateUpdatedDate()
+    {
+        $this->updated = new \DateTime();
+    }
+
     public function generatePath()
     {
         $slug = $this->getSlug();
@@ -485,10 +490,10 @@ class Post implements RouteInterface, SluggableInterface
      */
     public function setImage(Image $image = null)
     {
-        $this->image = $image;
-        if ( ! $this->image->getFile()) {
-            $this->image = null;
-        }
+        $this->image = isset($image)
+            ? (null !== $image->getFile() ? $image : null)
+            : null
+        ;
 
         return $this;
     }

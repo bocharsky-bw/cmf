@@ -7,10 +7,10 @@ use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Class NestedSet
- * @package BW\BlogBundle\Service
+ * Class NestedSetService
+ * @package BW\DefaultBundle\Service
  */
-class NestedSet {
+class NestedSetService {
 
     /**
      * @var \Doctrine\ORM\EntityManager The Doctrine entity manager object

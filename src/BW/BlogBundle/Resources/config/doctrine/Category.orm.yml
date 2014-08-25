@@ -62,4 +62,4 @@ BW\BlogBundle\Entity\Category:
             cascade: [persist, remove]
     lifecycleCallbacks:
         prePersist: [generateLevel]
-        preUpdate: [generateLevel]
+        preUpdate: [generateLevel, generateUpdatedDate]

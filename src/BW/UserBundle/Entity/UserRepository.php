@@ -15,7 +15,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         $qb = $this->createQueryBuilder('u');
         $q = $qb
-            ->select('u, r')
+            ->select('u')
+            ->addSelect('r')
             ->leftJoin('u.roles', 'r')
             ->where($qb->expr()->orX(
                 $qb->expr()->eq('u.username', ':username'),
@@ -87,23 +88,5 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             || $this->getEntityName() === $class
             || is_subclass_of($this->getEntityName(), $class)
         ;
-    }
-
-    public function findUsersForMailing($message_id, $limit = 1) {
-        $qb = $this->createQueryBuilder('u');
-        $result = $qb
-            ->leftJoin('u.mailing', 'ma')
-            ->innerJoin('u.roles', 'r')
-            ->innerJoin('r.messages', 'm')
-            ->where($qb->expr()->isNull('ma.user'))
-            ->andWhere($qb->expr()->eq('m.id', ':message_id'))
-            ->andWhere($qb->expr()->eq('m.sending', 1))
-            ->setParameter('message_id', $message_id)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult()
-        ;
-        
-        return $result;
     }
 }

@@ -29,6 +29,13 @@ class RoleType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('description', 'textarea', array(
+                'required' => true,
+                'label' => 'Описание ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
         ;
     }
     

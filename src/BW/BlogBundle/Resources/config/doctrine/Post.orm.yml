@@ -32,11 +32,11 @@ BW\BlogBundle\Entity\Post:
             type: datetime
         updated:
             type: datetime
-        home:
-            type: boolean
         order:
             column: ordering
             type: integer
+        home:
+            type: boolean
     oneToOne:
         image:
             targetEntity: BW\UploadBundle\Entity\Image
@@ -48,4 +48,5 @@ BW\BlogBundle\Entity\Post:
         route:
             targetEntity: BW\RouterBundle\Entity\Route
             cascade: [persist, remove]
-    lifecycleCallbacks: {}
+    lifecycleCallbacks:
+        preUpdate: [generateUpdatedDate]

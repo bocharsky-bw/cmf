@@ -14,9 +14,12 @@ BW\MenuBundle\Entity\Menu:
         alias:
             type: string
             length: 255
+        description:
+            type: string
+            length: 255
     oneToMany:
         items:
             targetEntity: BW\MenuBundle\Entity\Item
             mappedBy: menu
             cascade: [remove]
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

@@ -1,12 +1,12 @@
 <?php
 
-namespace BW\MenuBundle\Form;
+namespace BW\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MenuType extends AbstractType
+class UserSignUpType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,25 +15,31 @@ class MenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add('username', 'text', array(
                 'required' => true,
-                'label' => 'Название ',
+                'label' => 'Логин',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
-            ->add('alias', 'text', array(
+            ->add('email', 'text', array(
                 'required' => true,
-                'label' => 'Алиас ',
+                'label' => 'E-mail',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
-            ->add('description', 'textarea', array(
-                'required' => false,
-                'label' => 'Описание ',
+            ->add('password', 'password', array(
+                'required' => true,
+                'label' => 'Пароль ',
                 'attr' => array(
                     'class' => 'form-control',
+                ),
+            ))
+            ->add('register', 'submit', array(
+                'label' => 'Зарегистрироваться',
+                'attr' => array(
+                    'class' => 'btn btn-success',
                 ),
             ))
         ;
@@ -45,7 +51,7 @@ class MenuType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\MenuBundle\Entity\Menu'
+            'data_class' => 'BW\UserBundle\Entity\User'
         ));
     }
 
@@ -54,6 +60,6 @@ class MenuType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_menu';
+        return 'bw_user_sign_up';
     }
 }

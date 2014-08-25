@@ -41,6 +41,13 @@ class WidgetType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('shortDescription', 'textarea', array(
+                'required' => false,
+                'label' => 'Краткое описание ',
+                'attr' => array(
+                    'class' => 'form-control ckeditor',
+                ),
+            ))
             ->add('description', 'textarea', array(
                 'required' => false,
                 'label' => 'Полное описание ',

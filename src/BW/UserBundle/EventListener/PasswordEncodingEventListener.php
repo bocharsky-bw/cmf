@@ -6,7 +6,6 @@ use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use BW\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -48,11 +47,11 @@ class PasswordEncodingEventListener
             __METHOD__
         ));
 
-        /** @var UserInterface $entity */
+        /** @var \BW\UserBundle\Entity\User $entity */
         $entity = $args->getEntity();
         //$em = $args->getEntityManager();
 
-        if ($entity instanceof User) {
+        if ($entity instanceof UserInterface) {
             // If new User hasn't password
             if ( ! $entity->getPassword()) {
                 // Generate random password for security reasons
@@ -74,7 +73,7 @@ class PasswordEncodingEventListener
         $entity = $args->getEntity();
         //$em = $args->getEntityManager();
 
-        if ($entity instanceof User) {
+        if ($entity instanceof UserInterface) {
             if ($args->hasChangedField('password')) {
                 // If User password was changed
                 if ($args->getNewValue('password')) {
@@ -93,7 +92,7 @@ class PasswordEncodingEventListener
      * The user password hash
      *
      * @param UserInterface $entity The User object that implemented UserInterface
-     * @param $newPassword The new User password to encode
+     * @param string $newPassword The new User password to encode
      * @return string Encoded password hash
      */
     public function encodePassword(UserInterface $entity, $newPassword) {

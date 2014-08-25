@@ -1,0 +1,13 @@
+user_sign_up:
+    path:     /sign-up
+    defaults: { _controller: "BWUserBundle:User:signUp" }
+
+user_sign_in:
+    path:     /sign-in
+    defaults: { _controller: "BWUserBundle:User:signIn" }
+
+user_sign_in_check:
+    path:     /sign-in-check
+
+user_sign_out:
+    path:     /sign-out

@@ -128,6 +128,11 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     }
 
 
+    public function generateUpdatedDate()
+    {
+        $this->updated = new \DateTime();
+    }
+
     /**
      * Generate current nested level
      *
@@ -508,7 +513,7 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
      * @param \BW\BlogBundle\Entity\Category $children
      * @return Category
      */
-    public function addChild(\BW\BlogBundle\Entity\Category $children)
+    public function addChild(Category $children)
     {
         $this->children[] = $children;
 
@@ -520,7 +525,7 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
      *
      * @param \BW\BlogBundle\Entity\Category $children
      */
-    public function removeChild(\BW\BlogBundle\Entity\Category $children)
+    public function removeChild(Category $children)
     {
         $this->children->removeElement($children);
     }
@@ -621,10 +626,10 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
      */
     public function setImage(Image $image = null)
     {
-        $this->image = $image;
-        if ( ! $this->image->getFile()) {
-            $this->image = null;
-        }
+        $this->image = isset($image)
+            ? (null !== $image->getFile() ? $image : null)
+            : null
+        ;
 
         return $this;
     }

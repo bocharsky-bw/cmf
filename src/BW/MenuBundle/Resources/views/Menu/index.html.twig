@@ -3,7 +3,7 @@
 {% block title %}Список меню{% endblock %}
 
 {% block content_wrap -%}
-    <h1><i class="fa fa-list-alt"></i> Список меню</h1>
+    <h1><i class="fa fa-list"></i> Список меню</h1>
 
     <ul class="list-inline controls">
         <li>
@@ -19,6 +19,7 @@
                 <th>ID</th>
                 <th>Назвение</th>
                 <th>Алиас</th>
+                <th>Описание</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
                 <td>{{ entity.id }}</td>
                 <td><a href="{{ path('menu_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.alias }}</td>
+                <td>{{ entity.description }}</td>
             </tr>
         {% endfor %}
         </tbody>

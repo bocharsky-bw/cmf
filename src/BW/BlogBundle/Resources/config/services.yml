@@ -7,7 +7,7 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
         
 #    bw_blog.nested_set:
-#        class: BW\BlogBundle\Service\NestedSet
+#        class: BW\BlogBundle\Service\NestedSetService
 #        arguments: ["@service_container"]
 #
 #    bw_blog.widget:

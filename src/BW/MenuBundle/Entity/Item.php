@@ -351,7 +351,7 @@ class Item implements NestedSetInterface
      * @param \BW\MenuBundle\Entity\Menu $menu
      * @return Item
      */
-    public function setMenu(\BW\MenuBundle\Entity\Menu $menu = null)
+    public function setMenu(Menu $menu = null)
     {
         $this->menu = $menu;
 
@@ -374,7 +374,7 @@ class Item implements NestedSetInterface
      * @param \BW\MenuBundle\Entity\Item $parent
      * @return Item
      */
-    public function setParent(\BW\MenuBundle\Entity\Item $parent = null)
+    public function setParent(Item $parent = null)
     {
         $this->parent = $parent;
 
@@ -397,7 +397,7 @@ class Item implements NestedSetInterface
      * @param \BW\MenuBundle\Entity\Item $children
      * @return Item
      */
-    public function addChild(\BW\MenuBundle\Entity\Item $children)
+    public function addChild(Item $children)
     {
         $this->children[] = $children;
 
@@ -434,7 +434,7 @@ class Item implements NestedSetInterface
     {
         $this->route = $route;
 
-        if ($this->route) {
+        if (isset($this->route)) {
             $this->uri = ''; // Clear URI when assign route
         }
 

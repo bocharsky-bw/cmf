@@ -16,7 +16,7 @@ services:
             - { name: twig.extension }
 
     bw_default.service.nested_set:
-        class: BW\DefaultBundle\Service\NestedSet
+        class: BW\DefaultBundle\Service\NestedSetService
         arguments: ["@doctrine.orm.entity_manager", "@logger"]
 
     bw_default.service.transliterating:

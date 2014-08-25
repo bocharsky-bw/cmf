@@ -27,9 +27,10 @@
     <script src="{{ asset('js/less-1.7.0.min.js') }}" type="text/javascript"></script>
     #}
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('libs/ckfinder/ckfinder.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bower_components/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('libs/ckfinder/ckfinder.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -44,51 +45,70 @@
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div class="navbar-header">
                                     <a class="navbar-brand" href="{{ path('admin') }}">
-                                        <i class="fa fa-windows"></i> Главная
+                                        <i class="fa fa-apple"></i> Главная
                                     </a>
                                 </div>
 
                                 <!-- Collect the nav links, forms, and other content for toggling -->
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                     <ul class="nav navbar-nav">
-                                        <li>
-                                            <a href="{{ path('post') }}">
-                                                <i class="fa fa-file-text"></i> Статьи
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-sitemap"></i> Контент <span class="caret"></span>
                                             </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ path('post') }}">
+                                                        <i class="fa fa-file-text-o"></i> Статьи
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('category') }}">
+                                                        <i class="fa fa-folder-open-o"></i> Категории
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="{{ path('category') }}">
-                                                <i class="fa fa-folder"></i> Категории
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-puzzle-piece"></i> Модули <span class="caret"></span>
                                             </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ path('menu') }}">
+                                                        <i class="fa fa-list"></i> Меню
+                                                    </a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a href="{{ path('widget') }}">
+                                                        <i class="fa fa-th"></i> Виджеты
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('position') }}">
+                                                        <i class="fa fa-arrows-alt"></i> Позиции
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="{{ path('position') }}">
-                                                <i class="fa fa-compass"></i> Позиции
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-users"></i> Аккаунты <span class="caret"></span>
                                             </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ path('user') }}">
+                                                        <i class="fa fa-user"></i> Пользователи
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('role') }}">
+                                                        <i class="fa fa-lock"></i> Роли
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="{{ path('widget') }}">
-                                                <i class="fa fa-cubes"></i> Виджеты
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('user') }}">
-                                                <i class="fa fa-user"></i> Пользователи
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('role') }}">
-                                                <i class="fa fa-group"></i> Роли
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('menu') }}">
-                                                <i class="fa fa-navicon"></i> Меню
-                                            </a>
-                                        </li>
-                                        {#<li>#}
-                                            {#<a href="{{ path('item') }}">Пункты меню</a>#}
-                                        {#</li>#}
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
                                         <li>
@@ -96,13 +116,13 @@
                                                 <i class="fa fa-share-square-o"></i> Просмотр сайта
                                             </a>
                                         </li>
-                                        {#% if app.user %#}
+                                        {% if app.user %}
                                             <li>
-                                                <a href="{#{ path('user_sign_out') }#}">
+                                                <a href="{{ path('user_sign_out') }}">
                                                     <i class="fa fa-sign-out"></i> Выход
                                                 </a>
                                             </li>
-                                        {#{% endif %}#}
+                                        {% endif %}
                                     </ul>
                                 </div><!-- /.navbar-collapse -->
                             </div><!-- /.container-fluid -->
