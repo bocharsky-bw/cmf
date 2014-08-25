@@ -44,7 +44,7 @@
                             <div class="container-fluid">
                                 <!-- Brand and toggle get grouped for better mobile display -->
                                 <div class="navbar-header">
-                                    <a class="navbar-brand" href="{{ path('admin') }}">
+                                    <a class="navbar-brand" href="{{ path('admin') }}" title="Панель управления">
                                         <i class="fa fa-apple"></i> Главная
                                     </a>
                                 </div>
@@ -112,8 +112,8 @@
                                     </ul>
                                     <ul class="nav navbar-nav navbar-right">
                                         <li>
-                                            <a href="{{ path('index') }}">
-                                                <i class="fa fa-share-square-o"></i> Просмотр сайта
+                                            <a href="{{ path('index') }}" title="Просмотр сайта">
+                                                <i class="fa fa-share-square-o"></i> Сайт
                                             </a>
                                         </li>
                                         {% if app.user %}
