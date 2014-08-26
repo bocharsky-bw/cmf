@@ -25,6 +25,7 @@ class ItemType extends AbstractType
 
         $builder
             ->add('published', 'checkbox', array(
+                'required' => false,
                 'label' => 'Опубликовано ',
             ))
             ->add('menu', 'entity', array(
