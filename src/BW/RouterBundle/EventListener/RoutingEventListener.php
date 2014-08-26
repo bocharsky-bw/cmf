@@ -5,6 +5,7 @@ namespace BW\RouterBundle\EventListener;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bridge\Monolog\Logger;
@@ -29,6 +30,11 @@ class RoutingEventListener
      * @var \Symfony\Bridge\Monolog\Logger
      */
     private $logger;
+
+    /**
+     * @var bool Whether needs call flush
+     */
+    private $isPostFlush = false;
 
 
     /**
@@ -63,15 +69,21 @@ class RoutingEventListener
     private function handleEntity(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $em = $args->getEntityManager();
         if ($entity instanceof RouteInterface) {
             if (null === $entity->getRoute()) {
-                $entity->setRoute(new Route());
+                $entity->setRoute(new Route()); // Create new Route if not exists
             }
 
             $entity->getRoute()->handleEntity($entity);
+            $this->isPostFlush = true;
+        }
+    }
 
-            $em->flush();
+    public function postFlush(PostFlushEventArgs $args)
+    {
+        if (true === $this->isPostFlush) {
+            $this->isPostFlush = false; // must be before flush!
+            $args->getEntityManager()->flush();
         }
     }
 }

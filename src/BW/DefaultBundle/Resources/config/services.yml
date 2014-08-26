@@ -33,9 +33,10 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-#    bw_default.event_listener.nested_set_generating:
-#        class: BW\DefaultBundle\EventListener\NestedSetGeneratingEventListener
-#        arguments: ["@bw_default.service.nested_set", "@logger"]
-#        tags:
-#            - { name: doctrine.event_listener, event: postPersist }
-#            - { name: doctrine.event_listener, event: postUpdate }
+    bw_default.event_listener.nested_set_generating:
+        class: BW\DefaultBundle\EventListener\NestedSetGeneratingEventListener
+        arguments: ["@bw_default.service.nested_set", "@logger"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postFlush }

@@ -3,6 +3,7 @@
 namespace BW\DefaultBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Bridge\Monolog\Logger;
 use BW\DefaultBundle\Service\NestedSetService;
 use BW\DefaultBundle\Entity\NestedSetInterface;
@@ -23,11 +24,16 @@ class NestedSetGeneratingEventListener
      */
     private $logger;
 
+    /**
+     * @var bool Whether needs call flush
+     */
+    private $isPostFlush = false;
+
 
     /**
      * The constructor
      *
-     * @param NestedSet $nestedSet
+     * @param NestedSetService $nestedSet
      * @param Logger $logger
      */
     public function __construct(NestedSetService $nestedSet, Logger $logger)
@@ -58,6 +64,15 @@ class NestedSetGeneratingEventListener
             $em = $args->getEntityManager();
 
             $this->nestedSet->regenerate($em, $em->getClassMetadata(get_class($entity))->getName());
+            $this->isPostFlush = true;
+        }
+    }
+
+    public function postFlush(PostFlushEventArgs $args)
+    {
+        if (true === $this->isPostFlush) {
+            $this->isPostFlush = false; // must be before flush!
+            $args->getEntityManager()->flush();
         }
     }
 }

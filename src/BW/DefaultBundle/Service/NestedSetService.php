@@ -55,8 +55,7 @@ class NestedSetService
      */
     public function regenerate(EntityManager $em, $entityName)
     {
-        $em->flush(); // save to DB all unsaved entities
-
+//        $em->flush(); // save to DB all unsaved entities
         $entities = $em->getRepository($entityName)->findBy(array(), array(
             'order' => 'ASC',
         )); // fetch from DB
@@ -77,7 +76,7 @@ class NestedSetService
 
             // Order entities
             $this->order($this->nestedEntities);
-            $em->flush(); // save to DB
+//            $em->flush(); // save to DB
         }
     }
 
