@@ -12,9 +12,8 @@ BW\ModuleBundle\Entity\Widget:
             type: string
             length: 255
         shortDescription:
-            type: text
-        description:
-            type: text
+            type: string
+            length: 255
         published:
             type: boolean
         order:
@@ -22,6 +21,11 @@ BW\ModuleBundle\Entity\Widget:
             type: integer
         visibility:
             type: boolean
+    oneToOne:
+        customWidget:
+            targetEntity: BW\ModuleBundle\Entity\CustomWidget
+            mappedBy: widget
+            cascade: [persist, remove]
     oneToMany:
         widgetRoutes:
             targetEntity: BW\ModuleBundle\Entity\WidgetRoute

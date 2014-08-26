@@ -4,12 +4,10 @@ namespace BW\ModuleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use BW\RouterBundle\Entity\Route;
-use BW\ModuleBundle\Entity\Position;
-use BW\ModuleBundle\Entity\WidgetRoute;
 
 /**
- * Widget
+ * Class Widget
+ * @package BW\ModuleBundle\Entity
  */
 class Widget
 {
@@ -27,11 +25,6 @@ class Widget
      * @var string
      */
     private $shortDescription = '';
-
-    /**
-     * @var string
-     */
-    private $description = '';
 
     /**
      * @var boolean $published
@@ -57,6 +50,11 @@ class Widget
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
     private $widgetRoutes;
+
+    /**
+     * @var \BW\ModuleBundle\Entity\CustomWidget
+     */
+    private $customWidget;
 
 
     public function __construct()
@@ -121,29 +119,6 @@ class Widget
         $this->shortDescription = isset($shortDescription) ? $shortDescription : '';
 
         return $this;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Widget
-     */
-    public function setDescription($description)
-    {
-        $this->description = isset($description) ? $description : '';
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -281,5 +256,28 @@ class Widget
     public function getWidgetRoutes()
     {
         return $this->widgetRoutes;
+    }
+
+    /**
+     * Set customWidget
+     *
+     * @param \BW\ModuleBundle\Entity\CustomWidget $customWidget
+     * @return Widget
+     */
+    public function setCustomWidget(CustomWidget $customWidget = null)
+    {
+        $this->customWidget = $customWidget;
+
+        return $this;
+    }
+
+    /**
+     * Get customWidget
+     *
+     * @return \BW\ModuleBundle\Entity\CustomWidget 
+     */
+    public function getCustomWidget()
+    {
+        return $this->customWidget;
     }
 }

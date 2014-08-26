@@ -1,0 +1,18 @@
+BW\ModuleBundle\Entity\CustomWidget:
+    type: entity
+    table: custom_widgets
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: text
+    oneToOne:
+        widget:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            inversedBy: customWidget
+            cascade: [persist, remove]
+    lifecycleCallbacks: {}

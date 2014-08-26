@@ -2,6 +2,7 @@
 
 namespace BW\ModuleBundle\Form;
 
+use BW\ModuleBundle\Entity\Widget;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,9 +16,10 @@ class WidgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // this assumes that the entity manager was passed in as an option
-        $entityManager = $options['em'];
+        $em = $options['em'];
+        /** @var Widget $entity */
         $entity = $options['entity'];
-        $transformer = new UrlToWidgetRoutesTransformer($entityManager, $entity);
+        $transformer = new UrlToWidgetRoutesTransformer($em, $entity);
 
         $builder
             ->add('published', 'checkbox', array(
@@ -45,16 +47,16 @@ class WidgetType extends AbstractType
                 'required' => false,
                 'label' => 'Краткое описание ',
                 'attr' => array(
-                    'class' => 'form-control ckeditor',
+                    'class' => 'form-control',
                 ),
             ))
-            ->add('description', 'textarea', array(
-                'required' => false,
-                'label' => 'Полное описание ',
-                'attr' => array(
-                    'class' => 'form-control ckeditor',
-                ),
-            ))
+//            ->add('description', 'textarea', array(
+//                'required' => false,
+//                'label' => 'Полное описание ',
+//                'attr' => array(
+//                    'class' => 'form-control ckeditor',
+//                ),
+//            ))
             ->add('order', 'number', array(
                 'required' => false,
                 'label' => 'Порядок ',
@@ -72,6 +74,7 @@ class WidgetType extends AbstractType
                     true => 'На всех роутах, кроме перечисленных '
                 ),
             ))
+            ->add('customWidget', new CustomWidgetType($entity))
         ;
 
         // add a normal text field, but add your transformer to it
