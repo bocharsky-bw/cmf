@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class CustomWidget
  * @package BW\ModuleBundle\Entity
  */
-class CustomWidget
+class CustomWidget implements WidgetInterface
 {
     /**
      * @var integer

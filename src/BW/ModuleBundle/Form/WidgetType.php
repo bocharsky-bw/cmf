@@ -15,6 +15,8 @@ class WidgetType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     * @throws ClassNotFoundException
+     * @throws \Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -53,13 +55,6 @@ class WidgetType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-//            ->add('description', 'textarea', array(
-//                'required' => false,
-//                'label' => 'Полное описание ',
-//                'attr' => array(
-//                    'class' => 'form-control ckeditor',
-//                ),
-//            ))
             ->add('order', 'number', array(
                 'required' => false,
                 'label' => 'Порядок ',
@@ -82,25 +77,25 @@ class WidgetType extends AbstractType
         // Widget
         if (null === $entity->getType()) {
             throw new \InvalidArgumentException(sprintf(
-                'The "BW\ModuleBundle\Entity\Widget" entity must be related with "BW\ModuleBundle\Entity\Type" entity'
+                'The "BW\ModuleBundle\Entity\Widget" entity must be related with "BW\ModuleBundle\Entity\Type" entity.'
             ));
         }
-        $property = $entity->getType()->getProperty();
+        $property = $entity->getType()->getInversedProperty();
         if ( ! property_exists('BW\ModuleBundle\Entity\Widget', $property)) {
             throw new NoSuchPropertyException(sprintf(
-                'The property "%s" in "BW\ModuleBundle\Entity\Widget" entity not exists', $property
+                'The property "%s" in "BW\ModuleBundle\Entity\Widget" entity not exists.', $property
             ));
         }
         $formTypeClass = $entity->getType()->getFormTypeClass();
         if ( ! class_exists($formTypeClass)) {
             throw new ClassNotFoundException(sprintf(
-                'The "%s" form type not found', $formTypeClass
+                'The "%s" form type not found.', $formTypeClass
             ), new \ErrorException());
         }
         $formType = new $formTypeClass($entity);
         if ( ! ($formType instanceof AbstractWidgetType)) {
             throw new \Exception(sprintf(
-                'The "%s" must extends "BW\ModuleBundle\Form\AbstractWidgetType"', $formTypeClass
+                'The "%s" must extends "BW\ModuleBundle\Form\AbstractWidgetType".', $formTypeClass
             ));
         }
         $builder->add($property, $formType);

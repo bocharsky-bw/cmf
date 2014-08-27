@@ -3,6 +3,7 @@
 namespace BW\ModuleBundle\Form;
 
 use BW\ModuleBundle\Entity\Widget;
+use BW\ModuleBundle\Entity\WidgetInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -13,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
 {
+    /**
+     * @var Widget
+     */
     private $widget;
 
 
@@ -51,14 +55,27 @@ class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $widget = $this->getWidget();
+
         $resolver
             ->setDefaults(array(
-                'data_class' => 'BW\ModuleBundle\Entity\CustomWidget', // @TODO Maybe must passed via constructor?
-                'empty_data' => function () {
-                    $customWidget = new CustomWidget(); // @TODO Maybe must passed via constructor?
-                    $customWidget->setWidget($this->getWidget());
+                'data_class' => $widget->getType()->getEntityClass(),
+                'empty_data' => function () use ($widget) {
+                    $entityClass = $widget->getType()->getEntityClass();
+                    if ( ! class_exists($entityClass)) {
+                        throw new ClassNotFoundException(sprintf(
+                            'The "%s" entity not found.', $entityClass
+                        ), new \ErrorException());
+                    }
+                    $entity = new $entityClass();
+                    if ( ! ($entity instanceof WidgetInterface)) {
+                        throw new \Exception(sprintf(
+                            'The "%s" must implements "BW\ModuleBundle\Entity\WidgetInterface" interface.', $entityClass
+                        ));
+                    }
+                    $entity->setWidget($widget);
 
-                    return $customWidget;
+                    return $entity;
                 },
             ))
         ;
@@ -66,10 +83,15 @@ class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
 
     /**
      * @return string
-     * @TODO Maybe make autogenerate?
      */
     public function getName()
     {
-        return 'bw_custom_widget';
+        $name = $this->getWidget()->getType()->getFormTypeClass();
+        $name = strtolower($name);
+        $name = str_replace('\\', '_', $name);
+        $name = str_replace('widgettype', '_widget', $name);
+        $name = str_replace(array('bundle', 'form_'), '', $name);
+
+        return $name;
     }
 }

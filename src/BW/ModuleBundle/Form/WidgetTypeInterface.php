@@ -1,6 +1,7 @@
 <?php
 
 namespace BW\ModuleBundle\Form;
+
 use BW\ModuleBundle\Entity\Widget;
 
 /**
@@ -9,7 +10,6 @@ use BW\ModuleBundle\Entity\Widget;
  */
 interface WidgetTypeInterface
 {
-
     /**
      * @param Widget $widget
      */
@@ -19,5 +19,4 @@ interface WidgetTypeInterface
      * @return \BW\ModuleBundle\Entity\Widget
      */
     public function getWidget();
-
 }

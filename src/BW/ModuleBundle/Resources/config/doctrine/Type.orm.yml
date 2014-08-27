@@ -14,10 +14,16 @@ BW\ModuleBundle\Entity\Type:
         alias:
             type: string
             length: 255
-        property:
+        inversedProperty:
+            type: string
+            length: 255
+        entityClass:
             type: string
             length: 255
         formTypeClass:
+            type: string
+            length: 255
+        serviceName:
             type: string
             length: 255
     oneToMany:

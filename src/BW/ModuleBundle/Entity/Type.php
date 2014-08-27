@@ -29,12 +29,22 @@ class Type
     /**
      * @var string
      */
-    private $property = '';
+    private $inversedProperty = '';
+
+    /**
+     * @var string
+     */
+    private $entityClass = '';
 
     /**
      * @var string
      */
     private $formTypeClass = '';
+
+    /**
+     * @var string
+     */
+    private $serviceName = '';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -56,7 +66,7 @@ class Type
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -102,7 +112,7 @@ class Type
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -110,26 +120,49 @@ class Type
     }
 
     /**
-     * Set property
+     * Set inversedProperty
      *
-     * @param string $property
+     * @param string $inversedProperty
      * @return Type
      */
-    public function setProperty($property)
+    public function setInversedProperty($inversedProperty)
     {
-        $this->property = $property;
+        $this->inversedProperty = $inversedProperty;
 
         return $this;
     }
 
     /**
-     * Get property
+     * Get inversedProperty
      *
-     * @return string 
+     * @return string
      */
-    public function getProperty()
+    public function getInversedProperty()
     {
-        return $this->property;
+        return $this->inversedProperty;
+    }
+
+    /**
+     * Set entityClass
+     *
+     * @param string $entityClass
+     * @return Type
+     */
+    public function setEntityClass($entityClass)
+    {
+        $this->entityClass = $entityClass;
+
+        return $this;
+    }
+
+    /**
+     * Get entityClass
+     *
+     * @return string
+     */
+    public function getEntityClass()
+    {
+        return $this->entityClass;
     }
 
     /**
@@ -148,11 +181,34 @@ class Type
     /**
      * Get formTypeClass
      *
-     * @return string 
+     * @return string
      */
     public function getFormTypeClass()
     {
         return $this->formTypeClass;
+    }
+
+    /**
+     * Set serviceName
+     *
+     * @param string $serviceName
+     * @return Type
+     */
+    public function setServiceName($serviceName)
+    {
+        $this->serviceName = $serviceName;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceName
+     *
+     * @return string
+     */
+    public function getServiceName()
+    {
+        return $this->serviceName;
     }
 
     /**
@@ -161,7 +217,7 @@ class Type
      * @param \BW\ModuleBundle\Entity\Widget $widgets
      * @return Type
      */
-    public function addWidget(\BW\ModuleBundle\Entity\Widget $widgets)
+    public function addWidget(Widget $widgets)
     {
         $this->widgets[] = $widgets;
 
@@ -173,7 +229,7 @@ class Type
      *
      * @param \BW\ModuleBundle\Entity\Widget $widgets
      */
-    public function removeWidget(\BW\ModuleBundle\Entity\Widget $widgets)
+    public function removeWidget(Widget $widgets)
     {
         $this->widgets->removeElement($widgets);
     }
@@ -181,7 +237,7 @@ class Type
     /**
      * Get widgets
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWidgets()
     {
