@@ -31,6 +31,9 @@ BW\ModuleBundle\Entity\Widget:
             targetEntity: BW\ModuleBundle\Entity\WidgetRoute
             mappedBy: widget
     manyToOne:
+        type:
+            targetEntity: BW\ModuleBundle\Entity\Type
+            inversedBy: widgets
         position:
             targetEntity: BW\ModuleBundle\Entity\Position
             inversedBy: widgets

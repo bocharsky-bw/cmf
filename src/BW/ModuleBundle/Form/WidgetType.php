@@ -3,9 +3,12 @@
 namespace BW\ModuleBundle\Form;
 
 use BW\ModuleBundle\Entity\Widget;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Debug\Exception\ClassNotFoundException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 
 class WidgetType extends AbstractType
 {
@@ -16,10 +19,10 @@ class WidgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // this assumes that the entity manager was passed in as an option
+        /** @var EntityManager $em */
         $em = $options['em'];
         /** @var Widget $entity */
         $entity = $options['entity'];
-        $transformer = new UrlToWidgetRoutesTransformer($em, $entity);
 
         $builder
             ->add('published', 'checkbox', array(
@@ -74,10 +77,36 @@ class WidgetType extends AbstractType
                     true => 'На всех роутах, кроме перечисленных '
                 ),
             ))
-            ->add('customWidget', new CustomWidgetType($entity))
         ;
 
+        // Widget
+        if (null === $entity->getType()) {
+            throw new \InvalidArgumentException(sprintf(
+                'The "BW\ModuleBundle\Entity\Widget" entity must be related with "BW\ModuleBundle\Entity\Type" entity'
+            ));
+        }
+        $property = $entity->getType()->getProperty();
+        if ( ! property_exists('BW\ModuleBundle\Entity\Widget', $property)) {
+            throw new NoSuchPropertyException(sprintf(
+                'The property "%s" in "BW\ModuleBundle\Entity\Widget" entity not exists', $property
+            ));
+        }
+        $formTypeClass = $entity->getType()->getFormTypeClass();
+        if ( ! class_exists($formTypeClass)) {
+            throw new ClassNotFoundException(sprintf(
+                'The "%s" form type not found', $formTypeClass
+            ), new \ErrorException());
+        }
+        $formType = new $formTypeClass($entity);
+        if ( ! ($formType instanceof AbstractWidgetType)) {
+            throw new \Exception(sprintf(
+                'The "%s" must extends "BW\ModuleBundle\Form\AbstractWidgetType"', $formTypeClass
+            ));
+        }
+        $builder->add($property, $formType);
+
         // add a normal text field, but add your transformer to it
+        $transformer = new UrlToWidgetRoutesTransformer($em, $entity);
         $builder->add(
             $builder->create('widgetRoutes', 'text', array(
                 'required' => false,

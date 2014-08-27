@@ -11,4 +11,17 @@ BW\ModuleBundle\Entity\Type:
         name:
             type: string
             length: 255
+        alias:
+            type: string
+            length: 255
+        property:
+            type: string
+            length: 255
+        formTypeClass:
+            type: string
+            length: 255
+    oneToMany:
+        widgets:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            mappedBy: type
     lifecycleCallbacks: {}

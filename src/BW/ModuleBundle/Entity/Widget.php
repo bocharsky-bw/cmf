@@ -42,6 +42,11 @@ class Widget
     private $visibility = true;
 
     /**
+     * @var \BW\ModuleBundle\Entity\Type
+     */
+    private $type;
+
+    /**
      * @var \BW\ModuleBundle\Entity\Position
      */
     private $position;
@@ -201,6 +206,29 @@ class Widget
     }
 
     /**
+     * Set type
+     *
+     * @param \BW\ModuleBundle\Entity\Type $type
+     * @return Widget
+     */
+    public function setType(Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \BW\ModuleBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set position
      *
      * @param \BW\ModuleBundle\Entity\Position $position
@@ -222,8 +250,6 @@ class Widget
     {
         return $this->position;
     }
-
-
 
     /**
      * Add widgetRoutes
@@ -251,7 +277,7 @@ class Widget
     /**
      * Get widgetRoutes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWidgetRoutes()
     {
@@ -274,7 +300,7 @@ class Widget
     /**
      * Get customWidget
      *
-     * @return \BW\ModuleBundle\Entity\CustomWidget 
+     * @return \BW\ModuleBundle\Entity\CustomWidget
      */
     public function getCustomWidget()
     {
