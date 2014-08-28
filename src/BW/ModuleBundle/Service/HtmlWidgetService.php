@@ -6,10 +6,10 @@ use BW\ModuleBundle\Entity\Widget;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
- * Class CustomWidgetService
+ * Class HtmlWidgetService
  * @package BW\ModuleBundle\Service
  */
-class CustomWidgetService implements WidgetServiceInterface
+class HtmlWidgetService implements WidgetServiceInterface
 {
     /**
      * @var \Twig_Environment
@@ -47,8 +47,8 @@ class CustomWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
-        return $this->twig->render('BWModuleBundle:CustomWidget:show.html.twig', array(
-            'customWidget' => $widget->getCustomWidget(),
+        return $this->twig->render('BWModuleBundle:HtmlWidget:show.html.twig', array(
+            'htmlWidget' => $widget->getHtmlWidget(),
         ));
     }
 }

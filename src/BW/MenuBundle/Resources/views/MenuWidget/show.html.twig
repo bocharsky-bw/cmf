@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
-    {% for item in menuWidget.menu.items %}
+    {% for item in items %}
         <li>
             <a href="{{ item.uriForRequest(app.request) }}"
                class="{{ item.class }}"

@@ -5,10 +5,10 @@ namespace BW\ModuleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class CustomWidget
+ * Class HtmlWidget
  * @package BW\ModuleBundle\Entity
  */
-class CustomWidget implements WidgetInterface
+class HtmlWidget implements WidgetInterface
 {
     /**
      * @var integer
@@ -47,7 +47,7 @@ class CustomWidget implements WidgetInterface
      * Set widget
      *
      * @param \BW\ModuleBundle\Entity\Widget $widget
-     * @return CustomWidget
+     * @return HtmlWidget
      */
     public function setWidget(Widget $widget = null)
     {

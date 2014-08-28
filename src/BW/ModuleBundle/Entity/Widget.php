@@ -58,9 +58,9 @@ class Widget
     private $widgetRoutes;
 
     /**
-     * @var \BW\ModuleBundle\Entity\CustomWidget
+     * @var \BW\ModuleBundle\Entity\HtmlWidget
      */
-    private $customWidget;
+    private $htmlWidget;
 
     /**
      * @var \BW\MenuBundle\Entity\MenuWidget
@@ -291,26 +291,26 @@ class Widget
     }
 
     /**
-     * Set customWidget
+     * Set htmlWidget
      *
-     * @param \BW\ModuleBundle\Entity\CustomWidget $customWidget
+     * @param \BW\ModuleBundle\Entity\HtmlWidget $htmlWidget
      * @return Widget
      */
-    public function setCustomWidget(CustomWidget $customWidget = null)
+    public function setHtmlWidget(HtmlWidget $htmlWidget = null)
     {
-        $this->customWidget = $customWidget;
+        $this->htmlWidget = $htmlWidget;
 
         return $this;
     }
 
     /**
-     * Get customWidget
+     * Get htmlWidget
      *
-     * @return \BW\ModuleBundle\Entity\CustomWidget
+     * @return \BW\ModuleBundle\Entity\HtmlWidget
      */
-    public function getCustomWidget()
+    public function getHtmlWidget()
     {
-        return $this->customWidget;
+        return $this->htmlWidget;
     }
 
     /**

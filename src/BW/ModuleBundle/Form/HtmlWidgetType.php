@@ -5,10 +5,10 @@ namespace BW\ModuleBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class CustomWidgetType
+ * Class HtmlWidgetType
  * @package BW\ModuleBundle\Form
  */
-class CustomWidgetType extends AbstractWidgetType
+class HtmlWidgetType extends AbstractWidgetType
 {
     /**
      * @param FormBuilderInterface $builder

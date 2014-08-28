@@ -467,4 +467,14 @@ class Item implements NestedSetInterface
     {
         return $this->route;
     }
+
+    /**
+     * Get published
+     *
+     * @return boolean 
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
 }

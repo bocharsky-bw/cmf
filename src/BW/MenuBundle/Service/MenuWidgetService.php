@@ -4,6 +4,7 @@ namespace BW\MenuBundle\Service;
 
 use BW\ModuleBundle\Service\WidgetServiceInterface;
 use BW\ModuleBundle\Entity\Widget;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -22,6 +23,11 @@ class MenuWidgetService implements WidgetServiceInterface
      */
     private $logger;
 
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
 
     /**
      * The constructor
@@ -29,8 +35,9 @@ class MenuWidgetService implements WidgetServiceInterface
      * @param \Twig_Environment $twig
      * @param Logger $logger
      */
-    public function __construct(\Twig_Environment $twig, Logger $logger)
+    public function __construct(EntityManager $em, \Twig_Environment $twig, Logger $logger)
     {
+        $this->em = $em;
         $this->twig = $twig;
         $this->logger = $logger;
         $this->logger->debug(sprintf(
@@ -49,8 +56,20 @@ class MenuWidgetService implements WidgetServiceInterface
     public function render(Widget $widget)
     {
         /** @TODO Need to execute query with where statement and joins for optimize code */
+        $qb = $this->em->getRepository('BWMenuBundle:Item')->createQueryBuilder('i');
+        $qb
+            ->addSelect('m')
+            ->addSelect('r')
+            ->innerJoin('i.menu', 'm')
+            ->leftJoin('i.route', 'r')
+            ->innerJoin('m.menuWidgets', 'mw')
+            ->where($qb->expr()->eq('mw.id', $widget->getMenuWidget()->getId()))
+        ;
+        $items = $qb->getQuery()->getResult();
+
         return $this->twig->render('BWMenuBundle:MenuWidget:show.html.twig', array(
             'menuWidget' => $widget->getMenuWidget(),
+            'items' => $items,
         ));
     }
 }

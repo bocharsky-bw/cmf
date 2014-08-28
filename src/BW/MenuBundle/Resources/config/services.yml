@@ -8,4 +8,4 @@ services:
 
     bw_menu.service.menu_widget:
         class: BW\MenuBundle\Service\MenuWidgetService
-        arguments: ["@twig", "@logger"]
+        arguments: ["@doctrine.orm.entity_manager", "@twig", "@logger"]

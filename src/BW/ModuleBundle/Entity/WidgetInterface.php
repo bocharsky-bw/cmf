@@ -12,7 +12,7 @@ interface WidgetInterface
      * Set widget
      *
      * @param \BW\ModuleBundle\Entity\Widget $widget
-     * @return CustomWidget
+     * @return HtmlWidget
      */
     public function setWidget(Widget $widget = null);
 

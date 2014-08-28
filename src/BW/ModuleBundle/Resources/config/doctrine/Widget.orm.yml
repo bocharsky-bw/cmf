@@ -22,8 +22,8 @@ BW\ModuleBundle\Entity\Widget:
         visibility:
             type: boolean
     oneToOne:
-        customWidget:
-            targetEntity: BW\ModuleBundle\Entity\CustomWidget
+        htmlWidget:
+            targetEntity: BW\ModuleBundle\Entity\HtmlWidget
             mappedBy: widget
             cascade: [persist, remove]
         menuWidget:

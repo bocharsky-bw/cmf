@@ -22,4 +22,7 @@ BW\MenuBundle\Entity\Menu:
             targetEntity: BW\MenuBundle\Entity\Item
             mappedBy: menu
             cascade: [remove]
+        menuWidgets:
+            targetEntity: BW\MenuBundle\Entity\MenuWidget
+            mappedBy: menu
     lifecycleCallbacks: {}

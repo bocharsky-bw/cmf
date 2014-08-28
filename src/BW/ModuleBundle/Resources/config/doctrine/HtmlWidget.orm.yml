@@ -1,6 +1,6 @@
-BW\ModuleBundle\Entity\CustomWidget:
+BW\ModuleBundle\Entity\HtmlWidget:
     type: entity
-    table: custom_widgets
+    table: html_widgets
     id:
         id:
             type: integer
@@ -13,6 +13,6 @@ BW\ModuleBundle\Entity\CustomWidget:
     oneToOne:
         widget:
             targetEntity: BW\ModuleBundle\Entity\Widget
-            inversedBy: customWidget
+            inversedBy: htmlWidget
             cascade: [persist, remove]
     lifecycleCallbacks: {}

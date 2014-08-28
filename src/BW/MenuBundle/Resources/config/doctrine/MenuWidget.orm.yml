@@ -15,4 +15,5 @@ BW\MenuBundle\Entity\MenuWidget:
     manyToOne:
         menu:
             targetEntity: BW\MenuBundle\Entity\Menu
+            inversedBy: menuWidgets
     lifecycleCallbacks: {}

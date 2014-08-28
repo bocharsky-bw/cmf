@@ -35,6 +35,11 @@ class Menu
      */
     private $items;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $menuWidgets;
+
 
     /**
      * The constructor
@@ -42,6 +47,7 @@ class Menu
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->menuWidgets = new ArrayCollection();
     }
 
 
@@ -157,5 +163,38 @@ class Menu
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Add menuWidgets
+     *
+     * @param \BW\MenuBundle\Entity\MenuWidget $menuWidgets
+     * @return Menu
+     */
+    public function addMenuWidget(\BW\MenuBundle\Entity\MenuWidget $menuWidgets)
+    {
+        $this->menuWidgets[] = $menuWidgets;
+
+        return $this;
+    }
+
+    /**
+     * Remove menuWidgets
+     *
+     * @param \BW\MenuBundle\Entity\MenuWidget $menuWidgets
+     */
+    public function removeMenuWidget(\BW\MenuBundle\Entity\MenuWidget $menuWidgets)
+    {
+        $this->menuWidgets->removeElement($menuWidgets);
+    }
+
+    /**
+     * Get menuWidgets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMenuWidgets()
+    {
+        return $this->menuWidgets;
     }
 }
