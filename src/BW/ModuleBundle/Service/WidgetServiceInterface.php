@@ -2,6 +2,8 @@
 
 namespace BW\ModuleBundle\Service;
 
+use BW\ModuleBundle\Entity\Widget;
+
 /**
  * Interface WidgetServiceInterface
  * @package BW\ModuleBundle\Service
@@ -9,12 +11,10 @@ namespace BW\ModuleBundle\Service;
 interface WidgetServiceInterface
 {
     /**
+     * Render the widget
+     *
+     * @param Widget $widget
      * @return string
      */
-    public function __toString();
-
-    /**
-     * @return string
-     */
-    public function render();
+    public function render(Widget $widget);
 }

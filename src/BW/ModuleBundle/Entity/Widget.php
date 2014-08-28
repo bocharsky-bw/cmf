@@ -2,6 +2,7 @@
 
 namespace BW\ModuleBundle\Entity;
 
+use BW\MenuBundle\Entity\MenuWidget;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -60,6 +61,11 @@ class Widget
      * @var \BW\ModuleBundle\Entity\CustomWidget
      */
     private $customWidget;
+
+    /**
+     * @var \BW\MenuBundle\Entity\MenuWidget
+     */
+    private $menuWidget;
 
 
     public function __construct()
@@ -305,5 +311,28 @@ class Widget
     public function getCustomWidget()
     {
         return $this->customWidget;
+    }
+
+    /**
+     * Set menuWidget
+     *
+     * @param \BW\MenuBundle\Entity\MenuWidget $menuWidget
+     * @return Widget
+     */
+    public function setMenuWidget(MenuWidget $menuWidget = null)
+    {
+        $this->menuWidget = $menuWidget;
+
+        return $this;
+    }
+
+    /**
+     * Get menuWidget
+     *
+     * @return \BW\MenuBundle\Entity\MenuWidget 
+     */
+    public function getMenuWidget()
+    {
+        return $this->menuWidget;
     }
 }

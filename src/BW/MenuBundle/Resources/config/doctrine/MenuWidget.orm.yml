@@ -1,0 +1,18 @@
+BW\MenuBundle\Entity\MenuWidget:
+    type: entity
+    table: menu_widgets
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToOne:
+        widget:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            inversedBy: menuWidget
+            cascade: [persist, remove]
+    manyToOne:
+        menu:
+            targetEntity: BW\MenuBundle\Entity\Menu
+    lifecycleCallbacks: {}

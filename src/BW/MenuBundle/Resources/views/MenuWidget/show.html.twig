@@ -1,0 +1,10 @@
+<ul class="nav nav-pills">
+    {% for item in menuWidget.menu.items %}
+        <li>
+            <a href="{{ item.uriForRequest(app.request) }}"
+               class="{{ item.class }}"
+               title="{{ item.title }}"
+            >{{ item.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

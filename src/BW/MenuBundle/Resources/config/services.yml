@@ -5,3 +5,7 @@ services:
 #    bw_menu.example:
 #        class: %bw_menu.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_menu.service.menu_widget:
+        class: BW\MenuBundle\Service\MenuWidgetService
+        arguments: ["@twig", "@logger"]

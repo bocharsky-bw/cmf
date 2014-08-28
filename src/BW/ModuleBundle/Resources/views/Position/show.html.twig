@@ -1,5 +1,15 @@
-<div class="bw_position">
+<div class="bw_position {{ position.alias }}">
     {% for widget in widgets %}
-        {% include 'BWModuleBundle:Widget:show.html.twig' %}
+        <div class="widget">
+            <h3 class="widget_heading">
+                {{ widget.heading }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('widget_edit', {'id': widget.id}) }}"><i class="fa fa-edit"></i></a>
+                {% endif %}
+            </h3>
+            <div class="widget_description">
+                {{ container.get(widget.type.serviceName).render(widget)|raw }}
+            </div>
+        </div>
     {% endfor %}
 </div>

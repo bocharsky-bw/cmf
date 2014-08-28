@@ -4,8 +4,9 @@ namespace BW\MenuBundle\Entity;
 
 use BW\RouterBundle\Entity\Route;
 use BW\DefaultBundle\Entity\NestedSetInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Item
@@ -127,6 +128,22 @@ class Item implements NestedSetInterface
     public function isInternalUri()
     {
         return ! ($this->getUri() && preg_match('@^https?://@', $this->getUri()));
+    }
+
+    public function getUriForRequest(Request $request)
+    {
+        if ($this->isInternalUri()) {
+            $path = $this->getRoute()
+                ? $this->getRoute()->getPath()
+                : $this->getUri()
+            ;
+
+            $uri = $request->getUriForPath($path);
+        } else {
+            $uri = $this->getUri();
+        }
+
+        return $uri;
     }
 
 

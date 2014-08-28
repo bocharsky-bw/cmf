@@ -4,6 +4,7 @@ namespace BW\ModuleBundle\Service;
 
 use BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig_Environment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
@@ -11,6 +12,10 @@ use Doctrine\ORM\Query\Expr\Join;
 
 class PositionService
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -36,20 +41,14 @@ class PositionService
     /**
      * The constructor
      *
-     * @param EntityManager $em
-     * @param \Twig_Environment $twig
-     * @param \BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener
+     * @param ContainerInterface $container
      */
-    public function __construct(
-        EntityManager $em,
-        Twig_Environment $twig,
-        DatabaseRouteLoadingEventListener $databaseRouteLoading,
-        Logger $logger
-    ){
-        $this->em = $em;
-        $this->twig = $twig;
-        $this->databaseRouteLoading = $databaseRouteLoading;
-        $this->logger = $logger;
+    public function __construct(ContainerInterface $container){
+        $this->container = $container;
+        $this->em = $container->get('doctrine.orm.entity_manager');
+        $this->twig = $container->get('twig');
+        $this->databaseRouteLoading = $container->get('bw_router.event_listener.database_route_loading');
+        $this->logger = $container->get('logger');
         $this->logger->debug(sprintf(
             'Loaded service "%s".',
             __METHOD__
@@ -76,9 +75,10 @@ class PositionService
             ->createQueryBuilder('w')
         ;
         $widgets = $qb
+            ->addSelect('t')
             ->addSelect('p')
             ->addSelect('wr')
-            ->addSelect('wr2')
+            ->innerJoin('w.type', 't')
             ->innerJoin('w.position', 'p')
             ->leftJoin('w.widgetRoutes', 'wr')
             ->leftJoin('w.widgetRoutes', 'wr2', Join::WITH, $qb->expr()->andx(
@@ -106,6 +106,7 @@ class PositionService
         ;
 
         return $this->twig->render('BWModuleBundle:Position:show.html.twig', array(
+            'container' => $this->container,
             'position' => $position,
             'widgets' => $widgets,
         ));

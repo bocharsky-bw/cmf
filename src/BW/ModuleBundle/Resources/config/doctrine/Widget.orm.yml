@@ -26,6 +26,10 @@ BW\ModuleBundle\Entity\Widget:
             targetEntity: BW\ModuleBundle\Entity\CustomWidget
             mappedBy: widget
             cascade: [persist, remove]
+        menuWidget:
+            targetEntity: BW\MenuBundle\Entity\MenuWidget
+            mappedBy: widget
+            cascade: [persist, remove]
     oneToMany:
         widgetRoutes:
             targetEntity: BW\ModuleBundle\Entity\WidgetRoute

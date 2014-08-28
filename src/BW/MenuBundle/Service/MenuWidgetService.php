@@ -1,15 +1,16 @@
 <?php
 
-namespace BW\ModuleBundle\Service;
+namespace BW\MenuBundle\Service;
 
+use BW\ModuleBundle\Service\WidgetServiceInterface;
 use BW\ModuleBundle\Entity\Widget;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
- * Class CustomWidgetService
- * @package BW\ModuleBundle\Service
+ * Class MenuWidgetService
+ * @package BW\MenuBundle\Service
  */
-class CustomWidgetService implements WidgetServiceInterface
+class MenuWidgetService implements WidgetServiceInterface
 {
     /**
      * @var \Twig_Environment
@@ -47,8 +48,9 @@ class CustomWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
-        return $this->twig->render('BWModuleBundle:CustomWidget:show.html.twig', array(
-            'customWidget' => $widget->getCustomWidget(),
+        /** @TODO Need to execute query with where statement and joins for optimize code */
+        return $this->twig->render('BWMenuBundle:MenuWidget:show.html.twig', array(
+            'menuWidget' => $widget->getMenuWidget(),
         ));
     }
 }

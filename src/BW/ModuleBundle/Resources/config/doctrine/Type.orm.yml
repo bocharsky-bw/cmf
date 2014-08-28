@@ -14,6 +14,7 @@ BW\ModuleBundle\Entity\Type:
         alias:
             type: string
             length: 255
+            unique: true
         inversedProperty:
             type: string
             length: 255
@@ -26,6 +27,7 @@ BW\ModuleBundle\Entity\Type:
         serviceName:
             type: string
             length: 255
+            unique: true
     oneToMany:
         widgets:
             targetEntity: BW\ModuleBundle\Entity\Widget

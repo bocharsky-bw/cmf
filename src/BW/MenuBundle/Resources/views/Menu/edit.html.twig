@@ -34,10 +34,7 @@
                     <a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}" title="Редактировать запись">
                         {{ item.name }}
                     </a><br/>
-                    <a href="{{ item.isInternalUri()
-                        ? app.request.getUriForPath(item.route ? item.route.path : item.uri)
-                        : item.uri
-                    }}" title="Перейти по адресу">
+                    <a href="{{ item.uriForRequest(app.request) }}" title="Перейти по адресу">
                         <small class="fa fa-share-square-o">
                             {{ item.route ? item.route.path : item.uri }}
                         </small>

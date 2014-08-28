@@ -4,6 +4,7 @@ namespace BW\ModuleBundle\Form;
 
 use BW\ModuleBundle\Entity\Widget;
 use BW\ModuleBundle\Entity\WidgetInterface;
+use Symfony\Component\Debug\Exception\ClassNotFoundException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -52,21 +53,24 @@ class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
 
     /**
      * @param OptionsResolverInterface $resolver
+     * @throws ClassNotFoundException
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $widget = $this->getWidget();
+
+        if ( ! class_exists($widget->getType()->getEntityClass())) {
+            throw new ClassNotFoundException(sprintf(
+                'The "%s" entity not found.', $widget->getType()->getEntityClass()
+            ), new \ErrorException());
+        }
 
         $resolver
             ->setDefaults(array(
                 'data_class' => $widget->getType()->getEntityClass(),
                 'empty_data' => function () use ($widget) {
                     $entityClass = $widget->getType()->getEntityClass();
-                    if ( ! class_exists($entityClass)) {
-                        throw new ClassNotFoundException(sprintf(
-                            'The "%s" entity not found.', $entityClass
-                        ), new \ErrorException());
-                    }
+
                     $entity = new $entityClass();
                     if ( ! ($entity instanceof WidgetInterface)) {
                         throw new \Exception(sprintf(
