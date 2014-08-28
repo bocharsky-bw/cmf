@@ -2,12 +2,12 @@
 
 namespace BW\ModuleBundle\Controller;
 
+use BW\ModuleBundle\Entity\Type;
+use BW\ModuleBundle\Entity\Widget;
+use BW\ModuleBundle\Form\WidgetType;
 use BW\SkeletonBundle\Utility\FormUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use BW\ModuleBundle\Entity\Widget;
-use BW\ModuleBundle\Form\WidgetType;
 
 /**
  * Class WidgetController
@@ -23,6 +23,7 @@ class WidgetController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $form = $this->createSelectionTypeForm();
         $entities = $em->getRepository('BWModuleBundle:Widget')->findBy(array(), array(
             'position' => 'ASC',
             'order' => 'ASC',
@@ -30,7 +31,34 @@ class WidgetController extends Controller
 
         return $this->render('BWModuleBundle:Widget:index.html.twig', array(
             'entities' => $entities,
+            'form' => $form->createView(),
         ));
+    }
+
+    public function createSelectionTypeForm()
+    {
+        $form = $this
+            ->createFormBuilder()
+            ->setAction($this->generateUrl('widget_new'))
+            ->add('type', 'entity', array(
+                'class' => 'BW\ModuleBundle\Entity\Type',
+                'property' => 'name',
+                'required' => true,
+                'label' => 'Тип ',
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+            ))
+            ->add('new', 'submit', array(
+                'label' => ' Создать',
+                'attr' => array(
+                    'class' => 'btn btn-success fas fa-plus'
+                ),
+            ))
+            ->getForm()
+        ;
+
+        return $form;
     }
 
     /**
@@ -89,7 +117,18 @@ class WidgetController extends Controller
         $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
 
         $entity = new Widget();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createSelectionTypeForm();
+        $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $entity->setType($data['type']);
+                }
+            }
+        }
+
+        $form = $this->createCreateForm($entity);
 
         return $this->render('BWModuleBundle:Widget:new.html.twig', array(
             'entity' => $entity,

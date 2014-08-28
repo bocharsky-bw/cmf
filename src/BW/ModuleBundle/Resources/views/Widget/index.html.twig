@@ -5,13 +5,16 @@
 {% block content_wrap -%}
     <h1><i class="fa fa-th"></i> Список виджетов</h1>
 
-    <ul class="list-inline controls">
-        <li>
-            <a class="btn btn-success fas fa-plus" href="{{ path('widget_new') }}">
-                Создать
-            </a>
-        </li>
-    </ul>
+    {{ form_start(form) }}
+        <ul class="list-inline controls">
+            <li>
+                {{ form_widget(form.new) }}
+            </li>
+            <li>
+                {{ form_widget(form.type) }}
+            </li>
+        </ul>
+    {{ form_end(form) }}
 
     <table class="table table-striped">
         <thead>
