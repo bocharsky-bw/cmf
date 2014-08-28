@@ -50,7 +50,7 @@ class WidgetService
      * @return string Render HTML template
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function show($id)
+    public function render($id)
     {
         $widget = $this->em->getRepository('BWModuleBundle:Widget')->find($id);
 

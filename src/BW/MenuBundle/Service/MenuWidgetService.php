@@ -55,7 +55,6 @@ class MenuWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
-        /** @TODO Need to execute query with where statement and joins for optimize code */
         $qb = $this->em->getRepository('BWMenuBundle:Item')->createQueryBuilder('i');
         $qb
             ->addSelect('m')

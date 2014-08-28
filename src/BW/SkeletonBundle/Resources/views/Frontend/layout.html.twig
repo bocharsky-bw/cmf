@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block pre_content_wrap %}
-                        {{ bw_position.show('pre_content')|raw }}
+                        {{ bw_position.render('pre_content')|raw }}
                     {% endblock %}
                 </div>
             </div>
@@ -136,7 +136,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block post_content_wrap %}
-                        {{ bw_position.show('post_content')|raw }}
+                        {{ bw_position.render('post_content')|raw }}
                     {% endblock %}
                 </div>
             </div>

@@ -57,7 +57,7 @@ class PositionService
     }
 
 
-    public function show($alias)
+    public function render($alias)
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByAlias($alias);
         if ( ! $position) {
