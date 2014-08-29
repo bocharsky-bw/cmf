@@ -9,7 +9,6 @@ widget_show:
 widget_new:
     path:     /new
     defaults: { _controller: "BWModuleBundle:Widget:new" }
-    requirements: { _method: post }
 
 widget_create:
     path:     /create

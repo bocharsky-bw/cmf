@@ -37,9 +37,12 @@ class WidgetController extends Controller
 
     public function createSelectionTypeForm()
     {
-        $form = $this
-            ->createFormBuilder()
+        $form = $this->get('form.factory')
+            ->createNamedBuilder('', 'form', null, array(
+                'csrf_protection' => false,
+            ))
             ->setAction($this->generateUrl('widget_new'))
+            ->setMethod('GET')
             ->add('type', 'entity', array(
                 'class' => 'BW\ModuleBundle\Entity\Type',
                 'property' => 'name',
@@ -47,12 +50,6 @@ class WidgetController extends Controller
                 'label' => 'Тип ',
                 'attr' => array(
                     'class' => 'form-control'
-                ),
-            ))
-            ->add('new', 'submit', array(
-                'label' => ' Создать',
-                'attr' => array(
-                    'class' => 'btn btn-success fas fa-plus'
                 ),
             ))
             ->getForm()
@@ -67,7 +64,12 @@ class WidgetController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Widget();
-        $form = $this->createCreateForm($entity);
+        $type = $this->getDoctrine()->getRepository('BWModuleBundle:Type')->find(
+            $request->query->getInt('type')
+        );
+        $entity->setType($type);
+
+        $form = $this->createCreateForm($request, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -94,10 +96,12 @@ class WidgetController extends Controller
      * @param Widget $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Widget $entity)
+    private function createCreateForm(Request $request, Widget $entity)
     {
         $form = $this->createForm(new WidgetType(), $entity, array(
-            'action' => $this->generateUrl('widget_create'),
+            'action' => $this->generateUrl('widget_create', array(
+                'type' => $request->query->getInt('type'),
+            )),
             'method' => 'POST',
             'em' => $this->getDoctrine()->getManager(),
             'entity' => $entity,
@@ -117,18 +121,12 @@ class WidgetController extends Controller
         $request->getSession()->set('AllowCKFinder', true); // Allow to use CKFinder
 
         $entity = new Widget();
-        $form = $this->createSelectionTypeForm();
-        $form->handleRequest($request);
-        if ($request->isMethod('POST')) {
-            if ($form->isSubmitted()) {
-                if ($form->isValid()) {
-                    $data = $form->getData();
-                    $entity->setType($data['type']);
-                }
-            }
-        }
+        $type = $this->getDoctrine()->getRepository('BWModuleBundle:Type')->find(
+            $request->query->getInt('type')
+        );
+        $entity->setType($type);
 
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($request, $entity);
 
         return $this->render('BWModuleBundle:Widget:new.html.twig', array(
             'entity' => $entity,
