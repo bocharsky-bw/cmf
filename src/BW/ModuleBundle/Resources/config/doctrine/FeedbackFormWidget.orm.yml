@@ -1,0 +1,15 @@
+BW\ModuleBundle\Entity\FeedbackFormWidget:
+    type: entity
+    table: feedback_form_widgets
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToOne:
+        widget:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            inversedBy: feedbackFormWidget
+            cascade: [persist, remove]
+    lifecycleCallbacks: {}

@@ -67,6 +67,11 @@ class Widget
      */
     private $menuWidget;
 
+    /**
+     * @var \BW\ModuleBundle\Entity\FeedbackFormWidget
+     */
+    private $feedbackFormWidget;
+
 
     public function __construct()
     {
@@ -334,5 +339,28 @@ class Widget
     public function getMenuWidget()
     {
         return $this->menuWidget;
+    }
+
+    /**
+     * Set feedbackFormWidget
+     *
+     * @param \BW\ModuleBundle\Entity\FeedbackFormWidget $feedbackFormWidget
+     * @return Widget
+     */
+    public function setFeedbackFormWidget(FeedbackFormWidget $feedbackFormWidget = null)
+    {
+        $this->feedbackFormWidget = $feedbackFormWidget;
+
+        return $this;
+    }
+
+    /**
+     * Get feedbackFormWidget
+     *
+     * @return \BW\ModuleBundle\Entity\FeedbackFormWidget 
+     */
+    public function getFeedbackFormWidget()
+    {
+        return $this->feedbackFormWidget;
     }
 }

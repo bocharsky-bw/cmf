@@ -17,3 +17,7 @@ services:
     bw_module.service.html_widget:
         class: BW\ModuleBundle\Service\HtmlWidgetService
         arguments: ["@twig", "@logger"]
+
+    bw_module.service.feedback_form_widget:
+        class: BW\ModuleBundle\Service\FeedbackFormWidgetService
+        arguments: ["@twig", "@logger"]

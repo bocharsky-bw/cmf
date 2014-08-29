@@ -30,6 +30,10 @@ BW\ModuleBundle\Entity\Widget:
             targetEntity: BW\MenuBundle\Entity\MenuWidget
             mappedBy: widget
             cascade: [persist, remove]
+        feedbackFormWidget:
+            targetEntity: BW\ModuleBundle\Entity\FeedbackFormWidget
+            mappedBy: widget
+            cascade: [persist, remove]
     oneToMany:
         widgetRoutes:
             targetEntity: BW\ModuleBundle\Entity\WidgetRoute
