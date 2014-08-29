@@ -60,8 +60,10 @@ class AbstractWidgetType extends AbstractType implements WidgetTypeInterface
         $widget = $this->getWidget();
 
         if ( ! class_exists($widget->getType()->getEntityClass())) {
-            throw new ClassNotFoundException(sprintf(
-                'The "%s" entity not found.', $widget->getType()->getEntityClass()
+            throw new ClassNotFoundException(sprintf(''
+                . 'The "%s" entity not found. '
+                . 'Maybe you forgot to create it or used wrong name in database?',
+                $widget->getType()->getEntityClass()
             ), new \ErrorException());
         }
 

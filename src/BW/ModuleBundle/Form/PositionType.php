@@ -54,6 +54,6 @@ class PositionType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_modulebundle_position';
+        return 'bw_position';
     }
 }

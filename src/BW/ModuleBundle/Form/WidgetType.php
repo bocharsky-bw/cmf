@@ -76,20 +76,25 @@ class WidgetType extends AbstractType
 
         // Widget
         if (null === $entity->getType()) {
-            throw new \InvalidArgumentException(sprintf(
-                'The "BW\ModuleBundle\Entity\Widget" entity must be related with "BW\ModuleBundle\Entity\Type" entity.'
+            throw new \InvalidArgumentException(sprintf(''
+                . 'The "BW\ModuleBundle\Entity\Widget" entity must be related with "BW\ModuleBundle\Entity\Type" entity. '
+                . 'Choose type of widget you want to create/update.'
             ));
         }
         $property = $entity->getType()->getInversedProperty();
         if ( ! property_exists('BW\ModuleBundle\Entity\Widget', $property)) {
-            throw new NoSuchPropertyException(sprintf(
-                'The property "%s" in "BW\ModuleBundle\Entity\Widget" entity not exists.', $property
+            throw new NoSuchPropertyException(sprintf(''
+                . 'The property "%s" in "BW\ModuleBundle\Entity\Widget" entity not exists. '
+                . 'Maybe you forgot to add it for mapping or used wrong name in database?',
+                $property
             ));
         }
         $formTypeClass = $entity->getType()->getFormTypeClass();
         if ( ! class_exists($formTypeClass)) {
-            throw new ClassNotFoundException(sprintf(
-                'The "%s" form type not found.', $formTypeClass
+            throw new ClassNotFoundException(sprintf(''
+                . 'The "%s" form type not found. '
+                . 'Maybe you forgot to create it or used wrong name in database?',
+                $formTypeClass
             ), new \ErrorException());
         }
         $formType = new $formTypeClass($entity);
