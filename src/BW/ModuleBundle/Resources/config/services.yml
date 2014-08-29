@@ -12,7 +12,7 @@ services:
 
     bw_module.service.widget:
         class: BW\ModuleBundle\Service\WidgetService
-        arguments: ["@doctrine.orm.entity_manager", "@twig", "@logger"]
+        arguments: ["@doctrine.orm.entity_manager", "@logger"]
 
     bw_module.service.html_widget:
         class: BW\ModuleBundle\Service\HtmlWidgetService

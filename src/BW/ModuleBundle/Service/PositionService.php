@@ -57,6 +57,13 @@ class PositionService
     }
 
 
+    /**
+     * Render Position entity by alias
+     *
+     * @param string $alias
+     * @return string The rendered position
+     * @throws EntityNotFoundException
+     */
     public function render($alias)
     {
         $position = $this->em->getRepository('BWModuleBundle:Position')->findOneByAlias($alias);
