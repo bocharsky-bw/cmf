@@ -1,3 +1,8 @@
+CMF Sandbox
+===========
+
+Welcome to the CMF Sandbox - a PHP ready-to-use CMF based on Symfony Standard Edition
+
 Symfony Standard Edition
 ========================
 
