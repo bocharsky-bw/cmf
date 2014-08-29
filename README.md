@@ -1,6 +1,8 @@
 CMF Sandbox
 ===========
 
+[![Build Status](https://travis-ci.org/bocharsky-bw/cmf.svg?branch=dev)](https://travis-ci.org/bocharsky-bw/cmf)
+
 Welcome to the CMF Sandbox - a PHP ready-to-use CMF based on Symfony Standard Edition
 
 Symfony Standard Edition
