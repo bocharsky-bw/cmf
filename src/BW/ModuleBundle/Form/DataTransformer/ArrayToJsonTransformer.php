@@ -20,6 +20,8 @@ class ArrayToJsonTransformer implements DataTransformerInterface
         if ( ! is_array($array)) {
             $array = array();
         }
+
+        return array('dawdawdaw', 'dwadawd');
         return json_encode($array, JSON_UNESCAPED_UNICODE);
     }
 
