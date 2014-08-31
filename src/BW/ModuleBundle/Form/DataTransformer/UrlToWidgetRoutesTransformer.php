@@ -1,6 +1,6 @@
 <?php
 
-namespace BW\ModuleBundle\Form;
+namespace BW\ModuleBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;

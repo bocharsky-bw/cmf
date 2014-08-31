@@ -7,6 +7,9 @@ BW\ModuleBundle\Entity\FeedbackFormWidget:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        fields:
+            type: json_array
     oneToOne:
         widget:
             targetEntity: BW\ModuleBundle\Entity\Widget

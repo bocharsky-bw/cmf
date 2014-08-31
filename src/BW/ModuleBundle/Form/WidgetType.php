@@ -3,6 +3,7 @@
 namespace BW\ModuleBundle\Form;
 
 use BW\ModuleBundle\Entity\Widget;
+use BW\ModuleBundle\Form\DataTransformer\UrlToWidgetRoutesTransformer;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Debug\Exception\ClassNotFoundException;
 use Symfony\Component\Form\AbstractType;

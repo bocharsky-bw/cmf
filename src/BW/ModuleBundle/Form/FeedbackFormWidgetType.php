@@ -3,9 +3,10 @@
 namespace BW\ModuleBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use BW\ModuleBundle\Form\DataTransformer\ArrayToJsonTransformer;
 
 /**
- * Class HtmlWidgetType
+ * Class FeedbackFormWidgetType
  * @package BW\ModuleBundle\Form
  */
 class FeedbackFormWidgetType extends AbstractWidgetType
@@ -18,14 +19,16 @@ class FeedbackFormWidgetType extends AbstractWidgetType
     {
         parent::buildForm($builder, $options);
 
-//        $builder
-//            ->add('description', 'textarea', array(
-//                'required' => false,
-//                'label' => 'Полное описание ',
-//                'attr' => array(
-//                    'class' => 'form-control ckeditor',
-//                ),
-//            ))
-//        ;
+        // add a normal text field, but add your transformer to it
+        $transformer = new ArrayToJsonTransformer();
+        $builder->add(
+            $builder->create('fields', 'textarea', array(
+                'required' => true,
+                'label' => 'Поля формы ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))->addModelTransformer($transformer)
+        );
     }
 }

@@ -20,4 +20,4 @@ services:
 
     bw_module.service.feedback_form_widget:
         class: BW\ModuleBundle\Service\FeedbackFormWidgetService
-        arguments: ["@twig", "@logger"]
+        arguments: ["@form.factory", "@twig", "@logger"]

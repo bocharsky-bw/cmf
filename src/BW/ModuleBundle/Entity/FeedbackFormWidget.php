@@ -20,6 +20,11 @@ class FeedbackFormWidget implements WidgetInterface
      */
     private $widget;
 
+    /**
+     * @var array
+     */
+    private $fields = array();
+
 
     public function __construct()
     {
@@ -59,5 +64,28 @@ class FeedbackFormWidget implements WidgetInterface
     public function getWidget()
     {
         return $this->widget;
+    }
+
+    /**
+     * Set fields
+     *
+     * @param array $fields
+     * @return FeedbackFormWidget
+     */
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    /**
+     * Get fields
+     *
+     * @return array 
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }
