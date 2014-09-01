@@ -5,3 +5,8 @@ bw_module_bundle_position:
 bw_module_bundle_widget:
     resource: "@BWModuleBundle/Resources/config/routing/widget_admin.yml"
     prefix:   /_admin/widget
+
+bw_module_feedback_form_send:
+    path:     /bw/module/feedback-form/{id}/send
+    defaults: { _controller: "BWModuleBundle:FeedbackForm:send" }
+    requirements: { _method: post }

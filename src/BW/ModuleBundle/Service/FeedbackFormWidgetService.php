@@ -4,7 +4,10 @@ namespace BW\ModuleBundle\Service;
 
 use BW\ModuleBundle\Entity\Widget;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class FeedbackFormWidgetService
@@ -13,9 +16,19 @@ use Symfony\Component\Form\FormFactory;
 class FeedbackFormWidgetService implements WidgetServiceInterface
 {
     /**
+     * @var Request
+     */
+    private $request;
+
+    /**
      * @var FormFactory
      */
     private $formFactory;
+
+    /**
+     * @var Router
+     */
+    private $router;
 
     /**
      * @var \Twig_Environment
@@ -35,9 +48,11 @@ class FeedbackFormWidgetService implements WidgetServiceInterface
      * @param \Twig_Environment $twig
      * @param Logger $logger
      */
-    public function __construct(FormFactory $formFactory, \Twig_Environment $twig, Logger $logger)
+    public function __construct(RequestStack $requestStack, FormFactory $formFactory, Router $router, \Twig_Environment $twig, Logger $logger)
     {
+        $this->request = $requestStack->getCurrentRequest();
         $this->formFactory = $formFactory;
+        $this->router = $router;
         $this->twig = $twig;
         $this->logger = $logger;
         $this->logger->debug(sprintf(
@@ -55,20 +70,24 @@ class FeedbackFormWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
-//        var_dump(json_encode(array(
-//            'child' => 'name',
-//            'type' => 'text',
-//            'options' => array(
-//                'label' => 'Имя',
-//            ),
-//        ))); die;
         $feedbackFormWidget = $widget->getFeedbackFormWidget();
         $fb = $this->formFactory->createBuilder();
+        $fb
+            ->setMethod('POST')
+            ->setAction(
+                $this->router->generate('bw_module_feedback_form_send', array(
+                    'id' => $feedbackFormWidget->getId(),
+                ))
+            )
+        ;
 
         $fields = $feedbackFormWidget->getFields();
         foreach ($fields as $field) {
             $fb->add($field['child'], $field['type'], $field['options']);
         }
+        $fb->add('_redirect_url', 'hidden', array(
+            'data' => $this->request->getSchemeAndHttpHost() . $this->request->getRequestUri(),
+        ));
 
         $form = $fb->getForm();
 

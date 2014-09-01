@@ -21,6 +21,21 @@ class FeedbackFormWidget implements WidgetInterface
     private $widget;
 
     /**
+     * @var string
+     */
+    private $redirectUrl = '';
+
+    /**
+     * @var string
+     */
+    private $email = '';
+
+    /**
+     * @var string
+     */
+    private $subject = '';
+
+    /**
      * @var array
      */
     private $fields = array();
@@ -64,6 +79,75 @@ class FeedbackFormWidget implements WidgetInterface
     public function getWidget()
     {
         return $this->widget;
+    }
+
+    /**
+     * Set redirectUrl
+     *
+     * @param string $redirectUrl
+     * @return FeedbackFormWidget
+     */
+    public function setRedirectUrl($redirectUrl)
+    {
+        $this->redirectUrl = isset($redirectUrl) ? $redirectUrl : '';
+
+        return $this;
+    }
+
+    /**
+     * Get redirectUrl
+     *
+     * @return string
+     */
+    public function getRedirectUrl()
+    {
+        return $this->redirectUrl;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return FeedbackFormWidget
+     */
+    public function setEmail($email)
+    {
+        $this->email = isset($email) ? $email : '';
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set subject
+     *
+     * @param string $subject
+     * @return FeedbackFormWidget
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = isset($subject) ? $subject : '';
+
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 
     /**

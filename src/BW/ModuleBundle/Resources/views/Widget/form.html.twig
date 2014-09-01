@@ -74,4 +74,8 @@
         </div>
     {% endif %}
 
+    {% if entity.type.formTypeTemplate %}
+        {% include entity.type.formTypeTemplate with {'form': form.feedbackFormWidget} %}
+    {% endif %}
+
 {{ form_end(form) }}

@@ -39,6 +39,11 @@ class Type
     /**
      * @var string
      */
+    private $formTypeTemplate = '';
+
+    /**
+     * @var string
+     */
     private $formTypeClass = '';
 
     /**
@@ -186,6 +191,29 @@ class Type
     public function getFormTypeClass()
     {
         return $this->formTypeClass;
+    }
+
+    /**
+     * Set formTypeTemplate
+     *
+     * @param string $formTypeTemplate
+     * @return Type
+     */
+    public function setFormTypeTemplate($formTypeTemplate)
+    {
+        $this->formTypeTemplate = $formTypeTemplate;
+
+        return $this;
+    }
+
+    /**
+     * Get formTypeTemplate
+     *
+     * @return string
+     */
+    public function getFormTypeTemplate()
+    {
+        return $this->formTypeTemplate;
     }
 
     /**

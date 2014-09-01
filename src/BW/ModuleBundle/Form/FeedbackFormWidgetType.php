@@ -21,14 +21,37 @@ class FeedbackFormWidgetType extends AbstractWidgetType
 
         // add a normal text field, but add your transformer to it
         $transformer = new ArrayToCollectionTransformer();
-        $builder->add(
-            $builder->create('fields', 'collection', array(
-                'type' => new FieldType(),
+        $builder
+            ->add('redirectUrl', 'text', array(
                 'required' => false,
-                'label' => 'Поля формы ',
-                'allow_add' => true,
-                'allow_delete' => true,
-            ))->addModelTransformer($transformer)
-        );
+                'label' => 'Перенаправлять на URL',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('email', 'text', array(
+                'required' => false,
+                'label' => 'E-mail',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('subject', 'text', array(
+                'required' => false,
+                'label' => 'Тема письма',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add(
+                $builder->create('fields', 'collection', array(
+                    'type' => new FieldType(),
+                    'required' => false,
+                    'label' => 'Поля формы ',
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ))->addModelTransformer($transformer)
+            )
+        ;
     }
 }

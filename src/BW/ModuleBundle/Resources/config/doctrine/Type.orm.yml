@@ -24,6 +24,9 @@ BW\ModuleBundle\Entity\Type:
         formTypeClass:
             type: string
             length: 255
+        formTypeTemplate:
+            type: string
+            length: 255
         serviceName:
             type: string
             length: 255

@@ -8,6 +8,15 @@ BW\ModuleBundle\Entity\FeedbackFormWidget:
             generator:
                 strategy: AUTO
     fields:
+        redirectUrl:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        subject:
+            type: string
+            length: 255
         fields:
             type: json_array
     oneToOne:
