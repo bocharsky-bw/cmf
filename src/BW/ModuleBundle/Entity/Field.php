@@ -17,17 +17,17 @@ class Field
     private $id;
 
     /**
-     * @var string
+     * @var string The field name
      */
     private $child = '';
 
     /**
-     * @var string
+     * @var string The field type
      */
     private $type = '';
 
     /**
-     * @var string
+     * @var string The JSON string of options
      */
     private $options = '';
 
@@ -39,9 +39,19 @@ class Field
     {
     }
 
-    public function __toString()
+    /**
+     * Transform current object to array
+     *
+     * @return array
+     */
+    public function toArray()
     {
-        return 'fields to json transform...';
+//        var_dump($this->getType()); die;
+        return array(
+            'child' => $this->getChild(),
+            'type' => $this->getType(),
+            'options' => json_decode($this->getOptions(), true),
+        );
     }
 
 
@@ -70,7 +80,7 @@ class Field
      */
     public function setChild($child)
     {
-        $this->child = $child;
+        $this->child = (string)$child;
     }
 
     /**
@@ -86,7 +96,8 @@ class Field
      */
     public function setType($type)
     {
-        $this->type = $type;
+        $type = (string)$type;
+        $this->type = $type ? $type : null;
     }
 
     /**
@@ -102,6 +113,11 @@ class Field
      */
     public function setOptions($options)
     {
-        $this->options = $options;
+        $options = (string)$options;
+        // Transform empty array to null
+        if ('[]' === $options) {
+            $options = null;
+        }
+        $this->options = $options ? $options : '{}';
     }
 }

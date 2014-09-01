@@ -2,8 +2,8 @@
 
 namespace BW\ModuleBundle\Form;
 
+use BW\ModuleBundle\Form\DataTransformer\ArrayToCollectionTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
-use BW\ModuleBundle\Form\DataTransformer\ArrayToJsonTransformer;
 
 /**
  * Class FeedbackFormWidgetType
@@ -20,23 +20,14 @@ class FeedbackFormWidgetType extends AbstractWidgetType
         parent::buildForm($builder, $options);
 
         // add a normal text field, but add your transformer to it
-//        $transformer = new ArrayToJsonTransformer();
-//        $builder->add(
-//            $builder->create('fields', 'textarea', array(
-//                'required' => true,
-//                'label' => 'Поля формы ',
-//                'attr' => array(
-//                    'class' => 'form-control',
-//                ),
-//            ))->addModelTransformer($transformer)
-//        );
-
-        $transformer = new ArrayToJsonTransformer();
+        $transformer = new ArrayToCollectionTransformer();
         $builder->add(
             $builder->create('fields', 'collection', array(
-                'type' => 'textarea',
-                'required' => true,
+                'type' => new FieldType(),
+                'required' => false,
                 'label' => 'Поля формы ',
+                'allow_add' => true,
+                'allow_delete' => true,
             ))->addModelTransformer($transformer)
         );
     }
