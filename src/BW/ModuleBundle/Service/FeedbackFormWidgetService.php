@@ -2,6 +2,7 @@
 
 namespace BW\ModuleBundle\Service;
 
+use BW\ModuleBundle\Entity\FeedbackFormWidget;
 use BW\ModuleBundle\Entity\Widget;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -71,6 +72,17 @@ class FeedbackFormWidgetService implements WidgetServiceInterface
     public function render(Widget $widget)
     {
         $feedbackFormWidget = $widget->getFeedbackFormWidget();
+
+        $form = $this->createFeedbackForm($feedbackFormWidget);
+
+        return $this->twig->render('BWModuleBundle:FeedbackFormWidget:show.html.twig', array(
+            'feedbackFormWidget' => $feedbackFormWidget,
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function createFeedbackForm(FeedbackFormWidget $feedbackFormWidget)
+    {
         $fb = $this->formFactory->createBuilder();
         $fb
             ->setMethod('POST')
@@ -89,11 +101,6 @@ class FeedbackFormWidgetService implements WidgetServiceInterface
             'data' => $this->request->getSchemeAndHttpHost() . $this->request->getRequestUri(),
         ));
 
-        $form = $fb->getForm();
-
-        return $this->twig->render('BWModuleBundle:FeedbackFormWidget:show.html.twig', array(
-            'feedbackFormWidget' => $feedbackFormWidget,
-            'form' => $form->createView(),
-        ));
+        return $fb->getForm();
     }
 }

@@ -28,12 +28,17 @@ class FeedbackFormWidget implements WidgetInterface
     /**
      * @var string
      */
-    private $email = '';
+    private $emailTo;
 
     /**
      * @var string
      */
-    private $subject = '';
+    private $messageSubject;
+
+    /**
+     * @var string
+     */
+    private $messageBody;
 
     /**
      * @var array
@@ -105,49 +110,72 @@ class FeedbackFormWidget implements WidgetInterface
     }
 
     /**
-     * Set email
+     * Set emailTo
      *
-     * @param string $email
+     * @param string $emailTo
      * @return FeedbackFormWidget
      */
-    public function setEmail($email)
+    public function setEmailTo($emailTo)
     {
-        $this->email = isset($email) ? $email : '';
+        $this->emailTo = $emailTo;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get emailTo
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmailTo()
     {
-        return $this->email;
+        return $this->emailTo;
     }
 
     /**
-     * Set subject
+     * Set messageSubject
      *
-     * @param string $subject
+     * @param string $messageSubject
      * @return FeedbackFormWidget
      */
-    public function setSubject($subject)
+    public function setMessageSubject($messageSubject)
     {
-        $this->subject = isset($subject) ? $subject : '';
+        $this->messageSubject = $messageSubject;
 
         return $this;
     }
 
     /**
-     * Get subject
+     * Get messageSubject
      *
      * @return string
      */
-    public function getSubject()
+    public function getMessageSubject()
     {
-        return $this->subject;
+        return $this->messageSubject;
+    }
+
+    /**
+     * Set messageBody
+     *
+     * @param string $messageBody
+     * @return FeedbackFormWidget
+     */
+    public function setMessageBody($messageBody)
+    {
+        $this->messageBody = $messageBody;
+
+        return $this;
+    }
+
+    /**
+     * Get messageBody
+     *
+     * @return string
+     */
+    public function getMessageBody()
+    {
+        return $this->messageBody;
     }
 
     /**

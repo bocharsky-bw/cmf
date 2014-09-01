@@ -29,18 +29,25 @@ class FeedbackFormWidgetType extends AbstractWidgetType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('email', 'text', array(
+            ->add('emailTo', 'text', array(
                 'required' => false,
                 'label' => 'E-mail',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
             ))
-            ->add('subject', 'text', array(
+            ->add('messageSubject', 'text', array(
                 'required' => false,
-                'label' => 'Тема письма',
+                'label' => 'Тема сообщения',
                 'attr' => array(
                     'class' => 'form-control',
+                ),
+            ))
+            ->add('messageBody', 'textarea', array(
+                'required' => false,
+                'label' => 'Текст сообщения',
+                'attr' => array(
+                    'class' => 'form-control ckeditor',
                 ),
             ))
             ->add(

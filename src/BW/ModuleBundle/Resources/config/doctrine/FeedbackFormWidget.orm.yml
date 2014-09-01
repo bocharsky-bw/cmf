@@ -11,12 +11,14 @@ BW\ModuleBundle\Entity\FeedbackFormWidget:
         redirectUrl:
             type: string
             length: 255
-        email:
+        emailTo:
             type: string
             length: 255
-        subject:
+        messageSubject:
             type: string
             length: 255
+        messageBody:
+            type: text
         fields:
             type: json_array
     oneToOne:
