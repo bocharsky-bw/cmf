@@ -15,7 +15,6 @@ use BW\UserBundle\Form\RoleType;
  */
 class RoleController extends Controller
 {
-
     /**
      * Lists all Role entities.
      */
@@ -35,6 +34,9 @@ class RoleController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Role();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -43,6 +45,7 @@ class RoleController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $flashBag->add('success', 'Роль успешно создана.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('role'));
@@ -160,6 +163,8 @@ class RoleController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWUserBundle:Role')->find($id);
@@ -174,11 +179,12 @@ class RoleController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($id);
+                $this->delete($request, $id);
                 return $this->redirect($this->generateUrl('role'));
             }
 
             $em->flush();
+            $flashBag->add('success', 'Роль успешно обновлена.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('role'));
@@ -194,8 +200,10 @@ class RoleController extends Controller
         ));
     }
 
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWUserBundle:Role')->find($id);
 
@@ -205,6 +213,7 @@ class RoleController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Роль успешно удалена.');
     }
 
     /**
@@ -216,7 +225,7 @@ class RoleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($request, $id);
         }
 
         return $this->redirect($this->generateUrl('role'));

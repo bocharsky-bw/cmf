@@ -15,28 +15,14 @@ use BW\MenuBundle\Form\ItemType;
  */
 class ItemController extends Controller
 {
-
-//    /**
-//     * Lists all Item entities.
-//     */
-//    public function indexAction()
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $entities = $em->getRepository('BWMenuBundle:Item')->findBy(array(), array(
-//            'left' => 'ASC',
-//        ));
-//
-//        return $this->render('BWMenuBundle:Item:index.html.twig', array(
-//            'entities' => $entities,
-//        ));
-//    }
-
     /**
      * Creates a new Item entity.
      */
     public function createAction(Request $request, $menu_id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Item();
         $entity->setMenu(
             $this->getDoctrine()->getRepository('BWMenuBundle:Menu')->find($menu_id)
@@ -54,6 +40,7 @@ class ItemController extends Controller
 //            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
 
             $em->flush();
+            $flashBag->add('success', 'Пункт меню успешно создан.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('menu_edit', array(
@@ -178,6 +165,8 @@ class ItemController extends Controller
      */
     public function updateAction(Request $request, $menu_id, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWMenuBundle:Item')->find($id);
@@ -191,7 +180,7 @@ class ItemController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($id);
+                $this->delete($request, $id);
                 return $this->redirect($this->generateUrl('menu_edit', array(
                     'id' => $entity->getMenu()->getId(),
                 )));
@@ -203,6 +192,7 @@ class ItemController extends Controller
 //            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
 
             $em->flush();
+            $flashBag->add('success', 'Пункт меню успешно обновлен.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('menu_edit', array(
@@ -225,8 +215,10 @@ class ItemController extends Controller
     /**
      * Deletes a Item entity.
      */
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWMenuBundle:Item')->find($id);
 
@@ -236,6 +228,7 @@ class ItemController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Пункт меню успешно удален.');
     }
 
     /**
@@ -247,7 +240,7 @@ class ItemController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($request, $id);
         }
 
         return $this->redirect($this->generateUrl('item'));

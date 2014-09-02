@@ -17,7 +17,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class UserController extends Controller
 {
-
     /**
      * Lists all User entities.
      */
@@ -50,6 +49,9 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -59,6 +61,7 @@ class UserController extends Controller
             $em->persist($entity);
 
             $em->flush();
+            $flashBag->add('success', 'Пользователь успешно создан.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('user'));
@@ -175,6 +178,8 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWUserBundle:User')->find($id);
@@ -189,11 +194,12 @@ class UserController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($id);
+                $this->delete($request, $id);
                 return $this->redirect($this->generateUrl('user'));
             }
 
             $em->flush();
+            $flashBag->add('success', 'Пользователь успешно обновлен.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('user'));
@@ -209,8 +215,10 @@ class UserController extends Controller
         ));
     }
 
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWUserBundle:User')->find($id);
 
@@ -220,6 +228,7 @@ class UserController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Пользователь успешно удален.');
     }
 
     /**
@@ -231,7 +240,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($request, $id);
         }
 
         return $this->redirect($this->generateUrl('user'));

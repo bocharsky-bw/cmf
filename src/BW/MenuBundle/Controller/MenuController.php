@@ -15,7 +15,6 @@ use BW\MenuBundle\Form\MenuType;
  */
 class MenuController extends Controller
 {
-
     /**
      * Lists all Menu entities.
      */
@@ -35,6 +34,9 @@ class MenuController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Menu();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -43,6 +45,7 @@ class MenuController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $flashBag->add('success', 'Меню успешно создано.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('menu'));
@@ -172,6 +175,8 @@ class MenuController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWMenuBundle:Menu')->find($id);
@@ -186,11 +191,12 @@ class MenuController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($id);
+                $this->delete($request, $id);
                 return $this->redirect($this->generateUrl('menu'));
             }
 
             $em->flush();
+            $flashBag->add('success', 'Меню успешно обновлено.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('menu'));
@@ -209,8 +215,10 @@ class MenuController extends Controller
     /**
      * Deletes a Menu entity.
      */
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWMenuBundle:Menu')->find($id);
 
@@ -220,6 +228,7 @@ class MenuController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Меню успешно удалено.');
     }
 
     /**
@@ -231,7 +240,7 @@ class MenuController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($request, $id);
         }
 
         return $this->redirect($this->generateUrl('menu'));

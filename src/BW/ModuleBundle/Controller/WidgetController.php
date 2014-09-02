@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class WidgetController extends Controller
 {
-
     /**
      * Lists all Widget entities.
      */
@@ -63,6 +62,9 @@ class WidgetController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Widget();
         $type = $this->getDoctrine()->getRepository('BWModuleBundle:Type')->find(
             $request->query->getInt('type')
@@ -76,6 +78,7 @@ class WidgetController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $flashBag->add('success', 'Виджет успешно создан.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('widget'));
@@ -206,6 +209,8 @@ class WidgetController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
@@ -220,7 +225,7 @@ class WidgetController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($entity->getId());
+                $this->delete($request, $entity->getId());
                 return $this->redirect($this->generateUrl('widget'));
             }
             /* Route to Widget binding */
@@ -230,6 +235,7 @@ class WidgetController extends Controller
             }
 
             $em->flush();
+            $flashBag->add('success', 'Виджет успешно обновлен.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('widget'));
@@ -248,8 +254,10 @@ class WidgetController extends Controller
     /**
      * Deletes a Widget entity.
      */
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWModuleBundle:Widget')->find($id);
 
@@ -259,6 +267,7 @@ class WidgetController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Виджет успешно удален.');
     }
 
     /**

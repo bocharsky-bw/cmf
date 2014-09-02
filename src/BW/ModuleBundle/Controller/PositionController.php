@@ -15,7 +15,6 @@ use BW\ModuleBundle\Form\PositionType;
  */
 class PositionController extends Controller
 {
-
     /**
      * Lists all Position entities.
      */
@@ -37,6 +36,9 @@ class PositionController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Position();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -45,6 +47,7 @@ class PositionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $flashBag->add('success', 'Позиция успешно создана.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('position'));
@@ -161,6 +164,8 @@ class PositionController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWModuleBundle:Position')->find($id);
@@ -175,11 +180,12 @@ class PositionController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($entity->getId());
+                $this->delete($request, $entity->getId());
                 return $this->redirect($this->generateUrl('position'));
             }
 
             $em->flush();
+            $flashBag->add('success', 'Позиция успешно обновлена.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('position'));
@@ -198,8 +204,10 @@ class PositionController extends Controller
     /**
      * Deletes a Position entity.
      */
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWModuleBundle:Position')->find($id);
 
@@ -209,6 +217,7 @@ class PositionController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Позиция успешно удалена.');
     }
 
     /**
@@ -220,7 +229,7 @@ class PositionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($reqeust, $id);
         }
 
         return $this->redirect($this->generateUrl('position'));

@@ -48,6 +48,9 @@ class CategoryController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
+
         $entity = new Category();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -60,6 +63,7 @@ class CategoryController extends Controller
 //            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
+            $flashBag->add('success', 'Категория успешно создана.');
 
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
@@ -196,6 +200,8 @@ class CategoryController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWBlogBundle:Category')->find($id);
@@ -210,7 +216,7 @@ class CategoryController extends Controller
 
         if ($editForm->isValid()) {
             if ($editForm->get('delete')->isClicked()) {
-                $this->delete($entity->getId());
+                $this->delete($request, $entity->getId());
                 return $this->redirect($this->generateUrl('category'));
             }
 
@@ -218,6 +224,7 @@ class CategoryController extends Controller
 //            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
+            $flashBag->add('success', 'Категория успешно обновлена.');
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
@@ -238,8 +245,10 @@ class CategoryController extends Controller
     /**
      * Deletes a Category entity.
      */
-    private function delete($id)
+    private function delete(Request $request, $id)
     {
+        /** @var FlashBag $flashBag */
+        $flashBag = $request->getSession()->getFlashBag();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('BWBlogBundle:Category')->find($id);
 
@@ -249,6 +258,7 @@ class CategoryController extends Controller
 
         $em->remove($entity);
         $em->flush();
+        $flashBag->add('danger', 'Категория успешно удалена.');
     }
 
     /**
@@ -260,7 +270,7 @@ class CategoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->delete($id);
+            $this->delete($request, $id);
         }
 
         return $this->redirect($this->generateUrl('category'));

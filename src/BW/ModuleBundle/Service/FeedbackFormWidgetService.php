@@ -49,8 +49,13 @@ class FeedbackFormWidgetService implements WidgetServiceInterface
      * @param \Twig_Environment $twig
      * @param Logger $logger
      */
-    public function __construct(RequestStack $requestStack, FormFactory $formFactory, Router $router, \Twig_Environment $twig, Logger $logger)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        FormFactory $formFactory,
+        Router $router,
+        \Twig_Environment $twig,
+        Logger $logger
+    ) {
         $this->request = $requestStack->getCurrentRequest();
         $this->formFactory = $formFactory;
         $this->router = $router;
