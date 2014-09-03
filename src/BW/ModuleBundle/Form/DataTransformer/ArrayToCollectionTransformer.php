@@ -19,6 +19,8 @@ class ArrayToCollectionTransformer implements DataTransformerInterface
      */
     public function transform($array)
     {
+        $array = (array)$array; // type casting to array
+
         $collection = new ArrayCollection();
 
         foreach ($array as $item) {

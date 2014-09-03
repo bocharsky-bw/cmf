@@ -37,95 +37,93 @@
 {% block header %}
     <header id="header">
         {% block header_wrap %}
-            <div class="_container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-default" role="navigation">
-                            <div class="container-fluid">
-                                <!-- Brand and toggle get grouped for better mobile display -->
-                                <div class="navbar-header">
-                                    <a class="navbar-brand" href="{{ path('admin') }}" title="Панель управления">
-                                        <i class="fa fa-apple"></i> Главная
-                                    </a>
-                                </div>
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="{{ path('admin') }}" title="Панель управления">
+                                    <i class="fa fa-apple"></i> Главная
+                                </a>
+                            </div>
 
-                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                    <ul class="nav navbar-nav">
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-sitemap"></i> Контент <span class="caret"></span>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="{{ path('post') }}">
-                                                        <i class="fa fa-file-text-o"></i> Статьи
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ path('category') }}">
-                                                        <i class="fa fa-folder-open-o"></i> Категории
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-puzzle-piece"></i> Модули <span class="caret"></span>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="{{ path('menu') }}">
-                                                        <i class="fa fa-list"></i> Меню
-                                                    </a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a href="{{ path('widget') }}">
-                                                        <i class="fa fa-th"></i> Виджеты
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ path('position') }}">
-                                                        <i class="fa fa-arrows-alt"></i> Позиции
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                <i class="fa fa-users"></i> Аккаунты <span class="caret"></span>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="{{ path('user') }}">
-                                                        <i class="fa fa-user"></i> Пользователи
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ path('role') }}">
-                                                        <i class="fa fa-lock"></i> Роли
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav navbar-nav navbar-right">
-                                        <li>
-                                            <a href="{{ path('index') }}" title="Просмотр сайта">
-                                                <i class="fa fa-share-square-o"></i> Сайт
-                                            </a>
-                                        </li>
-                                        {% if app.user %}
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-sitemap"></i> Контент <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
                                             <li>
-                                                <a href="{{ path('user_sign_out') }}">
-                                                    <i class="fa fa-sign-out"></i> Выход
+                                                <a href="{{ path('post') }}">
+                                                    <i class="fa fa-file-text-o"></i> Статьи
                                                 </a>
                                             </li>
-                                        {% endif %}
-                                    </ul>
-                                </div><!-- /.navbar-collapse -->
-                            </div><!-- /.container-fluid -->
+                                            <li>
+                                                <a href="{{ path('category') }}">
+                                                    <i class="fa fa-folder-open-o"></i> Категории
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-puzzle-piece"></i> Модули <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('menu') }}">
+                                                    <i class="fa fa-list"></i> Меню
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('widget') }}">
+                                                    <i class="fa fa-th"></i> Виджеты
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('position') }}">
+                                                    <i class="fa fa-arrows-alt"></i> Позиции
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-users"></i> Аккаунты <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('user') }}">
+                                                    <i class="fa fa-user"></i> Пользователи
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('role') }}">
+                                                    <i class="fa fa-lock"></i> Роли
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="{{ path('index') }}" title="Просмотр сайта">
+                                            <i class="fa fa-share-square-o"></i> Сайт
+                                        </a>
+                                    </li>
+                                    {% if app.user %}
+                                        <li>
+                                            <a href="{{ path('user_sign_out') }}">
+                                                <i class="fa fa-sign-out"></i> Выход
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
                         </nav>
                     </div>
                 </div>
@@ -136,7 +134,7 @@
 
 {% block pre_content %}
     <div id="pre_content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     {% block pre_content_wrap %}
@@ -151,7 +149,7 @@
     {% if app.session.flashbag.peekAll %}
         <div id="flash_message">
             {% block flash_message_wrap %}
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
                             {% for status, flashMessages in app.session.flashbag.all %}
@@ -172,7 +170,7 @@
 
 {% block content %}
     <section id="section">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     {% block content_wrap %}
@@ -185,7 +183,7 @@
 
 {% block post_content %}
     <div id="post_content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     {% block post_content_wrap %}
@@ -198,7 +196,7 @@
 
 {% block footer %}
     <footer id="footer">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     {% block footer_wrap %}
@@ -211,7 +209,7 @@
 
 {% block overflow %}
     <div id="overflow">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     {% block overflow_wrap %}

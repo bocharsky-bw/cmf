@@ -29,22 +29,25 @@ class FeedbackFormController extends Controller
         $form->handleRequest($request);
         $data = $form->getData();
         if ($form->isValid()) {
-            $message = \Swift_Message::newInstance()
-                ->setSubject($feedbackFormWidget->getMessageSubject())
-                ->setFrom($this->get('service_container')->getParameter('mailer_user'))
-                ->setTo($feedbackFormWidget->getEmailTo())
-                ->setBody(preg_replace_callback('/(?<placeholder>{(?<name>.+?)})/i', function($matches) use ($data) {
-                    return isset($data[$matches['name']])
-                        ? $data[$matches['name']]
-                        : $matches['placeholder']
-                    ;
-                }, $feedbackFormWidget->getMessageBody()))
-                ->setContentType('text/html');
-            $isSent = $this->get('mailer')->send($message);
-            if ($isSent) {
-                $flashBag->add('success', 'Сообщение успешно отправлено.');
-            } else {
-                $flashBag->add('danger', 'Не удалось отправить сообщение.');
+            try {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject($feedbackFormWidget->getMessageSubject())
+                    ->setFrom($this->get('service_container')->getParameter('mailer_user'))
+                    ->setTo($feedbackFormWidget->getEmailTo())
+                    ->setBody(preg_replace_callback('/(?<placeholder>{(?<name>.+?)})/i', function ($matches) use ($data) {
+                        return isset($data[$matches['name']])
+                            ? $data[$matches['name']]
+                            : $matches['placeholder'];
+                    }, $feedbackFormWidget->getMessageBody()))
+                    ->setContentType('text/html');
+                $isSent = $this->get('mailer')->send($message);
+                if ($isSent) {
+                    $flashBag->add('success', 'Сообщение успешно отправлено.');
+                } else {
+                    $flashBag->add('danger', 'Не удалось отправить сообщение.');
+                }
+            } catch (\Swift_RfcComplianceException $e) {
+                $flashBag->add('danger', 'Не удалось отправить сообщение. ' . $e->getMessage());
             }
 
             $url = $feedbackFormWidget->getRedirectUrl()
