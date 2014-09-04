@@ -7,8 +7,8 @@
 
     {{ form_start(form) }}
         <ul class="list-inline controls">
-            <li>
-                <button type="submit" class="btn btn-success fas fa-plus"> Создать</button>
+            <li {% if not form.type.vars.choices %}title="Нельзя создать виджет без типа"{% endif %}>
+                <button type="submit" class="btn btn-success fas fa-plus" {% if not form.type.vars.choices %}disabled="disabled"{% endif %}> Создать</button>
             </li>
             <li>
                 {{ form_widget(form.type) }}
@@ -16,40 +16,44 @@
         </ul>
     {{ form_end(form) }}
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Краткое описание</th>
-                <th>Позиция</th>
-                <th>Тип</th>
-                <th>Опубликовано</th>
-                <th>Порядок</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.id }}</td>
-                <td>
-                    <a href="{{ path('widget_edit', { 'id': entity.id }) }}" title="Редактировать запись">
-                        {{ entity.heading ? entity.heading : '< no heading >' }}
-                    </a>
-                </td>
-                <td>{{ entity.shortDescription }}</td>
-                <td>
-                    {% if entity.position  %}
-                        <abbr title="{{ entity.position.alias }}">{{ entity.position.name }}</abbr>
-                    {% else %}
-                        < Без позиции >
-                    {% endif %}
-                </td>
-                <td><abbr title="{{ entity.type.alias }}">{{ entity.type.name }}</abbr></td>
-                <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td>{{ entity.order }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if entities %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Краткое описание</th>
+                    <th>Позиция</th>
+                    <th>Тип</th>
+                    <th>Опубликовано</th>
+                    <th>Порядок</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>
+                        <a href="{{ path('widget_edit', { 'id': entity.id }) }}" title="Редактировать запись">
+                            {{ entity.heading ? entity.heading : '< no heading >' }}
+                        </a>
+                    </td>
+                    <td>{{ entity.shortDescription }}</td>
+                    <td>
+                        {% if entity.position  %}
+                            <abbr title="{{ entity.position.alias }}">{{ entity.position.name }}</abbr>
+                        {% else %}
+                            < Без позиции >
+                        {% endif %}
+                    </td>
+                    <td><abbr title="{{ entity.type.alias }}">{{ entity.type.name }}</abbr></td>
+                    <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td>{{ entity.order }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
 {% endblock %}

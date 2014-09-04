@@ -13,69 +13,75 @@
         </li>
     </ul>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'c.id') }}</th>
-                <th class="{{ pagination.isSorted('c.heading') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Заголовок', 'c.heading') }}</th>
-                <th>Синоним URL</th>
-                <th>Родительская категория</th>
-                <th>Опубликовано</th>
-                <th>Главная</th>
-                <th class="{{ pagination.isSorted('c.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'c.created') }}</th>
-                <th class="{{ pagination.isSorted('c.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'c.updated') }}</th>
-                <th>Порядок</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in pagination %}
-            <tr>
-                <td class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ entity.id }}</a></td>
-                <td class="{{ pagination.isSorted('c.heading') ? 'active' }}">
-                    {{ '|— '|repeat(entity.level) }}
-                    <a href="{{ path('category_edit', { 'id': entity.id }) }}" title="Редактировать запись">
-                        {{ entity.heading }}
-                    </a><br/>
-                    <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
-                        <small class="fa fa-share-square-o" title="Перейти на страницу">
-                            {{ entity.route.path }}
-                        </small>
-                    </a>
-                </td>
-                <td>{{ entity.slug }}</td>
-                <td>
-                    {% if entity.parent %}
-                        <a href="{{ path('category_edit', {'id': entity.parent.id}) }}" title="Редактировать запись">
-                            {{ entity.parent.heading }}
+    {% if pagination.count %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'c.id') }}</th>
+                    <th class="{{ pagination.isSorted('c.heading') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Заголовок', 'c.heading') }}</th>
+                    <th>Синоним URL</th>
+                    <th>Родительская категория</th>
+                    <th>Опубликовано</th>
+                    <th>Главная</th>
+                    <th class="{{ pagination.isSorted('c.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'c.created') }}</th>
+                    <th class="{{ pagination.isSorted('c.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'c.updated') }}</th>
+                    <th>Порядок</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagination %}
+                <tr>
+                    <td class="{{ pagination.isSorted('c.id') ? 'active' }}">{{ entity.id }}</a></td>
+                    <td class="{{ pagination.isSorted('c.heading') ? 'active' }}">
+                        {{ '|— '|repeat(entity.level) }}
+                        <a href="{{ path('category_edit', { 'id': entity.id }) }}" title="Редактировать запись">
+                            {{ entity.heading }}
+                        </a><br/>
+                        <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
+                            <small class="fa fa-share-square-o" title="Перейти на страницу">
+                                {{ entity.route.path }}
+                            </small>
                         </a>
-                    {% else %}
-                        {{ '< Корневая >' }}
-                    {% endif %}
-                </td>
-                <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td><span class="{{ '/' ~ home_page_path  == entity.route.path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td class="{{ pagination.isSorted('c.created') ? 'active' }}">
-                    {% if entity.created %}
-                        <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
-                            {{ entity.created|date('d/m/Y') }}
-                        </abbr>
-                    {% endif %}
-                </td>
-                <td class="{{ pagination.isSorted('c.updated') ? 'active' }}">
-                    {% if entity.updated %}
-                        <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
-                            {{ entity.updated|date('d/m/Y') }}
-                        </abbr>
-                    {% endif %}
-                </td>
-                <td>{{ entity.order }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td>{{ entity.slug }}</td>
+                    <td>
+                        {% if entity.parent %}
+                            <a href="{{ path('category_edit', {'id': entity.parent.id}) }}" title="Редактировать запись">
+                                {{ entity.parent.heading }}
+                            </a>
+                        {% else %}
+                            {{ '< Корневая >' }}
+                        {% endif %}
+                    </td>
+                    <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td><span class="{{ '/' ~ home_page_path  == entity.route.path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td class="{{ pagination.isSorted('c.created') ? 'active' }}">
+                        {% if entity.created %}
+                            <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
+                                {{ entity.created|date('d/m/Y') }}
+                            </abbr>
+                        {% endif %}
+                    </td>
+                    <td class="{{ pagination.isSorted('c.updated') ? 'active' }}">
+                        {% if entity.updated %}
+                            <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
+                                {{ entity.updated|date('d/m/Y') }}
+                            </abbr>
+                        {% endif %}
+                    </td>
+                    <td>{{ entity.order }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
+
     <div class="count">
         Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
     </div>
+
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
     </div>

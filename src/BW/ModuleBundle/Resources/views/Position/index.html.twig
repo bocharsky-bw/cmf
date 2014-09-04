@@ -13,28 +13,32 @@
         </li>
     </ul>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Алиас</th>
-                <th>Описание</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.id }}</td>
-                <td>
-                    <a href="{{ path('position_edit', { 'id': entity.id }) }}" title="Редактировать запись">
-                        {{ entity.name ? entity.name : '< no heading >' }}
-                    </a>
-                </td>
-                <td>{{ entity.alias }}</td>
-                <td>{{ entity.description }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if entities %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Алиас</th>
+                    <th>Описание</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>
+                        <a href="{{ path('position_edit', { 'id': entity.id }) }}" title="Редактировать запись">
+                            {{ entity.name ? entity.name : '< no heading >' }}
+                        </a>
+                    </td>
+                    <td>{{ entity.alias }}</td>
+                    <td>{{ entity.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
 {% endblock %}

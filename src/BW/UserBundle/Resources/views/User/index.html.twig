@@ -13,65 +13,71 @@
         </li>
     </ul>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="{{ pagination.isSorted('u.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'u.id') }}</th>
-                <th class="{{ pagination.isSorted('u.username') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Логин', 'u.username') }}</th>
-                <th class="{{ pagination.isSorted('u.email') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'E-mail', 'u.email') }}</th>
-                <th>Роли</th>
-                <th>Активный</th>
-                <th>Подтвержденный</th>
-                <th class="{{ pagination.isSorted('u.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'u.created') }}</th>
-                <th class="{{ pagination.isSorted('u.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'u.updated') }}</th>
-                <th>Соц. сети</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in pagination %}
-            <tr>
-                <td class="{{ pagination.isSorted('u.id') ? 'active' }}">{{ entity.id }}</td>
-                <td class="{{ pagination.isSorted('u.username') ? 'active' }}"><a href="{{ path('user_edit', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
-                <td>{{ entity.email }}</td>
-                <td>
-                    {% if entity.roles %}
-                        {% for role in entity.roles %}
-                            {{ role.name }}{{ not loop.last ? ', ' }}
-                        {% endfor %}
-                    {% endif %}
-                </td>
-                <td><span class="{{ entity.enabled ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td><span class="{{ entity.confirmed ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                <td class="{{ pagination.isSorted('u.created') ? 'active' }}">
-                    {% if entity.created %}
-                        <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
-                            {{ entity.created|date('d/m/Y') }}
-                        </abbr>
-                    {% endif %}
-                </td>
-                <td class="{{ pagination.isSorted('u.updated') ? 'active' }}">
-                    {% if entity.updated %}
-                        <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
-                            {{ entity.updated|date('d/m/Y') }}
-                        </abbr>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if entity.facebookId and entity.googleId and entity.vkId %}
-                        {% if entity.facebookId %}Facebook ID: {{ entity.facebookId }}<br/>{% endif %}
-                        {% if entity.googleId %}Google ID: {{ entity.googleId }}<br/>{% endif %}
-                        {% if entity.vkId %}ВКонтакте ID: {{ entity.vkId }}<br/>{% endif %}
-                    {% else %}
-                        < не привязаны >
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if pagination.count %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="{{ pagination.isSorted('u.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'u.id') }}</th>
+                    <th class="{{ pagination.isSorted('u.username') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Логин', 'u.username') }}</th>
+                    <th class="{{ pagination.isSorted('u.email') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'E-mail', 'u.email') }}</th>
+                    <th>Роли</th>
+                    <th>Активный</th>
+                    <th>Подтвержденный</th>
+                    <th class="{{ pagination.isSorted('u.created') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Создано', 'u.created') }}</th>
+                    <th class="{{ pagination.isSorted('u.updated') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Обновлено', 'u.updated') }}</th>
+                    <th>Соц. сети</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagination %}
+                <tr>
+                    <td class="{{ pagination.isSorted('u.id') ? 'active' }}">{{ entity.id }}</td>
+                    <td class="{{ pagination.isSorted('u.username') ? 'active' }}"><a href="{{ path('user_edit', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                    <td>{{ entity.email }}</td>
+                    <td>
+                        {% if entity.roles %}
+                            {% for role in entity.roles %}
+                                {{ role.name }}{{ not loop.last ? ', ' }}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td><span class="{{ entity.enabled ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td><span class="{{ entity.confirmed ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td class="{{ pagination.isSorted('u.created') ? 'active' }}">
+                        {% if entity.created %}
+                            <abbr title="{{ entity.created|date('Создано в H:i:s') }}">
+                                {{ entity.created|date('d/m/Y') }}
+                            </abbr>
+                        {% endif %}
+                    </td>
+                    <td class="{{ pagination.isSorted('u.updated') ? 'active' }}">
+                        {% if entity.updated %}
+                            <abbr title="{{ entity.updated|date('Обновлено в H:i:s') }}">
+                                {{ entity.updated|date('d/m/Y') }}
+                            </abbr>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if entity.facebookId and entity.googleId and entity.vkId %}
+                            {% if entity.facebookId %}Facebook ID: {{ entity.facebookId }}<br/>{% endif %}
+                            {% if entity.googleId %}Google ID: {{ entity.googleId }}<br/>{% endif %}
+                            {% if entity.vkId %}ВКонтакте ID: {{ entity.vkId }}<br/>{% endif %}
+                        {% else %}
+                            < не привязаны >
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
+
     <div class="count">
         Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
     </div>
+
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
     </div>

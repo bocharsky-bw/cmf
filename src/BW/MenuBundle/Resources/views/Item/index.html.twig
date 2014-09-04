@@ -1,0 +1,52 @@
+<h2><i class="fa fa-list-ul"></i> Пункты меню</h2>
+
+<ul class="list-inline">
+    <li>
+        <a class="btn btn-primary fas fa-plus" href="{{ path('item_new', {'menu_id': entity.id}) }}"> Создать пункт меню</a>
+    </li>
+</ul>
+
+{% if pagination.count %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="{{ pagination.isSorted('i.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'i.id') }}</th>
+            <th class="{{ pagination.isSorted('i.name') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Название', 'i.name') }}</th>
+            <th>Класс CSS</th>
+            <th>Опубликовано</th>
+            <th>Порядок</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in pagination %}
+            <tr>
+                <td class="{{ pagination.isSorted('i.id') ? 'active' }}">{{ item.id }}</td>
+                <td class="{{ pagination.isSorted('i.name') ? 'active' }}">
+                    {{ '|— '|repeat(item.level) }}
+                    <a href="{{ path('item_edit', { 'menu_id': entity.id, 'id': item.id }) }}" title="Редактировать запись">
+                        {{ item.name }}
+                    </a><br/>
+                    <a href="{{ item.uriForRequest(app.request) }}" title="Перейти по адресу">
+                        <small class="fa fa-share-square-o">
+                            {{ item.route ? item.route.path : item.uri }}
+                        </small>
+                    </a>
+                </td>
+                <td>{{ item.class }}</td>
+                <td><span class="{{ item.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                <td>{{ item.order }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="well well-sm text-center">Записи отсутствуют</div>
+{% endif %}
+
+<div class="count">
+    Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
+</div>
+
+<div class="navigation text-center">
+    {{ knp_pagination_render(pagination) }}
+</div>

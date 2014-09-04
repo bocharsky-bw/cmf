@@ -17,24 +17,28 @@
         <em>Иерархия ролей настраивается вручную в файле <strong>app/config/security.yml</strong></em>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Роль</th>
-                <th>Описание</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.id }}</td>
-                <td><a href="{{ path('role_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                <td>{{ entity.role }}</td>
-                <td>{{ entity.description }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if entities %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Роль</th>
+                    <th>Описание</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('role_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                    <td>{{ entity.role }}</td>
+                    <td>{{ entity.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
 {% endblock %}
