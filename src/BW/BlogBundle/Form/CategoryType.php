@@ -34,13 +34,14 @@ class CategoryType extends AbstractType
                     $category = $options['data'];
 
                     return $er->createQueryBuilder('c')
-                            ->where('c.id != :id')
-                            ->andWhere('c.left < :left OR c.left > :right')
-                            ->orderBy('c.left', 'ASC')
-                            ->setParameter('id', (int)$category->getId(), Type::INTEGER)
-                            ->setParameter('left', (int)$category->getLeft(), Type::INTEGER)
-                            ->setParameter('right', (int)$category->getRight(), Type::INTEGER)
-                        ;
+                        ->where('c.id != :id')
+                        ->andWhere('c.root != :root OR (c.left < :left OR c.left > :right)')
+                        ->orderBy('c.left', 'ASC')
+                        ->setParameter('id', $category->getId(), Type::INTEGER)
+                        ->setParameter('root', $category->getRoot(), Type::INTEGER)
+                        ->setParameter('left', $category->getLeft(), Type::INTEGER)
+                        ->setParameter('right', $category->getRight(), Type::INTEGER)
+                    ;
                 },
                 'required' => false,
                 'label' => 'Родительская категория ',

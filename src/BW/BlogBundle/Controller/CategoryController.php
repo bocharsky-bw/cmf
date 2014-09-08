@@ -29,7 +29,8 @@ class CategoryController extends Controller
         $qb
             ->addSelect('r')
             ->innerJoin('c.route', 'r')
-            ->orderBy('c.left', 'ASC')
+            ->orderBy('c.root', 'ASC')
+            ->addOrderBy('c.left', 'ASC')
         ;
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

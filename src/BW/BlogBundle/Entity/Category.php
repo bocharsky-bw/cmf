@@ -66,6 +66,11 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     private $updated;
 
     /**
+     * @var integer
+     */
+    private $root;
+
+    /**
      * @var integer $order
      */
     private $order = 0;
@@ -439,6 +444,29 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     * @return Category
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return integer
+     */
+    public function getRoot()
+    {
+        return $this->root;
     }
 
     /**

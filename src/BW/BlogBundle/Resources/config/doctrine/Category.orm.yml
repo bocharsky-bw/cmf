@@ -1,6 +1,10 @@
 BW\BlogBundle\Entity\Category:
     type: entity
+    repositoryClass: Gedmo\Tree\Entity\Repository\NestedTreeRepository
     table: categories
+    gedmo:
+        tree:
+            type: nested
     id:
         id:
             type: integer
@@ -34,14 +38,27 @@ BW\BlogBundle\Entity\Category:
         order:
             column: ordering
             type: integer
-        level:
+        # Nested Set
+        root:
             type: integer
+            nullable: true
+            gedmo:
+                - treeRoot
+        level:
+            column: lvl
+            type: integer
+            gedmo:
+                - treeLevel
         left:
             column: lft
             type: integer
+            gedmo:
+                - treeLeft
         right:
             column: rgt
             type: integer
+            gedmo:
+                - treeRight
     oneToOne:
         image:
             targetEntity: BW\UploadBundle\Entity\Image
@@ -50,6 +67,8 @@ BW\BlogBundle\Entity\Category:
         children:
             targetEntity: BW\BlogBundle\Entity\Category
             mappedBy: parent
+            orderBy:
+                left: ASC
         posts:
             targetEntity: BW\BlogBundle\Entity\Post
             mappedBy: category
@@ -57,6 +76,12 @@ BW\BlogBundle\Entity\Category:
         parent:
             targetEntity: BW\BlogBundle\Entity\Category
             inversedBy: children
+            joinColumn:
+                #name: parent_id
+                #referencedColumnName: id
+                onDelete: CASCADE
+            gedmo:
+                - treeParent
         route:
             targetEntity: BW\RouterBundle\Entity\Route
             cascade: [persist, remove]
