@@ -68,7 +68,7 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     /**
      * @var integer
      */
-    private $root;
+    private $root = null;
 
     /**
      * @var integer $order

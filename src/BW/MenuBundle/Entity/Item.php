@@ -52,6 +52,11 @@ class Item implements NestedSetInterface
     /**
      * @var integer
      */
+    private $root = null;
+
+    /**
+     * @var integer
+     */
     private $level = 0;
 
     /**
@@ -294,6 +299,29 @@ class Item implements NestedSetInterface
     }
 
     /**
+     * Set root
+     *
+     * @param integer $root
+     * @return Item
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return integer
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
      * Set level
      *
      * @param integer $level
@@ -426,7 +454,7 @@ class Item implements NestedSetInterface
      *
      * @param \BW\MenuBundle\Entity\Item $children
      */
-    public function removeChild(\BW\MenuBundle\Entity\Item $children)
+    public function removeChild(Item $children)
     {
         $this->children->removeElement($children);
     }

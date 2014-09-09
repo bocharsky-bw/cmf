@@ -86,5 +86,4 @@ BW\BlogBundle\Entity\Category:
             targetEntity: BW\RouterBundle\Entity\Route
             cascade: [persist, remove]
     lifecycleCallbacks:
-        prePersist: [generateLevel]
-        preUpdate: [generateLevel, generateUpdatedDate]
+        preUpdate: [generateUpdatedDate]
