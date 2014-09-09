@@ -56,6 +56,7 @@ BW\MenuBundle\Entity\Item:
             mappedBy: parent
             orderBy:
                 left: ASC
+            cascade: [remove]
     manyToOne:
         parent:
             targetEntity: BW\MenuBundle\Entity\Item
@@ -63,7 +64,7 @@ BW\MenuBundle\Entity\Item:
             joinColumn:
                 #name: parent_id
                 #referencedColumnName: id
-                onDelete: CASCADE
+                #onDelete: CASCADE
             gedmo:
                 - treeParent
         menu:

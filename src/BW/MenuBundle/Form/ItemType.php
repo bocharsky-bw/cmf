@@ -48,8 +48,8 @@ class ItemType extends AbstractType
                         ->where('c.id != :id')
                         ->andWhere('c.root != :root OR (c.left < :left OR c.left > :right)')
                         ->orderBy('c.left', 'ASC')
-                        ->setParameter('id', $entity->getId(), Type::INTEGER)
-                        ->setParameter('root', $entity->getRoot(), Type::INTEGER)
+                        ->setParameter('id', (int)$entity->getId(), Type::INTEGER)
+                        ->setParameter('root', (int)$entity->getRoot(), Type::INTEGER)
                         ->setParameter('left', $entity->getLeft(), Type::INTEGER)
                         ->setParameter('right', $entity->getRight(), Type::INTEGER)
                         ;

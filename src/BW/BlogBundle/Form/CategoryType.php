@@ -37,8 +37,8 @@ class CategoryType extends AbstractType
                         ->where('c.id != :id')
                         ->andWhere('c.root != :root OR (c.left < :left OR c.left > :right)')
                         ->orderBy('c.left', 'ASC')
-                        ->setParameter('id', $category->getId(), Type::INTEGER)
-                        ->setParameter('root', $category->getRoot(), Type::INTEGER)
+                        ->setParameter('id', (int)$category->getId(), Type::INTEGER)
+                        ->setParameter('root', (int)$category->getRoot(), Type::INTEGER)
                         ->setParameter('left', $category->getLeft(), Type::INTEGER)
                         ->setParameter('right', $category->getRight(), Type::INTEGER)
                     ;

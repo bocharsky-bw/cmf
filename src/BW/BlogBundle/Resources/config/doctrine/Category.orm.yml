@@ -69,6 +69,7 @@ BW\BlogBundle\Entity\Category:
             mappedBy: parent
             orderBy:
                 left: ASC
+            cascade: [remove]
         posts:
             targetEntity: BW\BlogBundle\Entity\Post
             mappedBy: category
@@ -79,7 +80,7 @@ BW\BlogBundle\Entity\Category:
             joinColumn:
                 #name: parent_id
                 #referencedColumnName: id
-                onDelete: CASCADE
+                #onDelete: CASCADE
             gedmo:
                 - treeParent
         route:
