@@ -5,8 +5,3 @@ admin:
 index:
     path:     /
     defaults: { _controller: BWDefaultBundle:Default:index }
-
-# @TODO Move to BWRouterBundle
-home:
-    path:     /%home_page_path%
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: index, permanent: true }

@@ -5,7 +5,6 @@ namespace BW\RouterBundle\Entity;
 /**
  * Class Route
  * @package BW\RouterBundle\Entity
- * @TODO Create EventListener and store route automatically
  */
 class Route
 {
@@ -25,18 +24,17 @@ class Route
     private $defaults = array();
 
 
-    /**
-     * The constructor
-     */
-    public function __construct()
+    public function handleEntity(RouteInterface $entity)
     {
+        $entity->setRoute($this);
+        $this->setPath($entity->generatePath());
+        $this->setDefaults($entity->getDefaults());
     }
 
-
     /**
-     * The controller name (a string like BlogBundle:Post:index)
+     * Get the controller name (a string like BlogBundle:Post:index) or null if not defined
      *
-     * @return string
+     * @return string|null
      */
     public function getController()
     {
@@ -44,14 +42,6 @@ class Route
             ? $this->defaults['_controller']
             : null
         ;
-    }
-
-
-    public function handleEntity(RouteInterface $entity)
-    {
-        $entity->setRoute($this);
-        $this->setPath($entity->generatePath());
-        $this->setDefaults($entity->getDefaults());
     }
 
 

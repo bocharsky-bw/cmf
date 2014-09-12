@@ -4,11 +4,11 @@ namespace BW\RouterBundle\EventListener;
 
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bridge\Monolog\Logger;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 
 /**
  * Class RoutingEventListener
@@ -56,16 +56,31 @@ class RoutingEventListener
     }
 
 
+    /**
+     * The Doctrine entity post persist event trigger
+     *
+     * @param LifecycleEventArgs $args
+     */
     public function postPersist(LifecycleEventArgs $args)
     {
         $this->handleEntity($args);
     }
 
+    /**
+     * The Doctrine entity post update event trigger
+     *
+     * @param LifecycleEventArgs $args
+     */
     public function postUpdate(LifecycleEventArgs $args)
     {
         $this->handleEntity($args);
     }
 
+    /**
+     * The entity handle for automatic route creating and binding with it
+     *
+     * @param LifecycleEventArgs $args
+     */
     private function handleEntity(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -79,6 +94,11 @@ class RoutingEventListener
         }
     }
 
+    /**
+     * The Doctrine post flush event trigger
+     *
+     * @param PostFlushEventArgs $args
+     */
     public function postFlush(PostFlushEventArgs $args)
     {
         if (true === $this->isPostFlush) {

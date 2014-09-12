@@ -4,9 +4,9 @@ namespace BW\RouterBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bridge\Monolog\Logger;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Class DatabaseRouteLoadingEventListener
@@ -61,7 +61,7 @@ class DatabaseRouteLoadingEventListener
 
 
     /**
-     * Get current route object
+     * Get the current Route entity
      *
      * @return \BW\RouterBundle\Entity\Route
      */
@@ -77,14 +77,13 @@ class DatabaseRouteLoadingEventListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-//        die('onKernelRequest');
         $this->logger->debug(sprintf(
             'Notified event "%s" to listener "%s".',
             $event->getName(),
             __METHOD__
         ));
 
-        if ( ! $event->isMasterRequest()) {
+        if (! $event->isMasterRequest()) {
             // don't do anything if it's not the master request
             $this->logger->debug(sprintf(
                 'It is not master request. Abort search in database.'
@@ -92,7 +91,7 @@ class DatabaseRouteLoadingEventListener
             return;
         }
 
-        if ( ! $this->request->isMethod('GET')) {
+        if (! $this->request->isMethod('GET')) {
             // don't do anything if request method isn't GET
             $this->logger->debug(sprintf(
                 'It is "%s" request method, "GET" expected. Abort search in database.',
@@ -119,7 +118,7 @@ class DatabaseRouteLoadingEventListener
             'path' => $this->request->getPathInfo(),
         ));
 
-        if ( ! $route) {
+        if (! $route) {
             // don't do anything if route not found in database
             $this->logger->error(sprintf(
                 'Route with path "%s" not found in database.',
@@ -137,7 +136,7 @@ class DatabaseRouteLoadingEventListener
     }
 
     /**
-     * Whether is route matched
+     * Whether is current route matched
      *
      * @return bool
      */
