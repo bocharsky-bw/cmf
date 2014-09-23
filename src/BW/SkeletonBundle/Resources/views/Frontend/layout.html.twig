@@ -4,7 +4,13 @@
 
 {% block charset %}utf-8{% endblock %}
 
-{% block title %}% Layout Template %{% endblock %}
+{% block title -%}
+    {{ title_prefix ? title_prefix ~ ' ' : '' }}
+    {%- block title_wrap -%}
+        % Layout Template %
+    {%- endblock -%}
+    {{ title_suffix ? ' ' ~ title_suffix : '' }}
+{%- endblock %}
 
 {% block description %}{% endblock %}
 

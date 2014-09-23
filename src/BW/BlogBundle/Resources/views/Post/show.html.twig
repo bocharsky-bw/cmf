@@ -1,6 +1,6 @@
 {% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
-{% block title %}{{ entity.title ? entity.title : entity.heading }}{% endblock %}
+{% block title_wrap %}{{ entity.title ? entity.title : entity.heading }}{% endblock %}
 
 {% block description %}{{ entity.metaDescription ? entity.metaDescription }}{% endblock %}
 
