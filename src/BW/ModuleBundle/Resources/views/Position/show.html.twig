@@ -1,6 +1,6 @@
 <div class="bw_position {{ position.alias }}">
     {% for widget in widgets %}
-        <div class="widget">
+        <div class="widget {{ widget.class }}">
             <h3 class="widget_heading">
                 {{ widget.heading }}
                 {% if is_granted('ROLE_ADMIN') %}

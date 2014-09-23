@@ -63,6 +63,13 @@ class WidgetType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('class', 'text', array(
+                'required' => false,
+                'label' => 'HTML атрибут "class" ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             ->add('visibility', 'choice', array(
                 'required' => true,
                 'expanded' => true,

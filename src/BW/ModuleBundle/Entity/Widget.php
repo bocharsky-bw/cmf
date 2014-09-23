@@ -38,6 +38,11 @@ class Widget
     private $order = 0;
 
     /**
+     * @var string $class
+     */
+    private $class = '';
+
+    /**
      * @var boolean $visibility
      */
     private $visibility = true;
@@ -191,6 +196,29 @@ class Widget
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $class
+     * @return Widget
+     */
+    public function setClass($class)
+    {
+        $this->class = isset($class) ? $class : '';
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 
     /**

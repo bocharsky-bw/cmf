@@ -21,6 +21,9 @@ BW\ModuleBundle\Entity\Widget:
             type: integer
         visibility:
             type: boolean
+        class:
+            type: string
+            length: 255
     oneToOne:
         htmlWidget:
             targetEntity: BW\ModuleBundle\Entity\HtmlWidget
