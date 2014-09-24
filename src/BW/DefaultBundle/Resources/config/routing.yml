@@ -5,3 +5,7 @@ admin:
 index:
     path:     /
     defaults: { _controller: BWDefaultBundle:Default:index }
+
+bw_default_database:
+    resource: "@BWDefaultBundle/Resources/config/routing/database.yml"
+    prefix:   /_admin/database

@@ -1,0 +1,19 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block content_wrap -%}
+    <h1>Подтвердите удаление дампа</h1>
+
+    <p>
+        Вы действительно хотите удалить файл <b>{{ filename }}</b> дампа БД с файловой системы? <br/>
+        Это действие нельзя будет отменить.
+    </p>
+
+    <ul class="list-inline">
+        <li>
+            {{ form(form) }}
+        </li>
+        <li>
+            <a href="{{ path('database') }}" class="btn btn-default"><i class="fa fa-ban"></i> Отменить</a>
+        </li>
+    </ul>
+{% endblock %}

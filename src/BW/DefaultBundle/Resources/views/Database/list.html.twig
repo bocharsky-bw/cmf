@@ -1,0 +1,75 @@
+{% macro fileSizeFormat(size) -%}
+    {% set length = size|length %}
+
+    {% if 0 < length and length <= 3 %}
+        {{ size }} <abbr title="байт">Б</abbr>
+    {% elseif 3 < length and length <= 6 %}
+        {{ (size / 1000)|number_format(1, '.', ' ') }} <abbr title="килобайт">кБ</abbr>
+    {% elseif 6 < length and length <= 9 %}
+        {{ (size / 1000000)|number_format(1, '.', ' ') }} <abbr title="мегабайт">МБ</abbr>
+    {% else %}
+        {{ (size / 1000000000)|number_format(1, '.', ' ') }} <abbr title="гигабайт">ГБ</abbr>
+    {% endif %}
+{%- endmacro %}
+
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}База данных{% endblock %}
+
+{% block content_wrap -%}
+    <h1><i class="fa fa-database"></i> Список дампов БД</h1>
+
+    <ul class="list-inline controls">
+        <li>
+            {{ form(form) }}
+        </li>
+    </ul>
+
+    {% if finder %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Название</th>
+                <th>Создано</th>
+                <th>Размер</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for file in finder %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        {{ file.filename }}
+                    </td>
+                    <td>
+                        <abbr title="{{ file.mtime|date('в H:i:s') }}">
+                            {{ file.mtime|date('d/m/Y') }}
+                        </abbr>
+                    </td>
+                    <td>
+                        <span title="{{ file.size }} байт">{{ _self.fileSizeFormat(file.size) }}</span>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{ file.realpath }}">
+                                    <i class="fa fa-download"></i> Скачать
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('database_dump_delete', { 'filename': file.filename }) }}">
+                                    <i class="fa fa-times"></i> Удалить
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well well-sm text-center">Записи отсутствуют</div>
+    {% endif %}
+{% endblock %}
