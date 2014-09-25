@@ -17,20 +17,26 @@ class DatabaseController extends Controller
     {
         $kernel = $this->get('kernel');
 
-        return $kernel->getCacheDir() . '/dump';
+        return $kernel->getCacheDir() . '/../dump';
     }
 
     public function listAction()
     {
-        $finder = new Finder();
-        $finder->files()->in($this->getDumpPath())->sort(function (SplFileInfo $a, SplFileInfo $b) {
-            return strcmp($b->getMTime(), $a->getMTime());
-        });
+        $fs = $this->get('filesystem');
+
+        if ($fs->exists($this->getDumpPath())) {
+            $finder = new Finder();
+            $files = $finder->files()->in($this->getDumpPath())->sort(function (SplFileInfo $a, SplFileInfo $b) {
+                return strcmp($b->getMTime(), $a->getMTime()); // sort by modifiedTime DESC
+            });
+        } else {
+            $files = array();
+        }
 
         $form = $this->createDumpForm();
 
         return $this->render('BWDefaultBundle:Database:list.html.twig', [
-            'finder' => $finder,
+            'files' => $files,
             'form' => $form->createView(),
         ]);
     }

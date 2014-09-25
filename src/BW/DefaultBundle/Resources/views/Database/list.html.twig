@@ -25,7 +25,7 @@
         </li>
     </ul>
 
-    {% if finder %}
+    {% if files %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for file in finder %}
+            {% for file in files %}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>
