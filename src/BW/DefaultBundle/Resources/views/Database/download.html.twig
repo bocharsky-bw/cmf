@@ -1,0 +1,18 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block content_wrap -%}
+    <h1>Подтвердите скачивание дампа</h1>
+
+    <p>
+        Вы действительно хотите скачать файл <b>{{ filename }}</b> дампа БД к себе на компьютер?
+    </p>
+
+    <ul class="list-inline">
+        <li>
+            {{ form(form) }}
+        </li>
+        <li>
+            <a href="{{ path('database') }}" class="btn btn-default"><i class="fa fa-ban"></i> Отменить</a>
+        </li>
+    </ul>
+{% endblock %}

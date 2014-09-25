@@ -15,3 +15,12 @@ database_dump_delete_confirm:
     path:     /dump/{filename}/delete/confirm
     defaults: { _controller: BWDefaultBundle:Database:deleteConfirm }
     requirements: { _method: post|delete }
+
+database_dump_download:
+    path:     /dump/{filename}/download
+    defaults: { _controller: BWDefaultBundle:Database:download }
+
+database_dump_download_confirm:
+    path:     /dump/{filename}/download/confirm
+    defaults: { _controller: BWDefaultBundle:Database:downloadConfirm }
+    requirements: { _method: post }

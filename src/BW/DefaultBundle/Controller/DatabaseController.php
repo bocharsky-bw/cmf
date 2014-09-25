@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DatabaseController
@@ -13,20 +14,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DatabaseController extends Controller
 {
-    private function getDumpPath()
+    /**
+     * The database dump folder name
+     */
+    const DUMP_DIRNAME = 'dump';
+
+
+    private function getDumpDir()
     {
         $kernel = $this->get('kernel');
 
-        return $kernel->getCacheDir() . '/../dump';
+        return $kernel->getCacheDir()
+            . DIRECTORY_SEPARATOR
+            . '..'
+            . DIRECTORY_SEPARATOR
+            . self::DUMP_DIRNAME
+        ;
     }
 
     public function listAction()
     {
         $fs = $this->get('filesystem');
 
-        if ($fs->exists($this->getDumpPath())) {
+        if ($fs->exists($this->getDumpDir())) {
             $finder = new Finder();
-            $files = $finder->files()->in($this->getDumpPath())->sort(function (SplFileInfo $a, SplFileInfo $b) {
+            $files = $finder->files()->in($this->getDumpDir())->sort(function (SplFileInfo $a, SplFileInfo $b) {
                 return strcmp($b->getMTime(), $a->getMTime()); // sort by modifiedTime DESC
             });
         } else {
@@ -59,13 +71,21 @@ class DatabaseController extends Controller
         }
 
         // Make database dump dir if not exists
-        if (! $fs->exists($this->getDumpPath())) {
-            $fs->mkdir($this->getDumpPath());
+        if (! $fs->exists($this->getDumpDir())) {
+            $fs->mkdir($this->getDumpDir());
         }
 
+        // Generate file name
+        $filename = ''
+            . $container->getParameter('database_name')
+            . '_'
+            . date('Y-m-d_H:i:s')
+            . '_'
+            . uniqid()
+            . '.sql'
+        ;
         // Touched new file
-        $filename = date('Y-m-d_H:i:s') . '_' . uniqid() . '.sql';
-        $fs->touch($this->getDumpPath() . DIRECTORY_SEPARATOR . $filename);
+        $fs->touch($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename);
 
         // Execute dump command
         $result = exec(sprintf(
@@ -74,15 +94,15 @@ class DatabaseController extends Controller
             , $container->getParameter('database_name')
             , $container->getParameter('database_user')
             , $container->getParameter('database_password')
-            , $this->getDumpPath() . DIRECTORY_SEPARATOR . $filename
+            , $this->getDumpDir() . DIRECTORY_SEPARATOR . $filename
         ), $output, $return_var);
 
         if (0 === $return_var) {
             $session->getFlashBag()->add('success', 'Файл дампа БД успешно создан.');
         } else {
             $session->getFlashBug()->add('danger', 'При создании файла дампа БД произошла ошибка.');
-            if ($fs->exists($this->getDumpPath() . DIRECTORY_SEPARATOR . $filename)) {
-                $fs->remove($this->getDumpPath() . DIRECTORY_SEPARATOR . $filename);
+            if ($fs->exists($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename)) {
+                $fs->remove($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename);
             }
         }
 
@@ -123,8 +143,8 @@ class DatabaseController extends Controller
 
         if ($form->isValid()) {
             $fs = $this->get('filesystem');
-            if ($fs->exists($this->getDumpPath() . DIRECTORY_SEPARATOR . $filename)) {
-                $fs->remove($this->getDumpPath() . DIRECTORY_SEPARATOR . $filename);
+            if ($fs->exists($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename)) {
+                $fs->remove($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename);
                 $session->getFlashBag()->add('warning', 'Файл дампа БД успешно удален.');
             } else {
                 $session->getFlashBag()->add('danger', 'При удалении файла дампа БД произошла ошибка.');
@@ -140,7 +160,7 @@ class DatabaseController extends Controller
             ->setAction($this->generateUrl('database_dump_delete_confirm', array('filename' => $filename)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', [
-                'label' => ' Удалить',
+                'label' => ' Да, удалить',
                 'attr' => [
                     'class' => 'btn btn-danger fas fa-times',
 //                    'onclick' => "return confirm('Удалить вакансию?');",
@@ -150,8 +170,80 @@ class DatabaseController extends Controller
         ;
     }
 
-    public function downloadAction()
+    public function downloadAction($filename)
     {
+        $form = $this->createDownloadForm($filename);
 
+        return $this->render('BWDefaultBundle:Database:download.html.twig', array(
+            'filename' => $filename,
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function downloadConfirmAction(Request $request, $filename)
+    {
+        $session = $request->getSession();
+        $fs = $this->get('filesystem');
+
+        $form = $this->createDownloadForm($filename);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($fs->exists($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename)) {
+//                header('Content-Description: File Transfer');
+//                header('Content-Type: application/octet-stream');
+//                header('Content-Disposition: attachment; filename=' . basename($filename));
+//                header('Content-Transfer-Encoding: binary');
+//                header('Expires: 0');
+//                header('Cache-Control: must-revalidate');
+//                header('Pragma: public');
+//                header('Content-Length: ' . filesize($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename));
+                $response = new Response();
+                $response->headers->replace(array(
+                    'Content-Description' => 'File Transfer',
+                    'Content-Type:' => 'application/octet-stream',
+                    'Content-Disposition' => 'attachment; filename=' . basename($filename),
+                    'Content-Transfer-Encoding' => 'binary',
+                    'Expires' => '0',
+                    'Cache-Control' => 'must-revalidate',
+                    'Pragma' => 'public',
+                    'Content-Length' => filesize($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename),
+                ));
+                $response->sendHeaders();
+                readfile($this->getDumpDir() . DIRECTORY_SEPARATOR . $filename);
+                exit;
+            } else {
+                $session->getFlashBag()->add('danger', sprintf(''
+                    . 'Запрашиваемого на скачивание файла дампа базы данных не существует в файловой системе. '
+                    . 'Проверьте корректность имени файла. '
+                ));
+
+                return $this->redirect($this->generateUrl('database'));
+            }
+        } else {
+            $session->getFlashBag()->add('danger', sprintf(''
+                . 'Запрос на скачивание файла дампа базы данных не прошел валидацию. '
+                . 'Попробуйте перезагрузить страницу и повторить запрос. '
+            ));
+
+            return $this->redirect($this->generateUrl('database'));
+        }
+
+    }
+
+    private function createDownloadForm($filename)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('database_dump_download_confirm', array('filename' => $filename)))
+            ->setMethod('POST')
+            ->add('submit', 'submit', [
+                'label' => ' Да, скачать',
+                'attr' => [
+                    'class' => 'btn btn-success fas fa-download',
+//                    'onclick' => "return confirm('Удалить вакансию?');",
+                ],
+            ])
+            ->getForm()
+        ;
     }
 }

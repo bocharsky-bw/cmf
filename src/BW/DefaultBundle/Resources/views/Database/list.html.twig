@@ -2,22 +2,22 @@
     {% set length = size|length %}
 
     {% if 0 < length and length <= 3 %}
-        {{ size }} <abbr title="байт">Б</abbr>
+        = {{ size }} <abbr title="байт">Б</abbr>
     {% elseif 3 < length and length <= 6 %}
-        {{ (size / 1000)|number_format(1, '.', ' ') }} <abbr title="килобайт">кБ</abbr>
+        &approx; {{ (size / 1000)|number_format(1, '.', ' ') }} <abbr title="килобайт">кБ</abbr>
     {% elseif 6 < length and length <= 9 %}
-        {{ (size / 1000000)|number_format(1, '.', ' ') }} <abbr title="мегабайт">МБ</abbr>
+        &approx; {{ (size / 1000000)|number_format(1, '.', ' ') }} <abbr title="мегабайт">МБ</abbr>
     {% else %}
-        {{ (size / 1000000000)|number_format(1, '.', ' ') }} <abbr title="гигабайт">ГБ</abbr>
+        &approx; {{ (size / 1000000000)|number_format(1, '.', ' ') }} <abbr title="гигабайт">ГБ</abbr>
     {% endif %}
 {%- endmacro %}
 
 {% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block title %}База данных{% endblock %}
+{% block title %}Список файлов дампа БД{% endblock %}
 
 {% block content_wrap -%}
-    <h1><i class="fa fa-database"></i> Список дампов БД</h1>
+    <h1><i class="fa fa-database"></i> Список файлов дампа БД</h1>
 
     <ul class="list-inline controls">
         <li>
@@ -25,7 +25,7 @@
         </li>
     </ul>
 
-    {% if files %}
+    {% if files|length %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -49,12 +49,12 @@
                         </abbr>
                     </td>
                     <td>
-                        <span title="{{ file.size }} байт">{{ _self.fileSizeFormat(file.size) }}</span>
+                        <span title="= {{ file.size }} байт">{{ _self.fileSizeFormat(file.size) }}</span>
                     </td>
                     <td>
                         <ul class="list-inline">
                             <li>
-                                <a href="{{ file.realpath }}">
+                                <a href="{{ path('database_dump_download', { 'filename': file.filename }) }}">
                                     <i class="fa fa-download"></i> Скачать
                                 </a>
                             </li>
