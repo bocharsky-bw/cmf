@@ -1,0 +1,7 @@
+{%- macro show(path) -%}
+    {%- if is_granted('ROLE_ADMIN') -%}
+        <div class="controls">
+            <a href="{{ path }}" title="Изменить запись"><i class="fa fa-edit"></i></a>
+        </div>
+    {%- endif -%}
+{%- endmacro -%}

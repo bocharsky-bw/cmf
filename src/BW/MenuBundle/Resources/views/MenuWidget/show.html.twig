@@ -1,8 +1,8 @@
-{% import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug %}
+{%- import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug -%}
 
 {{ bw_debug.template(_self.templateName) }}
 
-<ul class="nav nav-pills">
+<ul class="menu nav nav-pills">
     {% for item in items %}
         <li>
             <a href="{{ item.uriForRequest(app.request) }}"
