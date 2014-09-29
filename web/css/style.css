@@ -3,3 +3,20 @@
     font-family: FontAwesome;
 }
 /* /HACKS */
+.editable:hover {
+    outline: #999 dashed 1px;
+}
+.editable .controls {
+    display: none;
+    float: right;
+}
+.editable:hover .controls {
+    display: block;
+    padding: 3px 3px 0 0;
+}
+.editable .controls a {
+    color: #999;
+}
+.editable .controls a:hover {
+    color: #444;
+}

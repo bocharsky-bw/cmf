@@ -8,30 +8,34 @@
     {{ bw_debug.template(_self.templateName, 'content_wrap') }}
 
     <div class="{{ entity.class }}">
-        <div class="category">
+        <div class="{{ is_granted('ROLE_ADMIN') ? 'editable ' : '' }}">
             {% if is_granted('ROLE_ADMIN') %}
-                <div class="admin_control">
-                    <a href="{{ path('category_edit', {'id': entity.id}) }}"><i class="fa fa-edit"></i></a>
+                <div class="controls">
+                    <a href="{{ path('category_edit', {'id': entity.id}) }}" title="Изменить запись"><i class="fa fa-edit"></i></a>
                 </div>
             {% endif %}
-            {% if entity.heading %}
-                <h1>{{ entity.heading }}</h1>
-            {% endif %}
-            <div class="description">
-                {{ entity.description|raw }}
+            <div class="category">
+                {% if entity.heading %}
+                    <h1>{{ entity.heading }}</h1>
+                {% endif %}
+                <div class="description">
+                    {{ entity.description|raw }}
+                </div>
             </div>
         </div>
         {% if posts is defined %}
-            <div class="posts">
+            <div class="{{ is_granted('ROLE_ADMIN') ? 'editable ' : '' }}posts">
                 {% for post in posts %}
                     <div class="post">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="controls">
+                                <a href="{{ path('post_edit', {'id': post.id}) }}" title="Изменить запись"><i class="fa fa-edit"></i></a>
+                            </div>
+                        {% endif %}
                         <h2>
                             <a href="{{ app.request.getUriForPath(post.route.path) }}">
                                 {{ post.heading }}
                             </a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('post_edit', {'id': post.id}) }}"><i class="fa fa-edit"></i></a>
-                            {% endif %}
                         </h2>
                         <div class="short_description">
                             {{ post.shortDescription|raw }}
