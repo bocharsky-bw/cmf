@@ -1,8 +1,8 @@
 {% extends "BWSkeletonBundle:Frontend:base.html.twig" %}
 
-{% block lang %}ru{% endblock %}
+{% block lang -%}ru{%- endblock %}
 
-{% block charset %}utf-8{% endblock %}
+{% block charset -%}utf-8{%- endblock %}
 
 {% block title -%}
     {{ title_prefix ? title_prefix ~ ' ' : '' }}
@@ -12,9 +12,9 @@
     {{ title_suffix ? ' ' ~ title_suffix : '' }}
 {%- endblock %}
 
-{% block description %}{% endblock %}
+{% block description -%}{%- endblock %}
 
-{% block css %}
+{% block css -%}
     <!-- % CSS % -->
     {# less stylesheet
     {% stylesheets filter='less' output='cache/bootstrap.css' %}
@@ -25,20 +25,21 @@
     <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap-theme.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('bower_components/fontawesome/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
-{% endblock %}
+{%- endblock %}
 
-{% block js %}
+{% block js -%}
     <!-- % JS % -->
     {# less compiler
     <script src="{{ asset('js/less-1.7.0.min.js') }}" type="text/javascript"></script>
     #}
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
-{% endblock %}
+{%- endblock %}
 
-{% block header %}
+{% block header -%}
+    {{ bw_debug.template(_self.templateName, 'header') }}
     <header id="header">
-        {% block header_wrap %}
+        {% block header_wrap -%}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -86,28 +87,30 @@
                     </div>
                 </div>
             </div>
-        {% endblock %}
+        {%- endblock %}
     </header>
-{% endblock %}
+{%- endblock %}
 
-{% block pre_content %}
+{% block pre_content -%}
+    {{ bw_debug.template(_self.templateName, 'pre_content') }}
     <div id="pre_content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {% block pre_content_wrap %}
+                    {% block pre_content_wrap -%}
                         {{ bw_position.render('pre_content')|raw }}
-                    {% endblock %}
+                    {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+{%- endblock %}
 
-{% block flash_message %}
+{% block flash_message -%}
+    {{ bw_debug.template(_self.templateName, 'flash_message') }}
     {% if app.session.flashbag.peekAll %}
         <div id="flash_message">
-            {% block flash_message_wrap %}
+            {% block flash_message_wrap -%}
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
@@ -122,60 +125,64 @@
                         </div>
                     </div>
                 </div>
-            {% endblock %}
+            {%- endblock %}
         </div>
     {% endif %}
-{% endblock %}
+{%- endblock %}
 
-{% block content %}
+{% block content -%}
+    {{ bw_debug.template(_self.templateName, 'content') }}
     <section id="section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {% block content_wrap %}
-                    {% endblock %}
+                    {% block content_wrap -%}
+                    {%- endblock %}
                 </div>
             </div>
         </div>
     </section>
-{% endblock %}
+{%- endblock %}
 
-{% block post_content %}
+{% block post_content -%}
+    {{ bw_debug.template(_self.templateName, 'post_content') }}
     <div id="post_content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {% block post_content_wrap %}
+                    {% block post_content_wrap -%}
                         {{ bw_position.render('post_content')|raw }}
-                    {% endblock %}
+                    {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+{%- endblock %}
 
-{% block footer %}
+{% block footer -%}
+    {{ bw_debug.template(_self.templateName, 'footer') }}
     <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {% block footer_wrap %}
-                    {% endblock %}
+                    {% block footer_wrap -%}
+                    {%- endblock %}
                 </div>
             </div>
         </div>
     </footer>
-{% endblock %}
+{%- endblock %}
 
-{% block overflow %}
+{% block overflow -%}
+    {{ bw_debug.template(_self.templateName, 'overflow') }}
     <div id="overflow">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    {% block overflow_wrap %}
-                    {% endblock %}
+                    {% block overflow_wrap -%}
+                    {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
+{%- endblock %}

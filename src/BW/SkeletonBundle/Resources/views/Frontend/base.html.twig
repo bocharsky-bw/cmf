@@ -1,53 +1,57 @@
-<!DOCTYPE html>
-<html lang="{% block lang %}en{% endblock %}">
-    <head>
-        {% block head %}
-            <meta charset="{% block charset %}utf-8{% endblock %}">
+{%- import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug -%}
 
-            <title>{% block title %}% Base Template %{% endblock %}</title>
-            <meta name="description" content="{% block description %}{% endblock %}"/>
+<!DOCTYPE html>
+<html lang="{% block lang -%}en{%- endblock %}">
+    <head>
+        {% block head -%}
+            <meta charset="{% block charset -%}utf-8{%- endblock %}">
+
+            <title>{% block title -%}% Base Template %{%- endblock %}</title>
+            <meta name="description" content="{% block description -%}{%- endblock %}"/>
 
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-            {% block css %}<!-- % CSS % -->{% endblock %}
-            {% block js %}<!-- % JS % -->{% endblock %}
-        {% endblock %}
+            {% block css -%}<!-- % CSS % -->{%- endblock %}
+            {% block js -%}<!-- % JS % -->{%- endblock %}
+        {%- endblock %}
     </head>
     <body id="body">
-        {% block body %}
+        {{ bw_debug.template(_self.templateName) }}
+        {% block body -%}
             <div id="wrap">
                 <div id="wrap_inner">
-                    {% block body_wrap %}
-                        {% block header %}
+                    {% block body_wrap -%}
+                        {% block header -%}
                             % Header Block %
-                        {% endblock %}
+                        {%- endblock %}
 
-                        {% block pre_content %}
+                        {% block pre_content -%}
                             % Pre Content Block %
-                        {% endblock %}
+                        {%- endblock %}
 
-                        {% block flash_message %}
+                        {% block flash_message -%}
                             % Flash Message Block %
-                        {% endblock %}
+                        {%- endblock %}
 
-                        {% block content %}
+                        {% block content -%}
                             % Content Block %
-                        {% endblock %}
+                        {%- endblock %}
 
-                        {% block post_content %}
+                        {% block post_content -%}
                             % Post Content Block %
-                        {% endblock %}
+                        {%- endblock %}
 
-                        {% block footer %}
+                        {% block footer -%}
                             % Footer Block %
-                        {% endblock %}
-                    {% endblock %}
+                        {%- endblock %}
+                    {%- endblock %}
                 </div>
             </div>
-        {% endblock %}
+        {%- endblock %}
 
-        {% block overflow %}
+        {% block overflow -%}
+            {{ bw_debug.template(_self.templateName, 'overflow') }}
             % Overflow Block %
-        {% endblock %}
+        {%- endblock %}
     </body>
 </html>
