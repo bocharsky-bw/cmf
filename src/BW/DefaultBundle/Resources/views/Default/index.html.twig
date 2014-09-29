@@ -3,5 +3,9 @@
 {% block title_wrap %}Главная страница{% endblock %}
 
 {% block content_wrap -%}
+    {{ bw_debug.template(_self.templateName, 'content_wrap') }}
+
     <h1>Главная страница</h1>
+
+    {{ bw_debug.template(_self.templateName, 'content_wrap', '/') }}
 {% endblock %}

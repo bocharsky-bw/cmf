@@ -15,6 +15,7 @@
 {% block description -%}{%- endblock %}
 
 {% block css -%}
+    {{ bw_debug.template(_self.templateName, 'css') }}
     <!-- % CSS % -->
     {# less stylesheet
     {% stylesheets filter='less' output='cache/bootstrap.css' %}
@@ -25,21 +26,25 @@
     <link href="{{ asset('bower_components/bootstrap/dist/css/bootstrap-theme.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('bower_components/fontawesome/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
+    {{ bw_debug.template(_self.templateName, 'css', '/') }}
 {%- endblock %}
 
 {% block js -%}
+    {{ bw_debug.template(_self.templateName, 'js') }}
     <!-- % JS % -->
     {# less compiler
     <script src="{{ asset('js/less-1.7.0.min.js') }}" type="text/javascript"></script>
     #}
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+    {{ bw_debug.template(_self.templateName, 'js', '/') }}
 {%- endblock %}
 
 {% block header -%}
     {{ bw_debug.template(_self.templateName, 'header') }}
     <header id="header">
         {% block header_wrap -%}
+            {{ bw_debug.template(_self.templateName, 'header_wrap') }}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -87,8 +92,10 @@
                     </div>
                 </div>
             </div>
+            {{ bw_debug.template(_self.templateName, 'header_wrap', '/') }}
         {%- endblock %}
     </header>
+    {{ bw_debug.template(_self.templateName, 'header', '/') }}
 {%- endblock %}
 
 {% block pre_content -%}
@@ -98,12 +105,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block pre_content_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'pre_content_wrap') }}
                         {{ bw_position.render('pre_content')|raw }}
+                        {{ bw_debug.template(_self.templateName, 'pre_content_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
+    {{ bw_debug.template(_self.templateName, 'pre_content', '/') }}
 {%- endblock %}
 
 {% block flash_message -%}
@@ -111,6 +121,7 @@
     {% if app.session.flashbag.peekAll %}
         <div id="flash_message">
             {% block flash_message_wrap -%}
+                {{ bw_debug.template(_self.templateName, 'flash_message_wrap') }}
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
@@ -125,9 +136,11 @@
                         </div>
                     </div>
                 </div>
+                {{ bw_debug.template(_self.templateName, 'flash_message_wrap', '/') }}
             {%- endblock %}
         </div>
     {% endif %}
+    {{ bw_debug.template(_self.templateName, 'flash_message', '/') }}
 {%- endblock %}
 
 {% block content -%}
@@ -137,11 +150,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block content_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'content_wrap') }}
+
+                        {{ bw_debug.template(_self.templateName, 'content_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
         </div>
     </section>
+    {{ bw_debug.template(_self.templateName, 'content', '/') }}
 {%- endblock %}
 
 {% block post_content -%}
@@ -151,12 +168,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block post_content_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'post_content_wrap') }}
                         {{ bw_position.render('post_content')|raw }}
+                        {{ bw_debug.template(_self.templateName, 'post_content_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
+    {{ bw_debug.template(_self.templateName, 'post_content', '/') }}
 {%- endblock %}
 
 {% block footer -%}
@@ -166,11 +186,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block footer_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'footer_wrap') }}
+
+                        {{ bw_debug.template(_self.templateName, 'footer_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
         </div>
     </footer>
+    {{ bw_debug.template(_self.templateName, 'footer', '/') }}
 {%- endblock %}
 
 {% block overflow -%}
@@ -180,9 +204,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% block overflow_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'overflow_wrap') }}
+
+                        {{ bw_debug.template(_self.templateName, 'overflow_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
         </div>
     </div>
+    {{ bw_debug.template(_self.templateName, 'overflow', '/') }}
 {%- endblock %}

@@ -1,3 +1,7 @@
+{% import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug %}
+
+{{ bw_debug.template(_self.templateName) }}
+
 <ul class="nav nav-pills">
     {% for item in items %}
         <li>
@@ -8,3 +12,5 @@
         </li>
     {% endfor %}
 </ul>
+
+{{ bw_debug.template(_self.templateName, null, '/') }}

@@ -1,10 +1,12 @@
 {% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
-{% block title_wrap %}{{ entity.title ? entity.title : entity.heading }}{% endblock %}
+{% block title_wrap -%}{{ entity.title ? entity.title : entity.heading }}{%- endblock %}
 
-{% block description %}{{ entity.metaDescription ? entity.metaDescription }}{% endblock %}
+{% block description -%}{{ entity.metaDescription ? entity.metaDescription }}{%- endblock %}
 
 {% block content_wrap -%}
+    {{ bw_debug.template(_self.templateName, 'content_wrap') }}
+
     <div class="post">
         <h1>
             {{ entity.heading }}
@@ -16,4 +18,6 @@
             {{ entity.description|raw }}
         </div>
     </div>
+
+    {{ bw_debug.template(_self.templateName, 'content_wrap', '/') }}
 {% endblock %}

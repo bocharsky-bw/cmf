@@ -1,1 +1,7 @@
+{% import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug %}
+
+{{ bw_debug.template(_self.templateName) }}
+
 {{ form(form) }}
+
+{{ bw_debug.template(_self.templateName, null, '/') }}

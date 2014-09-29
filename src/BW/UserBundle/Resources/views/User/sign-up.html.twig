@@ -3,6 +3,8 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content_wrap -%}
+    {{ bw_debug.template(_self.templateName, 'content_wrap') }}
+
     <div class="col-lg-6 col-lg-offset-3">
         <h1>Регистрация</h1>
 
@@ -30,4 +32,6 @@
             </p>
         </div>
     </div>
+
+    {{ bw_debug.template(_self.templateName, 'content_wrap', '/') }}
 {% endblock %}

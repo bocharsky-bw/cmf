@@ -4,6 +4,8 @@
 <html lang="{% block lang -%}en{%- endblock %}">
     <head>
         {% block head -%}
+            {{ bw_debug.template(_self.templateName, 'head') }}
+
             <meta charset="{% block charset -%}utf-8{%- endblock %}">
 
             <title>{% block title -%}% Base Template %{%- endblock %}</title>
@@ -12,46 +14,71 @@
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
             {% block css -%}<!-- % CSS % -->{%- endblock %}
+
             {% block js -%}<!-- % JS % -->{%- endblock %}
+
+            {{ bw_debug.template(_self.templateName, 'head', '/') }}
         {%- endblock %}
     </head>
     <body id="body">
         {{ bw_debug.template(_self.templateName) }}
+
         {% block body -%}
+            {{ bw_debug.template(_self.templateName, 'body') }}
             <div id="wrap">
                 <div id="wrap_inner">
                     {% block body_wrap -%}
+                        {{ bw_debug.template(_self.templateName, 'body_wrap') }}
+
                         {% block header -%}
+                            {{ bw_debug.template(_self.templateName, 'header') }}
                             % Header Block %
+                            {{ bw_debug.template(_self.templateName, 'header', '/') }}
                         {%- endblock %}
 
                         {% block pre_content -%}
+                            {{ bw_debug.template(_self.templateName, 'pre_content') }}
                             % Pre Content Block %
+                            {{ bw_debug.template(_self.templateName, 'pre_content', '/') }}
                         {%- endblock %}
 
                         {% block flash_message -%}
+                            {{ bw_debug.template(_self.templateName, 'flash_message') }}
                             % Flash Message Block %
+                            {{ bw_debug.template(_self.templateName, 'flash_message', '/') }}
                         {%- endblock %}
 
                         {% block content -%}
+                            {{ bw_debug.template(_self.templateName, 'content') }}
                             % Content Block %
+                            {{ bw_debug.template(_self.templateName, 'content', '/') }}
                         {%- endblock %}
 
                         {% block post_content -%}
+                            {{ bw_debug.template(_self.templateName, 'post_content') }}
                             % Post Content Block %
+                            {{ bw_debug.template(_self.templateName, 'post_content', '/') }}
                         {%- endblock %}
 
                         {% block footer -%}
+                            {{ bw_debug.template(_self.templateName, 'footer') }}
                             % Footer Block %
+                            {{ bw_debug.template(_self.templateName, 'footer', '/') }}
                         {%- endblock %}
+
+                        {{ bw_debug.template(_self.templateName, 'body_wrap', '/') }}
                     {%- endblock %}
                 </div>
             </div>
+            {{ bw_debug.template(_self.templateName, 'body', '/') }}
         {%- endblock %}
 
         {% block overflow -%}
             {{ bw_debug.template(_self.templateName, 'overflow') }}
             % Overflow Block %
+            {{ bw_debug.template(_self.templateName, 'overflow', '/') }}
         {%- endblock %}
+
+        {{ bw_debug.template(_self.templateName, null, '/') }}
     </body>
 </html>

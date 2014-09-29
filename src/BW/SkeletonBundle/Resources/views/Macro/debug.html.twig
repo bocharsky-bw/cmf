@@ -1,3 +1,5 @@
-{%- macro template(templateName, blockName = null) -%}
-    {% if(app.debug) %}<!-- {{ templateName ~ (blockName ? " :: block " ~ blockName : "") }} -->{% endif %}
+{%- macro template(templateName, blockName = null, positionName = null) -%}
+    {%- if(app.debug) -%}
+        <!-- {{ (positionName ? positionName : "") ~ templateName ~ (blockName ? " :: block " ~ blockName : "") }} -->
+    {%- endif -%}
 {%- endmacro -%}
