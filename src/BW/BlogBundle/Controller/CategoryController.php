@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class CategoryController extends Controller
 {
-
     /**
      * Lists all Category entities.
      */
@@ -32,6 +31,28 @@ class CategoryController extends Controller
             ->orderBy('c.root', 'ASC')
             ->addOrderBy('c.left', 'ASC')
         ;
+
+        $quickSearchForm = $this->get('bw_default.service.quick_search')->createForm();
+        $quickSearchForm->handleRequest($request);
+        if ($quickSearchForm->isSubmitted()) {
+            $data = $quickSearchForm->getData();
+
+            // Quick jump to the entity by ID
+            if (preg_match('/^\d+$/', $data['query'])) {
+                $qb->where($qb->expr()->eq('c.id', (int)$data['query']));
+                $entity = $qb->getQuery()->getOneOrNullResult();
+                if ($entity) {
+                    return $this->redirect($this->generateUrl('category_edit', [
+                        'id' => $entity->getId(),
+                    ]));
+                }
+            }
+
+            $qb
+                ->where('c.heading LIKE :query')
+                ->setParameter('query', "%{$data['query']}%")
+            ;
+        }
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
@@ -41,6 +62,7 @@ class CategoryController extends Controller
 
         return $this->render('BWBlogBundle:Category:index.html.twig', array(
             'pagination' => $pagination,
+            'quickSearchForm' => $quickSearchForm->createView(),
         ));
     }
 

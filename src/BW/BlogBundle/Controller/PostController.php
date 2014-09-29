@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class PostController extends Controller
 {
-
     /**
      * Lists all Post entities.
      */
@@ -31,6 +30,28 @@ class PostController extends Controller
             ->leftJoin('p.category', 'c')
             ->innerJoin('p.route', 'r')
         ;
+
+        $quickSearchForm = $this->get('bw_default.service.quick_search')->createForm();
+        $quickSearchForm->handleRequest($request);
+        if ($quickSearchForm->isSubmitted()) {
+            $data = $quickSearchForm->getData();
+
+            // Quick jump to the entity by ID
+            if (preg_match('/^\d+$/', $data['query'])) {
+                $qb->where($qb->expr()->eq('p.id', (int)$data['query']));
+                $entity = $qb->getQuery()->getOneOrNullResult();
+                if ($entity) {
+                    return $this->redirect($this->generateUrl('post_edit', [
+                        'id' => $entity->getId(),
+                    ]));
+                }
+            }
+
+            $qb
+                ->where('p.heading LIKE :query')
+                ->setParameter('query', "%{$data['query']}%")
+            ;
+        }
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
@@ -40,6 +61,7 @@ class PostController extends Controller
 
         return $this->render('BWBlogBundle:Post:index.html.twig', array(
             'pagination' => $pagination,
+            'quickSearchForm' => $quickSearchForm->createView(),
         ));
     }
 

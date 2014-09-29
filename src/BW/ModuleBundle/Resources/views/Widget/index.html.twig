@@ -2,6 +2,10 @@
 
 {% block title %}Список виджетов{% endblock %}
 
+{% block quick_search %}
+    {% include 'BWDefaultBundle:QuickSearch:form.html.twig' %}
+{% endblock %}
+
 {% block content_wrap -%}
     <h1><i class="fa fa-th"></i> Список виджетов</h1>
 
@@ -16,24 +20,24 @@
         </ul>
     {{ form_end(form) }}
 
-    {% if entities %}
+    {% if pagination.count %}
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Название</th>
+                    <th class="{{ pagination.isSorted('w.id') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'ID', 'w.id') }}</th>
+                    <th class="{{ pagination.isSorted('w.heading') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Заголовок', 'w.heading') }}</th>
                     <th>Краткое описание</th>
                     <th>Позиция</th>
                     <th>Тип</th>
                     <th>Опубликовано</th>
-                    <th>Порядок</th>
+                    <th class="{{ pagination.isSorted('w.order') ? 'active' }}">{{ knp_pagination_sortable(pagination, 'Порядок', 'w.order') }}</th>
                 </tr>
             </thead>
             <tbody>
-            {% for entity in entities %}
+            {% for entity in pagination %}
                 <tr>
-                    <td>{{ entity.id }}</td>
-                    <td>
+                    <td class="{{ pagination.isSorted('w.id') ? 'active' }}">{{ entity.id }}</td>
+                    <td class="{{ pagination.isSorted('w.heading') ? 'active' }}">
                         <a href="{{ path('widget_edit', { 'id': entity.id }) }}" title="Редактировать запись">
                             {{ entity.heading ? entity.heading : '< Без заголовка >' }}
                         </a>
@@ -48,7 +52,7 @@
                     </td>
                     <td><abbr title="{{ entity.type.alias }}">{{ entity.type.name }}</abbr></td>
                     <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                    <td>{{ entity.order }}</td>
+                    <td class="{{ pagination.isSorted('w.order') ? 'active' }}">{{ entity.order }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -56,4 +60,12 @@
     {% else %}
         <div class="well well-sm text-center">Записи отсутствуют</div>
     {% endif %}
+
+    <div class="count">
+        Всего: <strong>{{ pagination.getTotalItemCount }}</strong> записей
+    </div>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

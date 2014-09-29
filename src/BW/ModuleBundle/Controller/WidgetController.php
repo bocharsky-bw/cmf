@@ -18,19 +18,54 @@ class WidgetController extends Controller
     /**
      * Lists all Widget entities.
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createSelectionTypeForm();
-        $entities = $em->getRepository('BWModuleBundle:Widget')->findBy(array(), array(
-            'position' => 'ASC',
-            'order' => 'ASC',
-        ));
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWModuleBundle:Widget')->createQueryBuilder('w');
+        $qb
+            ->addSelect('t')
+            ->addSelect('p')
+            ->innerJoin('w.type', 't')
+            ->leftJoin('w.position', 'p')
+            ->orderBy('p.name', 'ASC')
+            ->addOrderBy('w.order', 'ASC')
+        ;
+
+        $quickSearchForm = $this->get('bw_default.service.quick_search')->createForm();
+        $quickSearchForm->handleRequest($request);
+        if ($quickSearchForm->isSubmitted()) {
+            $data = $quickSearchForm->getData();
+
+            // Quick jump to the entity by ID
+            if (preg_match('/^\d+$/', $data['query'])) {
+                $qb->where($qb->expr()->eq('w.id', (int)$data['query']));
+                $entity = $qb->getQuery()->getOneOrNullResult();
+                if ($entity) {
+                    return $this->redirect($this->generateUrl('widget_edit', [
+                        'id' => $entity->getId(),
+                    ]));
+                }
+            }
+
+            $qb
+                ->where('w.heading LIKE :query')
+                ->setParameter('query', "%{$data['query']}%")
+            ;
+        }
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWModuleBundle:Widget:index.html.twig', array(
-            'entities' => $entities,
+            'pagination' => $pagination,
             'form' => $form->createView(),
+            'quickSearchForm' => $quickSearchForm->createView(),
         ));
     }
 

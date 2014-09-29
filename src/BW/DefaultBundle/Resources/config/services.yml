@@ -19,6 +19,10 @@ services:
         class: BW\DefaultBundle\Service\TransliteratingService
         arguments: ["%bw_default.service.transliterating.alphabet_overridden%"]
 
+    bw_default.service.quick_search:
+        class: BW\DefaultBundle\Service\QuickSearchService
+        arguments: ["@form.factory"]
+
     bw_default.event_listener.sluggable:
         class: BW\DefaultBundle\EventListener\SluggableEventListener
         arguments:
