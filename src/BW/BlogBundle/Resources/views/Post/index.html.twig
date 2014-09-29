@@ -34,7 +34,7 @@
                     <td class="{{ pagination.isSorted('p.id') ? 'active' }}">{{ entity.id }}</td>
                     <td class="{{ pagination.isSorted('p.heading') ? 'active' }}">
                         <a href="{{ path('post_edit', { 'id': entity.id }) }}" title="Редактировать запись">
-                            {{ entity.heading ? entity.heading : '< no heading >' }}
+                            {{ entity.heading ? entity.heading : '< Без заголовка >' }}
                         </a><br/>
                         <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
                             <small class="fa fa-share-square-o">

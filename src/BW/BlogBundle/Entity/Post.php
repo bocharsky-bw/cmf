@@ -171,7 +171,7 @@ class Post implements RouteInterface, SluggableInterface
      */
     public function setHeading($heading)
     {
-        $this->heading = $heading;
+        $this->heading = isset($heading) ? $heading : '';
 
         return $this;
     }

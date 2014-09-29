@@ -35,7 +35,7 @@
                     <td class="{{ pagination.isSorted('c.heading') ? 'active' }}">
                         {{ '|— '|repeat(entity.level) }}
                         <a href="{{ path('category_edit', { 'id': entity.id }) }}" title="Редактировать запись">
-                            {{ entity.heading }}
+                            {{ entity.heading ? entity.heading : '< Без заголовка >' }}
                         </a><br/>
                         <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
                             <small class="fa fa-share-square-o" title="Перейти на страницу">

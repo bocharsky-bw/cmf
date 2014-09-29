@@ -51,7 +51,7 @@ class CategoryType extends AbstractType
                 ),
             ))
             ->add('heading', 'text', array(
-                'required' => true,
+                'required' => false,
                 'label' => 'Заголовок ',
                 'attr' => array(
                     'class' => 'form-control',

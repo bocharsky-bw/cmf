@@ -9,12 +9,14 @@
 
     <div class="{{ entity.class }}">
         <div class="category">
-            <h1>
-                {{ entity.heading }}
-                {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="admin_control">
                     <a href="{{ path('category_edit', {'id': entity.id}) }}"><i class="fa fa-edit"></i></a>
-                {% endif %}
-            </h1>
+                </div>
+            {% endif %}
+            {% if entity.heading %}
+                <h1>{{ entity.heading }}</h1>
+            {% endif %}
             <div class="description">
                 {{ entity.description|raw }}
             </div>

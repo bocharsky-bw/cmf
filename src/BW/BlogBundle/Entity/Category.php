@@ -229,7 +229,7 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
      */
     public function setHeading($heading)
     {
-        $this->heading = $heading;
+        $this->heading = isset($heading) ? $heading : '';
     
         return $this;
     }
