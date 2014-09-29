@@ -51,6 +51,11 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     private $description = '';
 
     /**
+     * @var string $class
+     */
+    private $class = '';
+
+    /**
      * @var boolean $published
      */
     private $published = true;
@@ -352,6 +357,29 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $class
+     * @return Category
+     */
+    public function setClass($class)
+    {
+        $this->class = isset($class) ? $class : '';
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 
     /**

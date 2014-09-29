@@ -7,41 +7,43 @@
 {% block content_wrap -%}
     {{ bw_debug.template(_self.templateName, 'content_wrap') }}
 
-    <div class="category">
-        <h1>
-            {{ entity.heading }}
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('category_edit', {'id': entity.id}) }}"><i class="fa fa-edit"></i></a>
-            {% endif %}
-        </h1>
-        <div class="description">
-            {{ entity.description|raw }}
+    <div class="{{ entity.class }}">
+        <div class="category">
+            <h1>
+                {{ entity.heading }}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('category_edit', {'id': entity.id}) }}"><i class="fa fa-edit"></i></a>
+                {% endif %}
+            </h1>
+            <div class="description">
+                {{ entity.description|raw }}
+            </div>
         </div>
+        {% if posts is defined %}
+            <div class="posts">
+                {% for post in posts %}
+                    <div class="post">
+                        <h2>
+                            <a href="{{ app.request.getUriForPath(post.route.path) }}">
+                                {{ post.heading }}
+                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('post_edit', {'id': post.id}) }}"><i class="fa fa-edit"></i></a>
+                            {% endif %}
+                        </h2>
+                        <div class="short_description">
+                            {{ post.shortDescription|raw }}
+                        </div>
+                        <div class="more">
+                            <a class="btn btn-primary" href="{{ app.request.getUriForPath(post.route.path) }}">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-    {% if posts is defined %}
-        <div class="posts">
-            {% for post in posts %}
-                <div class="post">
-                    <h2>
-                        <a href="{{ app.request.getUriForPath(post.route.path) }}">
-                            {{ post.heading }}
-                        </a>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('post_edit', {'id': post.id}) }}"><i class="fa fa-edit"></i></a>
-                        {% endif %}
-                    </h2>
-                    <div class="short_description">
-                        {{ post.shortDescription|raw }}
-                    </div>
-                    <div class="more">
-                        <a class="btn btn-primary" href="{{ app.request.getUriForPath(post.route.path) }}">
-                            Подробнее
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
 
     {{ bw_debug.template(_self.templateName, 'content_wrap', '/') }}
 {% endblock %}

@@ -29,6 +29,9 @@ BW\BlogBundle\Entity\Category:
             type: text
         description:
             type: text
+        class:
+            type: string
+            length: 255
         published:
             type: boolean
         created:

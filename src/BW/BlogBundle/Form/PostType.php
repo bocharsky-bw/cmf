@@ -61,6 +61,13 @@ class PostType extends AbstractType
                     'class' => 'form-control ckeditor',
                 ),
             ))
+            ->add('class', 'text', array(
+                'required' => false,
+                'label' => 'HTML атрибут "class" ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             ->add('created', 'datetime', array(
                 'required' => false,
                 'label' => 'Дата создания',
