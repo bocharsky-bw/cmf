@@ -19,3 +19,5 @@ parameters:
     use_assetic_controller: true
 
     home_page_path: home
+    title_prefix: ~
+    title_suffix: ~

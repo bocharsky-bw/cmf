@@ -1,7 +1,3 @@
-parameters:
-    title_prefix: Префикс
-    title_suffix: cуффикс.
-
 twig:
     globals:
         title_prefix: %title_prefix%
