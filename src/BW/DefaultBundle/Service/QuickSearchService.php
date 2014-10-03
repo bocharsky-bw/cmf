@@ -44,9 +44,17 @@ class QuickSearchService
             ->add('query', 'text', [
                 'required' => false,
                 'label' => ' ',
+                'label_attr' => [
+                    'class' => 'input-group-addon fas fa-info-circle',
+                    'title' => sprintf(''
+                        . 'Введите полное название записи или его часть для поиска соответствий. '
+                        . 'Используйте ID для быстрого перехода в режим редактирования записи.'
+                    ),
+                ],
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Что ищем?..',
+                    'title' => 'вфцвафц',
                 ],
             ])
             ->add('search', 'submit', [
