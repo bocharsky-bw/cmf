@@ -86,6 +86,17 @@ class FormUtility {
         ));
     }
 
+    public static function addDuplicateButton(FormInterface $form)
+    {
+        return $form->add('saveAsCopy', 'submit', array(
+            'label' => ' Сохранить как копию',
+            'attr' => array(
+                'class' => 'btn btn-info fas fa-copy',
+                'title' => 'Сохранить как новую запись',
+            )
+        ));
+    }
+
     public static function addDeleteButton(FormInterface $form)
     {
         return $form->add('delete', 'submit', array(

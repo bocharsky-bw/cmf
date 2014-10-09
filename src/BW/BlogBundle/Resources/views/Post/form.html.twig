@@ -20,6 +20,9 @@
         {% if form.updateAndShow is defined %}
             <li>{{ form_row(form.updateAndShow) }}</li>
         {% endif %}
+        {% if form.saveAsCopy is defined %}
+            <li>{{ form_row(form.saveAsCopy) }}</li>
+        {% endif %}
         {% if form.delete is defined %}
             <li>{{ form_row(form.delete) }}</li>
         {% endif %}

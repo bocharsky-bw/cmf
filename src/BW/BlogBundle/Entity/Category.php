@@ -122,14 +122,34 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
 
 
     /**
-     * The constructor
+     * Init entity
      */
-    public function __construct()
+    private function init()
     {
+        $this->id = null;
+        $this->slug = null;
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->route = null;
+        $this->image = null;
+    }
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->init();
+    }
+
+    /**
+     * Clone current entity
+     */
+    public function __clone()
+    {
+        $this->init();
     }
 
     public function __toString()

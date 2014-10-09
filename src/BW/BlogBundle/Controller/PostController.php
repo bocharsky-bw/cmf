@@ -193,6 +193,7 @@ class PostController extends Controller
         FormUtility::addUpdateButton($form);
         FormUtility::addUpdateAndCloseButton($form);
         FormUtility::addUpdateAndShowButton($form);
+        FormUtility::addDuplicateButton($form);
         FormUtility::addDeleteButton($form);
 
         return $form;
@@ -221,6 +222,12 @@ class PostController extends Controller
             if ($editForm->get('delete')->isClicked()) {
                 $this->delete($request, $entity->getId());
                 return $this->redirect($this->generateUrl('post'));
+            }
+            if ($editForm->get('saveAsCopy')->isClicked()) {
+                $entityCopy = $this->saveAsCopy($entity);
+                return $this->redirect($this->generateUrl('post_edit', [
+                    'id' => $entityCopy->getId(),
+                ]));
             }
 
             $em->flush();
@@ -290,5 +297,24 @@ class PostController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * @param Post $entity
+     * @return Post
+     */
+    private function saveAsCopy(Post $entity)
+    {
+        /** @var FlashBag $flashBag */
+        $flashBag = $this->get('request_stack')->getCurrentRequest()->getSession()->getFlashBag();
+        $em = $this->getDoctrine()->getManager();
+
+        $entityCopy = clone $entity;
+        $em->detach($entity); // Ignore all unsaved changes of source entity
+        $em->persist($entityCopy);
+        $em->flush();
+        $flashBag->add('success', 'Копия статьи успешно сохранена.');
+
+        return $entityCopy;
     }
 }

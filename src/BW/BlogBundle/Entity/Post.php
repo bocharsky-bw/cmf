@@ -90,12 +90,32 @@ class Post implements RouteInterface, SluggableInterface
 
 
     /**
+     * Init entity
+     */
+    public function init()
+    {
+        $this->id = null;
+        $this->slug = null;
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
+        $this->route = null;
+        $this->image = null;
+    }
+
+    /**
      * The constructor
      */
     public function __construct()
     {
-        $this->created = new \DateTime();
-        $this->updated = new \DateTime();
+        $this->init();
+    }
+
+    /**
+     * Clone current entity
+     */
+    public function __clone()
+    {
+        $this->init();
     }
 
 
