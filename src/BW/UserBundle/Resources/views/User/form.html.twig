@@ -2,27 +2,7 @@
     {{ form_errors(form) }}
 
     <ul class="list-inline">
-        {% if form.create is defined %}
-            <li>{{ form_row(form.create) }}</li>
-        {% endif %}
-        {% if form.createAndClose is defined %}
-            <li>{{ form_row(form.createAndClose) }}</li>
-        {% endif %}
-        {% if form.createAndShow is defined %}
-            <li>{{ form_row(form.createAndShow) }}</li>
-        {% endif %}
-        {% if form.update is defined %}
-            <li>{{ form_row(form.update) }}</li>
-        {% endif %}
-        {% if form.updateAndClose is defined %}
-            <li>{{ form_row(form.updateAndClose) }}</li>
-        {% endif %}
-        {% if form.updateAndShow is defined %}
-            <li>{{ form_row(form.updateAndShow) }}</li>
-        {% endif %}
-        {% if form.delete is defined %}
-            <li>{{ form_row(form.delete) }}</li>
-        {% endif %}
+        {% include 'BWSkeletonBundle:Form:control-button-list.html.twig' %}
         <li>
             <a class="btn btn-default fas fa-ban" href="{{ path('user') }}" title="Отменить несохраненные изменения"> Закрыть</a>
         </li>
