@@ -45,6 +45,11 @@ class Item implements NestedSetInterface
     private $published = true;
 
     /**
+     * @var boolean
+     */
+    private $blank = false;
+
+    /**
      * @var integer
      */
     private $order = 0;
@@ -132,16 +137,21 @@ class Item implements NestedSetInterface
      */
     public function isInternalUri()
     {
-        return ! ($this->getUri() && preg_match('@^https?://@', $this->getUri()));
+        return false === strpos($this->getUri(), '@://@');
     }
 
+    /**
+     * Get URI for request
+     *
+     * @param Request $request
+     * @return string
+     */
     public function getUriForRequest(Request $request)
     {
         if ($this->isInternalUri()) {
             $path = $this->getRoute()
                 ? $this->getRoute()->getPath()
-                : $this->getUri()
-            ;
+                : $this->getUri();
 
             $uri = $request->getUriForPath($path);
         } else {
@@ -273,6 +283,49 @@ class Item implements NestedSetInterface
         $this->published = $published;
 
         return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set blank
+     *
+     * @param boolean $blank
+     * @return Item
+     */
+    public function setBlank($blank)
+    {
+        $this->blank = $blank;
+
+        return $this;
+    }
+
+    /**
+     * Is blank
+     *
+     * @return boolean
+     */
+    public function isBlank()
+    {
+        return $this->blank;
+    }
+
+    /**
+     * Get blank
+     *
+     * @return boolean
+     */
+    public function getBlank()
+    {
+        return $this->blank;
     }
 
     /**
@@ -494,15 +547,5 @@ class Item implements NestedSetInterface
     public function getRoute()
     {
         return $this->route;
-    }
-
-    /**
-     * Get published
-     *
-     * @return boolean 
-     */
-    public function getPublished()
-    {
-        return $this->published;
     }
 }

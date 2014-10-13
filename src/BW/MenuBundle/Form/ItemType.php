@@ -28,6 +28,10 @@ class ItemType extends AbstractType
                 'required' => false,
                 'label' => 'Опубликовано ',
             ))
+            ->add('blank', 'checkbox', array(
+                'required' => false,
+                'label' => 'В новом окне ',
+            ))
             ->add('menu', 'entity', array(
                 'class' => 'BW\MenuBundle\Entity\Menu',
                 'property' => 'name',

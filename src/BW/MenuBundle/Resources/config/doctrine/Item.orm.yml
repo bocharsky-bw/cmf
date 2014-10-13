@@ -26,6 +26,8 @@ BW\MenuBundle\Entity\Item:
             length: 255
         published:
             type: boolean
+        blank:
+            type: boolean
         order:
             column: ordering
             type: integer

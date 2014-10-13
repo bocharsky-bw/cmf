@@ -55,20 +55,25 @@ class MenuWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
-        $qb = $this->em->getRepository('BWMenuBundle:Item')->createQueryBuilder('i');
-        $qb
-            ->addSelect('m')
-            ->addSelect('r')
-            ->innerJoin('i.menu', 'm')
-            ->leftJoin('i.route', 'r')
-            ->innerJoin('m.menuWidgets', 'mw')
-            ->where($qb->expr()->eq('mw.id', $widget->getMenuWidget()->getId()))
-        ;
-        $items = $qb->getQuery()->getResult();
+        $menu = $widget->getMenuWidget()->getMenu();
 
-        return $this->twig->render('BWMenuBundle:MenuWidget:show.html.twig', array(
+        $repo = $this->em->getRepository('BWMenuBundle:Item');
+        $query = $repo->createQueryBuilder('node')
+            ->addSelect('r')
+            ->leftJoin('node.route', 'r')
+            ->orderBy('node.root, node.left', 'ASC')
+            ->where('node.published = 1')
+            ->andWhere('node.menu = :menu')
+            ->setParameter('menu', $menu)
+            ->getQuery();
+
+        $repo->setChildrenIndex('children');
+        $itemTree = $repo->buildTree($query->getArrayResult());
+
+        return $this->twig->render('BWMenuBundle:MenuWidget:unordered-list.html.twig', array(
             'menuWidget' => $widget->getMenuWidget(),
-            'items' => $items,
+            'menu' => $menu,
+            'itemTree' => $itemTree,
         ));
     }
 }

@@ -1,0 +1,44 @@
+{%- import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug -%}
+
+{% macro renderMenu(items, level = 1) %}
+    <ul class="level-{{ level }} {% if 1 == level %}nav nav-pills{% else %}dropdown-menu{% endif %}">
+        {% for item in items %}
+            {{ _self.renderMenuItem(item, level) }}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro renderMenuItem(item, level = 1) %}
+    {% set hasChildren = item.children|length %}
+    <li class="item-{{ item.id }} {% if hasChildren %}dropdown {% endif %}{{ item.class }}">
+        <a href="{% spaceless %}
+            {% if item.route %}
+                {{ app.request.uriForPath(item.route.path) }}
+            {% else %}
+                {% if '://' in item.uri %}
+                    {{ item.uri }}
+                {% else %}
+                    {{ app.request.uriForPath(item.uri) }}
+                {% endif %}
+            {% endif %}
+        {% endspaceless %}" class="{% if hasChildren %}dropdown-toggle{% endif %}" data-id="{{ item.id }}" title="{{ item.title }}" {% if item.blank %}target="_blank" {% endif %}{% if hasChildren %}data-toggle="dropdown" {% endif %}>
+            {{ item.name }}
+            {%- if hasChildren -%}
+                &nbsp;<span class="caret"></span>
+            {%- endif %}
+        </a>
+        {% if hasChildren %}
+            {{ _self.renderMenu(item.children, level + 1) }}
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{{ bw_debug.template(_self.templateName) }}
+
+<div class="menu menu-{{ menu.id }}" data-id="{{ menu.id }}">
+    {% if itemTree -%}
+        {{ _self.renderMenu(itemTree) }}
+    {%- endif %}
+</div>
+
+{{ bw_debug.template(_self.templateName, null, '/') }}
