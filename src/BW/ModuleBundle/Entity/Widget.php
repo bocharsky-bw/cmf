@@ -2,6 +2,7 @@
 
 namespace BW\ModuleBundle\Entity;
 
+use BW\BlogBundle\Entity\CategoryWidget;
 use BW\MenuBundle\Entity\MenuWidget;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -390,5 +391,32 @@ class Widget
     public function getFeedbackFormWidget()
     {
         return $this->feedbackFormWidget;
+    }
+    /**
+     * @var \BW\BlogBundle\Entity\CategoryWidget
+     */
+    private $categoryWidget;
+
+    /**
+     * Set categoryWidget
+     *
+     * @param \BW\BlogBundle\Entity\CategoryWidget $categoryWidget
+     * @return Widget
+     */
+    public function setCategoryWidget(CategoryWidget $categoryWidget = null)
+    {
+        $this->categoryWidget = $categoryWidget;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryWidget
+     *
+     * @return \BW\BlogBundle\Entity\CategoryWidget 
+     */
+    public function getCategoryWidget()
+    {
+        return $this->categoryWidget;
     }
 }

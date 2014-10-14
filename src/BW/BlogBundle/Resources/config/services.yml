@@ -20,3 +20,7 @@ services:
 #        tags:
 #            - { name: doctrine.event_listener, event: prePersist }
 #            - { name: doctrine.event_listener, event: preUpdate }
+
+    bw_blog.service.category_widget:
+        class: BW\BlogBundle\Service\CategoryWidgetService
+        arguments: ["@doctrine.orm.entity_manager", "@twig", "@logger"]

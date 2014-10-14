@@ -1,0 +1,15 @@
+BW\BlogBundle\Entity\CategoryWidget:
+    type: entity
+    table: category_widgets
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToOne:
+        widget:
+            targetEntity: BW\ModuleBundle\Entity\Widget
+            inversedBy: categoryWidget
+            cascade: [persist, remove]
+    lifecycleCallbacks: {}

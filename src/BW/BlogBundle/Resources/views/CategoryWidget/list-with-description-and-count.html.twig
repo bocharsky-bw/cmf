@@ -1,0 +1,23 @@
+{% import 'BWSkeletonBundle:Macro:debug.html.twig' as bw_debug %}
+
+{{ bw_debug.template(_self.templateName) }}
+
+<div class="categories">
+    {% for category in categories %}
+        <div class="category">
+            <h2 class="h4">
+                <a href="{{ app.request.uriForPath(category.route.path) }}">
+                    {{ category.heading }}
+                    <span class="badge">
+                        {{ category.posts.count }}
+                    </span>
+                </a>
+            </h2>
+            <div class="short-description">
+                {{ category.shortDescription|raw }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{{ bw_debug.template(_self.templateName, null, '/') }}

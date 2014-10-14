@@ -37,6 +37,10 @@ BW\ModuleBundle\Entity\Widget:
             targetEntity: BW\ModuleBundle\Entity\FeedbackFormWidget
             mappedBy: widget
             cascade: [persist, remove]
+        categoryWidget:
+            targetEntity: BW\BlogBundle\Entity\CategoryWidget
+            mappedBy: widget
+            cascade: [persist, remove]
     oneToMany:
         widgetRoutes:
             targetEntity: BW\ModuleBundle\Entity\WidgetRoute
