@@ -6,15 +6,15 @@
     {% for category in categories %}
         <div class="category">
             <h2 class="h4">
-                <a href="{{ app.request.uriForPath(category.route.path) }}">
-                    {{ category.heading }}
+                <a href="{{ app.request.uriForPath(category[0].route.path) }}">
+                    {{ category[0].heading }}
                     <span class="badge">
-                        {{ category.posts.count }}
+                        {{ category.countPosts }}
                     </span>
                 </a>
             </h2>
             <div class="short-description">
-                {{ category.shortDescription|raw }}
+                {{ category[0].shortDescription|raw }}
             </div>
         </div>
     {% endfor %}

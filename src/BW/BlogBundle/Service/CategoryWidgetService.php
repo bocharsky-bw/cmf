@@ -58,7 +58,7 @@ class CategoryWidgetService implements WidgetServiceInterface
         $qb = $this->em->getRepository('BWBlogBundle:Category')->createQueryBuilder('c');
         $categories = $qb
             ->addSelect('r')
-//            ->addSelect('COUNT(p.id)') /** @TODO Need to optimize query with MySQL counting */
+            ->addSelect('COUNT(p.id) AS countPosts')
             ->innerJoin('c.route', 'r')
             ->innerJoin('c.posts', 'p')
             ->where('c.published = 1')
