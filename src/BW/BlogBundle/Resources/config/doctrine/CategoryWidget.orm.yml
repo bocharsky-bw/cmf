@@ -7,9 +7,16 @@ BW\BlogBundle\Entity\CategoryWidget:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        mode:
+            type: boolean
     oneToOne:
         widget:
             targetEntity: BW\ModuleBundle\Entity\Widget
             inversedBy: categoryWidget
             cascade: [persist, remove]
+    manyToMany:
+        categories:
+            targetEntity: BW\BlogBundle\Entity\Category
+            inversedBy: categoryWidgets
     lifecycleCallbacks: {}

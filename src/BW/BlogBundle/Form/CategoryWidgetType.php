@@ -19,16 +19,25 @@ class CategoryWidgetType extends AbstractWidgetType
     {
         parent::buildForm($builder, $options);
 
-//        $builder
-//            ->add('categories', 'entity', array(
-//                'class' => 'BW\MenuBundle\Entity\Menu',
-//                'property' => 'name',
-//                'required' => true,
-//                'label' => 'Меню ',
-//                'attr' => array(
-//                    'class' => 'form-control',
-//                ),
-//            ))
-//        ;
+        $builder
+            ->add('mode', 'choice', [
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Отображать категории ',
+                'choices' => [
+                    false => 'Только перечисленные ',
+                    true => 'Все, кроме перечисленных '
+                ],
+            ])
+            ->add('categories', 'entity', [
+                'class' => 'BW\BlogBundle\Entity\Category',
+                'property' => 'heading',
+                'required' => false,
+                'label' => 'Список категорий ',
+                'expanded' => true,
+                'multiple' => true,
+            ])
+        ;
     }
 }

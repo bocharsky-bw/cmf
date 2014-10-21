@@ -89,5 +89,9 @@ BW\BlogBundle\Entity\Category:
         route:
             targetEntity: BW\RouterBundle\Entity\Route
             cascade: [persist, remove]
+    manyToMany:
+        categoryWidgets:
+            targetEntity: BW\BlogBundle\Entity\CategoryWidget
+            mappedBy: categories
     lifecycleCallbacks:
         preUpdate: [generateUpdatedDate]

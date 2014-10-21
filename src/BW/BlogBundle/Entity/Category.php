@@ -120,6 +120,11 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
      */
     private $image;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $categoryWidgets;
+
 
     /**
      * Init entity
@@ -132,6 +137,7 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
         $this->updated = new \DateTime();
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->categoryWidgets = new ArrayCollection();
         $this->route = null;
         $this->image = null;
     }
@@ -718,5 +724,38 @@ class Category implements RouteInterface, NestedSetInterface, SluggableInterface
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Add categoryWidgets
+     *
+     * @param \BW\BlogBundle\Entity\CategoryWidget $categoryWidgets
+     * @return Category
+     */
+    public function addCategoryWidget(CategoryWidget $categoryWidgets)
+    {
+        $this->categoryWidgets[] = $categoryWidgets;
+
+        return $this;
+    }
+
+    /**
+     * Remove categoryWidgets
+     *
+     * @param \BW\BlogBundle\Entity\CategoryWidget $categoryWidgets
+     */
+    public function removeCategoryWidget(CategoryWidget $categoryWidgets)
+    {
+        $this->categoryWidgets->removeElement($categoryWidgets);
+    }
+
+    /**
+     * Get categoryWidgets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategoryWidgets()
+    {
+        return $this->categoryWidgets;
     }
 }

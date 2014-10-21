@@ -5,6 +5,7 @@ namespace BW\BlogBundle\Service;
 use BW\ModuleBundle\Service\WidgetServiceInterface;
 use BW\ModuleBundle\Entity\Widget;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -56,15 +57,21 @@ class CategoryWidgetService implements WidgetServiceInterface
     public function render(Widget $widget)
     {
         $qb = $this->em->getRepository('BWBlogBundle:Category')->createQueryBuilder('c');
-        $categories = $qb
+        $qb
             ->addSelect('r')
             ->addSelect('COUNT(p.id) AS countPosts')
             ->innerJoin('c.route', 'r')
             ->innerJoin('c.posts', 'p')
             ->where('c.published = 1')
-            ->groupBy('c.id')
-            ->getQuery()
-            ->getResult();
+            ->groupBy('c.id');
+
+        // Только перечисленные:
+        $qb
+            ->innerJoin('c.categoryWidgets', 'cw')
+            ->andWhere('cw.widget = :widget')
+            ->setParameter('widget', $widget);
+
+        $categories = $qb->getQuery()->getResult();
 
         return $this->twig->render('BWBlogBundle:CategoryWidget:list-with-description-and-count.html.twig', array(
             'categories' => $categories,
