@@ -26,7 +26,7 @@ class CategoryWidget implements WidgetInterface
     /**
      * @var boolean
      */
-    private $mode;
+    private $exclude = true;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -79,26 +79,26 @@ class CategoryWidget implements WidgetInterface
     }
 
     /**
-     * Set mode
+     * Set exclude
      *
-     * @param boolean $mode
+     * @param boolean $exclude
      * @return CategoryWidget
      */
-    public function setMode($mode)
+    public function setExclude($exclude)
     {
-        $this->mode = $mode;
+        $this->exclude = $exclude;
 
         return $this;
     }
 
     /**
-     * Get mode
+     * Get exclude
      *
      * @return boolean 
      */
-    public function getMode()
+    public function getExclude()
     {
-        return $this->mode;
+        return $this->exclude;
     }
 
     /**

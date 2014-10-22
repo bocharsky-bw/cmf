@@ -4,6 +4,9 @@ namespace BW\BlogBundle\Service;
 
 use BW\ModuleBundle\Service\WidgetServiceInterface;
 use BW\ModuleBundle\Entity\Widget;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Types\ArrayType;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Monolog\Logger;
@@ -56,6 +59,9 @@ class CategoryWidgetService implements WidgetServiceInterface
      */
     public function render(Widget $widget)
     {
+        $categories = $widget->getCategoryWidget()->getCategories();
+        $exclude = $widget->getCategoryWidget()->getExclude();
+
         $qb = $this->em->getRepository('BWBlogBundle:Category')->createQueryBuilder('c');
         $qb
             ->addSelect('r')
@@ -63,13 +69,9 @@ class CategoryWidgetService implements WidgetServiceInterface
             ->innerJoin('c.route', 'r')
             ->innerJoin('c.posts', 'p')
             ->where('c.published = 1')
+            ->andWhere('c.id ' . ($exclude ? 'NOT' : '') . ' IN (:categories)')
+            ->setParameter('categories', $categories->toArray(), Connection::PARAM_INT_ARRAY)
             ->groupBy('c.id');
-
-        // Только перечисленные:
-        $qb
-            ->innerJoin('c.categoryWidgets', 'cw')
-            ->andWhere('cw.widget = :widget')
-            ->setParameter('widget', $widget);
 
         $categories = $qb->getQuery()->getResult();
 

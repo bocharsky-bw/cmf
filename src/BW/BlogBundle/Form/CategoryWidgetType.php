@@ -20,7 +20,7 @@ class CategoryWidgetType extends AbstractWidgetType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('mode', 'choice', [
+            ->add('exclude', 'choice', [
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,

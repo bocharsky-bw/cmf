@@ -8,7 +8,7 @@ BW\BlogBundle\Entity\CategoryWidget:
             generator:
                 strategy: AUTO
     fields:
-        mode:
+        exclude:
             type: boolean
     oneToOne:
         widget:
