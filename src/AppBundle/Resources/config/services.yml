@@ -1,0 +1,53 @@
+parameters:
+#    app.example.class: AppBundle\Example
+    app.service.transliterating.alphabet_overridden: {"А": "A"}
+    app.event_listener.sluggable.denied_characters: '*[^#/0-9A-Za-z_-]*'
+    app.event_listener.sluggable.to_lower: true
+
+services:
+#    app.example:
+#        class: %app.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    app.twig.bw_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments: ["@service_container", "@logger"]
+        tags:
+            - { name: twig.extension }
+
+    app.service.transliterating:
+        class: AppBundle\Service\TransliteratingService
+        arguments: ["%app.service.transliterating.alphabet_overridden%"]
+
+    app.service.quick_search:
+        class: AppBundle\Service\QuickSearchService
+        arguments: ["@form.factory"]
+
+    app.event_listener.sluggable:
+        class: AppBundle\EventListener\SluggableEventListener
+        arguments:
+            - "@app.service.transliterating"
+            - "%app.event_listener.sluggable.denied_characters%"
+            - "%app.event_listener.sluggable.to_lower%"
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+#    app.service.nested_set:
+#        class: AppBundle\Service\NestedSetService
+#        arguments: ["@logger"]
+
+#    app.event_listener.nested_set_generating:
+#        class: AppBundle\EventListener\NestedSetGeneratingEventListener
+#        arguments: ["@app.service.nested_set", "@logger"]
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist }
+#            - { name: doctrine.event_listener, event: postUpdate }
+#            - { name: doctrine.event_listener, event: postFlush }
+
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]

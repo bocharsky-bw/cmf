@@ -21,8 +21,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
+            new AppBundle\AppBundle(),
             new BW\RouterBundle\BWRouterBundle(),
-            new BW\DefaultBundle\BWDefaultBundle(),
             new BW\BlogBundle\BWBlogBundle(),
             new BW\SkeletonBundle\BWSkeletonBundle(),
             new BW\ModuleBundle\BWModuleBundle(),

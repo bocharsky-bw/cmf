@@ -1,13 +1,13 @@
 <?php
 
-namespace BW\DefaultBundle\Service;
+namespace AppBundle\Service;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 
 /**
  * Class QuickSearchService
- * @package BW\DefaultBundle\Service
+ * @package AppBundle\Service
  */
 class QuickSearchService
 {

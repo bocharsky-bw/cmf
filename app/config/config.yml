@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: "@BWDefaultBundle/Resources/config/config.yml" }
+    - { resource: "@AppBundle/Resources/config/config.yml" }
     - { resource: "@BWRouterBundle/Resources/config/config.yml" }
     - { resource: "@BWModuleBundle/Resources/config/config.yml" }
 

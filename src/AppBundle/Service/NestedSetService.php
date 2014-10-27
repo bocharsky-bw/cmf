@@ -1,14 +1,14 @@
 <?php
 
-namespace BW\DefaultBundle\Service;
+namespace AppBundle\Service;
 
-use BW\DefaultBundle\Entity\NestedSetInterface;
+use AppBundle\Entity\NestedSetInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Doctrine\ORM\EntityManager;
 
 /**
  * Class NestedSetService
- * @package BW\DefaultBundle\Service
+ * @package AppBundle\Service
  */
 class NestedSetService
 {
@@ -97,7 +97,7 @@ class NestedSetService
         foreach ($entities as $entity) {
             if ( ! ($entity instanceof NestedSetInterface)) {
                 throw new \UnexpectedValueException(''
-                    . 'The entity must implement a "BW\DefaultBundle\Entity\NestedSetInterface" interface '
+                    . 'The entity must implement a "AppBundle\Entity\NestedSetInterface" interface '
                     . 'for determine positions.'
                 );
             }
@@ -140,7 +140,7 @@ class NestedSetService
         foreach ($nodes as $node) {
             if ( ! ($node['entity'] instanceof NestedSetInterface)) {
                 throw new \UnexpectedValueException(''
-                    . 'The entity must implement a "BW\DefaultBundle\Entity\NestedSetInterface" interface '
+                    . 'The entity must implement a "AppBundle\Entity\NestedSetInterface" interface '
                     . 'to determine positions.'
                 );
             }

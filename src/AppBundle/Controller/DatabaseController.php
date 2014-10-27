@@ -1,6 +1,6 @@
 <?php
 
-namespace BW\DefaultBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Finder;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DatabaseController
- * @package BW\DefaultBundle\Controller
+ * @package AppBundle\Controller
  */
 class DatabaseController extends Controller
 {
@@ -47,7 +47,7 @@ class DatabaseController extends Controller
 
         $form = $this->createDumpForm();
 
-        return $this->render('BWDefaultBundle:Database:list.html.twig', [
+        return $this->render('AppBundle:Database:list.html.twig', [
             'files' => $files,
             'form' => $form->createView(),
         ]);
@@ -128,7 +128,7 @@ class DatabaseController extends Controller
     {
         $form = $this->createDeleteForm($filename);
 
-        return $this->render('BWDefaultBundle:Database:delete.html.twig', array(
+        return $this->render('AppBundle:Database:delete.html.twig', array(
             'filename' => $filename,
             'form' => $form->createView(),
         ));
@@ -174,7 +174,7 @@ class DatabaseController extends Controller
     {
         $form = $this->createDownloadForm($filename);
 
-        return $this->render('BWDefaultBundle:Database:download.html.twig', array(
+        return $this->render('AppBundle:Database:download.html.twig', array(
             'filename' => $filename,
             'form' => $form->createView(),
         ));

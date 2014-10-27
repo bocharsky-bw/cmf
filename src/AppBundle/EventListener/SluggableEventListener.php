@@ -1,15 +1,15 @@
 <?php
 
-namespace BW\DefaultBundle\EventListener;
+namespace AppBundle\EventListener;
 
-use BW\DefaultBundle\Entity\SluggableInterface;
-use BW\DefaultBundle\Service\TransliteratingService;
+use AppBundle\Entity\SluggableInterface;
+use AppBundle\Service\TransliteratingService;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Class SluggableEventListener
- * @package BW\DefaultBundle\EventListener
+ * @package AppBundle\EventListener
  */
 class SluggableEventListener
 {

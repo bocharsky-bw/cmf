@@ -37,7 +37,7 @@ class ItemController extends Controller
             $em->persist($entity);
 
             // Regenerate nested set
-//            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
+//            $this->get('app.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
 
             $em->flush();
             $flashBag->add('success', 'Пункт меню успешно создан.');
@@ -189,7 +189,7 @@ class ItemController extends Controller
             $this->assignRoute($entity, $request);
 
             // Regenerate nested set
-//            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
+//            $this->get('app.service.nested_set')->regenerate($em, 'BWMenuBundle:Item');
 
             $em->flush();
             $flashBag->add('success', 'Пункт меню успешно обновлен.');

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class FeedbackFormWidget
- * @package BW\DefaultBundle\Entity
+ * @package BW\ModuleBundle\Entity
  */
 class FeedbackFormWidget implements WidgetInterface
 {

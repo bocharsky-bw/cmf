@@ -1,10 +1,10 @@
 <?php
 
-namespace BW\DefaultBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * Interface NestedSetInterface
- * @package BW\DefaultBundle\Entity
+ * @package AppBundle\Entity
  */
 interface NestedSetInterface
 {

@@ -31,7 +31,7 @@ class PostController extends Controller
             ->innerJoin('p.route', 'r')
         ;
 
-        $quickSearchForm = $this->get('bw_default.service.quick_search')->createForm();
+        $quickSearchForm = $this->get('app.service.quick_search')->createForm();
         $quickSearchForm->handleRequest($request);
         if ($quickSearchForm->isSubmitted()) {
             $data = $quickSearchForm->getData();

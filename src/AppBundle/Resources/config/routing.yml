@@ -1,0 +1,11 @@
+admin:
+    path:     /_admin/
+    defaults: { _controller: AppBundle:App:admin }
+
+index:
+    path:     /
+    defaults: { _controller: AppBundle:App:index }
+
+app_database:
+    resource: "@AppBundle/Resources/config/routing/database.yml"
+    prefix:   /_admin/database

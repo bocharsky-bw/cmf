@@ -1,26 +1,26 @@
 database:
     path:     /
-    defaults: { _controller: BWDefaultBundle:Database:list }
+    defaults: { _controller: AppBundle:Database:list }
 
 database_dump:
     path:     /dump
-    defaults: { _controller: BWDefaultBundle:Database:dump }
+    defaults: { _controller: AppBundle:Database:dump }
     requirements: { _method: post }
 
 database_dump_delete:
     path:     /dump/{filename}/delete
-    defaults: { _controller: BWDefaultBundle:Database:delete }
+    defaults: { _controller: AppBundle:Database:delete }
 
 database_dump_delete_confirm:
     path:     /dump/{filename}/delete/confirm
-    defaults: { _controller: BWDefaultBundle:Database:deleteConfirm }
+    defaults: { _controller: AppBundle:Database:deleteConfirm }
     requirements: { _method: post|delete }
 
 database_dump_download:
     path:     /dump/{filename}/download
-    defaults: { _controller: BWDefaultBundle:Database:download }
+    defaults: { _controller: AppBundle:Database:download }
 
 database_dump_download_confirm:
     path:     /dump/{filename}/download/confirm
-    defaults: { _controller: BWDefaultBundle:Database:downloadConfirm }
+    defaults: { _controller: AppBundle:Database:downloadConfirm }
     requirements: { _method: post }

@@ -1,15 +1,19 @@
 <?php
 
-namespace BW\DefaultBundle\Controller;
+namespace AppBundle\Controller;
 
 use BW\RouterBundle\Entity\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+/**
+ * Class AppController
+ * @package AppBundle\Controller
+ */
+class AppController extends Controller
 {
     public function adminAction()
     {
-        return $this->render('BWDefaultBundle:Default:admin.html.twig');
+        return $this->render('AppBundle:App:admin.html.twig');
     }
 
     public function indexAction()
@@ -22,6 +26,6 @@ class DefaultController extends Controller
             return $this->forward($route->getController(), $route->getDefaults());
         }
 
-        return $this->render('BWDefaultBundle:Default:index.html.twig');
+        return $this->render('AppBundle:App:index.html.twig');
     }
 }

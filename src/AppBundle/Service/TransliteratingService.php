@@ -1,13 +1,13 @@
 <?php
 
-namespace BW\DefaultBundle\Service;
+namespace AppBundle\Service;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Class TransliteratingService
- * @package BW\DefaultBundle\Service
+ * @package AppBundle\Service
  */
 class TransliteratingService
 {

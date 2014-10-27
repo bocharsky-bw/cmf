@@ -32,7 +32,7 @@ class CategoryController extends Controller
             ->addOrderBy('c.left', 'ASC')
         ;
 
-        $quickSearchForm = $this->get('bw_default.service.quick_search')->createForm();
+        $quickSearchForm = $this->get('app.service.quick_search')->createForm();
         $quickSearchForm->handleRequest($request);
         if ($quickSearchForm->isSubmitted()) {
             $data = $quickSearchForm->getData();
@@ -83,7 +83,7 @@ class CategoryController extends Controller
             $em->persist($entity);
 
             // Regenerate nested set
-//            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
+//            $this->get('app.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
             $flashBag->add('success', 'Категория успешно создана.');
@@ -251,7 +251,7 @@ class CategoryController extends Controller
             }
 
             // Regenerate nested set
-//            $this->get('bw_default.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
+//            $this->get('app.service.nested_set')->regenerate($em, 'BWBlogBundle:Category');
 
             $em->flush();
             $flashBag->add('success', 'Категория успешно обновлена.');

@@ -1,11 +1,15 @@
 <?php
 
-namespace BW\DefaultBundle\Twig;
+namespace AppBundle\Twig;
 
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class BWExtension extends \Twig_Extension
+/**
+ * Class AppExtension
+ * @package AppBundle\Twig
+ */
+class AppExtension extends \Twig_Extension
 {
 
     /**
@@ -34,7 +38,7 @@ class BWExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'bw_default_extension';
+        return 'app_extension';
     }
 
     public function getFilters()

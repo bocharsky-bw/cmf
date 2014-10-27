@@ -1,21 +1,21 @@
 <?php
 
-namespace BW\DefaultBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Bridge\Monolog\Logger;
-use BW\DefaultBundle\Service\NestedSetService;
-use BW\DefaultBundle\Entity\NestedSetInterface;
+use AppBundle\Service\NestedSetService;
+use AppBundle\Entity\NestedSetInterface;
 
 /**
  * Class NestedSetGeneratingEventListener
- * @package BW\DefaultBundle\EventListener
+ * @package AppBundle\EventListener
  */
 class NestedSetGeneratingEventListener
 {
     /**
-     * @var \BW\DefaultBundle\Service\NestedSetService
+     * @var \AppBundle\Service\NestedSetService
      */
     private $nestedSet;
 
