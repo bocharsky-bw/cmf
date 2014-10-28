@@ -89,7 +89,40 @@ class RoutingEventListener
                 $entity->setRoute(new Route()); // Create new Route if not exists
             }
 
-            $entity->getRoute()->handleEntity($entity);
+            $path = $entity->getRoute()->handleEntity($entity)->getPath();
+            // generate correct path without duplicate
+            while (true) {
+                // try to find Route with same path in repo
+                $route = $args->getEntityManager()
+                    ->getRepository('BWRouterBundle:Route')
+                    ->createQueryBuilder('r')
+                    ->where('r.id != :id')
+                    ->andWhere('r.path = :path')
+                    ->setParameter('id', (int)$entity->getRoute()->getId()) // type casting to int required!
+                    ->setParameter('path', $path)
+                    ->orderBy('r.path', 'DESC')
+                    ->getQuery()
+                    ->getOneOrNullResult();
+
+                if (null === $route) {
+                    break; // break generation if Route path is unique
+                } else {
+                    $matched = false; // reset matched flag
+                    // increment index at the end of string
+                    $path = preg_replace_callback('@(?<=-)(\d+)$@', function ($matches) use (&$matched) {
+                        $matched = true; // set regex matched flag
+                        $index = (int)$matches[1];
+                        return ++$index;
+                    }, $path);
+                    // if regex not matched and Route path generation not break
+                    if (false === $matched) {
+                        $path .= '-1'; // add index to the end of string if not exist
+                    }
+                }
+            }
+            $entity->getRoute()->setPath($path); // update path
+            // @TODO Also need to update entity slug...
+
             $this->isPostFlush = true;
         }
     }

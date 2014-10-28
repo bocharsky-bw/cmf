@@ -24,11 +24,17 @@ class Route
     private $defaults = array();
 
 
+    /**
+     * @param RouteInterface $entity
+     * @return $this
+     */
     public function handleEntity(RouteInterface $entity)
     {
         $entity->setRoute($this);
         $this->setPath($entity->generatePath());
         $this->setDefaults($entity->getDefaults());
+
+        return $this;
     }
 
     /**

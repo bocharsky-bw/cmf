@@ -20,3 +20,6 @@
 .editable .controls a:hover {
     color: #444;
 }
+.form-group > div > ul {
+    color: red;
+}
