@@ -40,11 +40,15 @@
                         <a href="{{ path('post_edit', { 'id': entity.id }) }}" title="Редактировать запись">
                             {{ entity.heading ? entity.heading : '< Без заголовка >' }}
                         </a><br/>
-                        <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
-                            <small class="fa fa-share-square-o">
-                                {{ entity.route.path }}
-                            </small>
-                        </a>
+                        {% if entity.route %}
+                            <a href="{{ app.request.getUriForPath(entity.route.path) }}" title="Перейти по адресу">
+                                <small class="fa fa-share-square-o">
+                                    {{ entity.route.path }}
+                                </small>
+                            </a>
+                        {% else %}
+                            &lt;without route&gt;
+                        {% endif %}
                     </td>
                     <td>{{ entity.slug }}</td>
                     <td>
@@ -57,7 +61,7 @@
                         {% endif %}
                     </td>
                     <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
-                    <td><span class="{{ '/' ~ home_page_path == entity.route.path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
+                    <td><span class="{{ entity.route and entity.route.path == '/' ~ home_page_path ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                     <td class="{{ pagination.isSorted('p.created') ? 'active' }}">
                         {% if entity.created %}
                             <abbr title="{{ entity.created|date('Создано в H:i:s') }}">

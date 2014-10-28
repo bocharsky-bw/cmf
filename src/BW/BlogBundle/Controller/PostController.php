@@ -28,8 +28,8 @@ class PostController extends Controller
             ->addSelect('c')
             ->addSelect('r')
             ->leftJoin('p.category', 'c')
-            ->innerJoin('p.route', 'r')
-        ;
+            ->leftJoin('p.route', 'r')
+            ->orderBy('p.created', 'DESC');
 
         $quickSearchForm = $this->get('app.service.quick_search')->createForm();
         $quickSearchForm->handleRequest($request);

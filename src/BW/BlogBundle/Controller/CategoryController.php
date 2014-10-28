@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $qb = $em->getRepository('BWBlogBundle:Category')->createQueryBuilder('c');
         $qb
             ->addSelect('r')
-            ->innerJoin('c.route', 'r')
+            ->leftJoin('c.route', 'r')
             ->orderBy('c.root', 'ASC')
             ->addOrderBy('c.left', 'ASC')
         ;

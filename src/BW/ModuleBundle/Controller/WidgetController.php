@@ -28,7 +28,7 @@ class WidgetController extends Controller
         $qb
             ->addSelect('t')
             ->addSelect('p')
-            ->innerJoin('w.type', 't')
+            ->leftJoin('w.type', 't')
             ->leftJoin('w.position', 'p')
             ->orderBy('p.name', 'ASC')
             ->addOrderBy('w.order', 'ASC')

@@ -50,7 +50,13 @@
                             < Без позиции >
                         {% endif %}
                     </td>
-                    <td><abbr title="{{ entity.type.alias }}">{{ entity.type.name }}</abbr></td>
+                    <td>
+                        {% if entity.type %}
+                            <abbr title="{{ entity.type.alias }}">{{ entity.type.name }}</abbr>
+                        {% else %}
+                            &lt;without type&gt;
+                        {% endif %}
+                    </td>
                     <td><span class="{{ entity.published ? 'fa fa-check-square-o' : 'fa fa-square-o' }}"></span></td>
                     <td class="{{ pagination.isSorted('w.order') ? 'active' }}">{{ entity.order }}</td>
                 </tr>
