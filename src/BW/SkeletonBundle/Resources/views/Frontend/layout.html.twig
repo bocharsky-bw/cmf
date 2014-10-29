@@ -144,6 +144,24 @@
     {{ bw_debug.template(_self.templateName, 'flash_message', '/') }}
 {%- endblock %}
 
+{% block breadcrumbs -%}
+    {{ bw_debug.template(_self.templateName, 'breadcrumbs') }}
+        <div id="breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% block breadcrumbs_wrap -%}
+                            {{ bw_debug.template(_self.templateName, 'breadcrumbs_wrap') }}
+                            {% include 'BWBreadcrumbsBundle:Breadcrumb:unordered-list.html.twig' with {'breadcrumb': service('bw_breadcrumb')} %}
+                            {{ bw_debug.template(_self.templateName, 'breadcrumbs_wrap', '/') }}
+                        {%- endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ bw_debug.template(_self.templateName, 'breadcrumbs', '/') }}
+{%- endblock %}
+
 {% block content -%}
     {{ bw_debug.template(_self.templateName, 'content') }}
     <section id="section">

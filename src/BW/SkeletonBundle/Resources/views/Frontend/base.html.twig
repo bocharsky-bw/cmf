@@ -49,6 +49,12 @@
                             {{ bw_debug.template(_self.templateName, 'flash_message', '/') }}
                         {%- endblock %}
 
+                        {% block breadcrumbs -%}
+                            {{ bw_debug.template(_self.templateName, 'breadcrumbs') }}
+                            % Breadcrumbs Block %
+                            {{ bw_debug.template(_self.templateName, 'breadcrumbs', '/') }}
+                        {%- endblock %}
+
                         {% block content -%}
                             {{ bw_debug.template(_self.templateName, 'content') }}
                             % Content Block %
