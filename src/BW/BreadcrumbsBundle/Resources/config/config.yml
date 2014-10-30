@@ -1,0 +1,3 @@
+twig:
+    globals:
+        bw_breadcrumb: "@bw_breadcrumb"

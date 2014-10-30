@@ -4,6 +4,7 @@ imports:
     - { resource: "@AppBundle/Resources/config/config.yml" }
     - { resource: "@BWRouterBundle/Resources/config/config.yml" }
     - { resource: "@BWModuleBundle/Resources/config/config.yml" }
+    - { resource: "@BWBreadcrumbsBundle/Resources/config/config.yml" }
 
 framework:
     #esi:             ~

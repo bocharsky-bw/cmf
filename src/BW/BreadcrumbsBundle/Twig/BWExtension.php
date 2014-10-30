@@ -25,14 +25,8 @@ class BWExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('bw_breadcrumb', array($this, 'breadcrumbFunction')),
             new \Twig_SimpleFunction('bw_render_breadcrumb', array($this, 'renderBreadcrumbFunction')),
         );
-    }
-
-    public function breadcrumbFunction()
-    {
-        return $this->breadcrumb;
     }
 
     public function renderBreadcrumbFunction($template = 'BWBreadcrumbsBundle:Breadcrumb:unordered-list.html.twig')
