@@ -5,4 +5,10 @@ services:
 
     bw_breadcrumb:
         class: BW\BreadcrumbsBundle\Service\BreadcrumbService
-        arguments: []
+        arguments: ["@twig"]
+
+    bw_breadcrumb.twig.bw_extension:
+        class: BW\BreadcrumbsBundle\Twig\BWExtension
+        arguments: ["@bw_breadcrumb"]
+        tags:
+            - { name: twig.extension }

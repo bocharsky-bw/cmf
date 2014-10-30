@@ -2,6 +2,7 @@
 
 namespace BW\BreadcrumbsBundle\Service;
 use BW\BreadcrumbsBundle\Entity\Crumb;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Class BreadcrumbService
@@ -9,6 +10,11 @@ use BW\BreadcrumbsBundle\Entity\Crumb;
  */
 class BreadcrumbService implements \Iterator, \Countable
 {
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
     /**
      * @var int
      */
@@ -45,14 +51,33 @@ class BreadcrumbService implements \Iterator, \Countable
     private $separatorCharacter = '/';
 
 
-    public function __construct()
+    public function __construct(\Twig_Environment $twig)
     {
+        $this->twig = $twig;
+
         $this->crumbs = [
             self::buildCrumb('Home', '/'),
             self::buildCrumb('Category', '/category'),
             self::buildCrumb('SubCategory', '/category/subcategory'),
             self::buildCrumb('Post', '/category/subcategory/post'),
         ];
+    }
+
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return string
+     */
+    public function render($template = 'BWBreadcrumbsBundle:Breadcrumb:unordered-list.html.twig')
+    {
+        return $this->twig->render($template, [
+            'breadcrumb' => $this,
+        ]);
     }
 
     /**
@@ -68,10 +93,14 @@ class BreadcrumbService implements \Iterator, \Countable
 
     /**
      * @param Crumb $crumb
+     *
+     * @return $this
      */
     public function addCrumb(Crumb $crumb)
     {
         $this->crumbs[] = $crumb;
+
+        return $this;
     }
 
     /**
