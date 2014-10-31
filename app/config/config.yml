@@ -107,3 +107,12 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+# BW Breadcrumb
+bw_breadcrumbs:
+    navigation: true
+    show_first: true
+    show_last: true
+    last_as_link: false
+    show_separator: false
+    separator_character: '/'

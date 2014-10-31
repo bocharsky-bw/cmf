@@ -21,14 +21,14 @@ class BreadcrumbService implements \Iterator, \Countable
     private $position = 0;
 
     /**
-     * @var bool
-     */
-    private $navigation = false;
-
-    /**
      * @var array
      */
     private $crumbs = [];
+
+    /**
+     * @var bool
+     */
+    private $navigation = false;
 
     /**
      * @var bool

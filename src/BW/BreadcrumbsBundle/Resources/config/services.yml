@@ -1,3 +1,5 @@
+parameters:
+
 services:
 #    bw_breadcrumbs.example:
 #        class: BW\BreadcrumbsBundle\Example
@@ -6,6 +8,13 @@ services:
     bw_breadcrumb:
         class: BW\BreadcrumbsBundle\Service\BreadcrumbService
         arguments: ["@twig"]
+        calls:
+            - [setNavigation, ["%bw_breadcrumbs.navigation%"]]
+            - [setShowFirst, ["%bw_breadcrumbs.show_first%"]]
+            - [setShowLast, ["%bw_breadcrumbs.show_last%"]]
+            - [setLastAsLink, ["%bw_breadcrumbs.last_as_link%"]]
+            - [setShowSeparator, ["%bw_breadcrumbs.show_separator%"]]
+            - [setSeparatorCharacter, ["%bw_breadcrumbs.separator_character%"]]
 
     bw_breadcrumb.twig.bw_extension:
         class: BW\BreadcrumbsBundle\Twig\BWExtension

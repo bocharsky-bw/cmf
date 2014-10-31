@@ -20,6 +20,18 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('bw_breadcrumbs');
 
+        $rootNode
+            ->children()
+                ->booleanNode('navigation')->defaultTrue()->end()
+                ->booleanNode('show_first')->defaultTrue()->end()
+                ->booleanNode('show_last')->defaultTrue()->end()
+                ->booleanNode('last_as_link')->defaultFalse()->end()
+                ->booleanNode('show_separator')->defaultTrue()->end()
+                ->scalarNode('separator_character')->defaultValue('/')->end()
+                // ...
+            ->end()
+        ;
+
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
