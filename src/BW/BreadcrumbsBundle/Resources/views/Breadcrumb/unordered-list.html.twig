@@ -8,7 +8,7 @@
                 </li>
             {% endif %}
             <li class="crumb" data-crumb="{{ loop.index }}">
-                {% if not crumb.uri or (loop.last and not breadcrumb.lastAsLink) %}
+                {% if not breadcrumb.navigation or not crumb.uri or (loop.last and not breadcrumb.lastAsLink) %}
                     <span>{{ crumb.name }}</span>
                 {% else %}
                     <a href="{{ crumb.uri }}">{{ crumb.name }}</a>

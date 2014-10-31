@@ -1,8 +1,8 @@
 <?php
 
 namespace BW\BreadcrumbsBundle\Service;
+
 use BW\BreadcrumbsBundle\Entity\Crumb;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Class BreadcrumbService
@@ -19,6 +19,11 @@ class BreadcrumbService implements \Iterator, \Countable
      * @var int
      */
     private $position = 0;
+
+    /**
+     * @var bool
+     */
+    private $navigation = false;
 
     /**
      * @var array
@@ -99,6 +104,26 @@ class BreadcrumbService implements \Iterator, \Countable
     public function addCrumb(Crumb $crumb)
     {
         $this->crumbs[] = $crumb;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNavigation()
+    {
+        return $this->navigation;
+    }
+
+    /**
+     * @param boolean $navigation
+     *
+     * @return $this
+     */
+    public function setNavigation($navigation)
+    {
+        $this->navigation = $navigation;
 
         return $this;
     }
