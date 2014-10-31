@@ -28,12 +28,12 @@ class BreadcrumbService implements \Iterator, \Countable
     /**
      * @var bool
      */
-    private $navigation = false;
+    private $navigation = true;
 
     /**
      * @var bool
      */
-    private $showFirst = false;
+    private $showFirst = true;
 
     /**
      * @var bool
