@@ -2,7 +2,7 @@
     {% for crumb in breadcrumb %}
         {% if (loop.first and not breadcrumb.showFirst) or (loop.last and not breadcrumb.showLast) -%}
         {%- else %}
-            {% if breadcrumb.showSeparator and not loop.first and breadcrumb.showFirst %}
+            {% if breadcrumb.showSeparator and ((breadcrumb.showFirst and loop.index != 1) or (not breadcrumb.showFirst and loop.index != 2)) %}
                 <li class="separator">
                     <span>{{ breadcrumb.separatorCharacter }}</span>
                 </li>
