@@ -5,16 +5,11 @@ namespace BW\BreadcrumbsBundle\Service;
 use BW\BreadcrumbsBundle\Entity\Crumb;
 
 /**
- * Class BreadcrumbService
+ * Class BreadcrumbsService
  * @package BW\BreadcrumbsBundle\Service
  */
-class BreadcrumbService implements \Iterator, \Countable
+class BreadcrumbsService implements \Iterator, \Countable
 {
-    /**
-     * @var \Twig_Environment
-     */
-    private $twig;
-
     /**
      * @var int
      */
@@ -56,10 +51,8 @@ class BreadcrumbService implements \Iterator, \Countable
     private $separatorCharacter = '/';
 
 
-    public function __construct(\Twig_Environment $twig)
+    public function __construct()
     {
-        $this->twig = $twig;
-
         $this->crumbs = [
             self::buildCrumb('Home', '/'),
             self::buildCrumb('Category', '/category'),
@@ -68,22 +61,6 @@ class BreadcrumbService implements \Iterator, \Countable
         ];
     }
 
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
-     * @param string $template
-     *
-     * @return string
-     */
-    public function render($template = 'BWBreadcrumbsBundle:Breadcrumb:unordered-list.html.twig')
-    {
-        return $this->twig->render($template, [
-            'breadcrumb' => $this,
-        ]);
-    }
 
     /**
      * @param string $name

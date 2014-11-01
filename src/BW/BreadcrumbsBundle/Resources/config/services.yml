@@ -5,9 +5,8 @@ services:
 #        class: BW\BreadcrumbsBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
 
-    bw_breadcrumb:
-        class: BW\BreadcrumbsBundle\Service\BreadcrumbService
-        arguments: ["@twig"]
+    bw_breadcrumbs:
+        class: BW\BreadcrumbsBundle\Service\BreadcrumbsService
         calls:
             - [setNavigation, ["%bw_breadcrumbs.navigation%"]]
             - [setShowFirst, ["%bw_breadcrumbs.show_first%"]]
@@ -16,8 +15,8 @@ services:
             - [setShowSeparator, ["%bw_breadcrumbs.show_separator%"]]
             - [setSeparatorCharacter, ["%bw_breadcrumbs.separator_character%"]]
 
-    bw_breadcrumb.twig.bw_extension:
+    bw_breadcrumbs.twig.bw_extension:
         class: BW\BreadcrumbsBundle\Twig\BWExtension
-        arguments: ["@bw_breadcrumb"]
+        arguments: ["@service_container"]
         tags:
             - { name: twig.extension }

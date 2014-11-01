@@ -1,0 +1,19 @@
+<ul class="breadcrumb">
+    {% for crumb in breadcrumbs %}
+        {% if (loop.first and not breadcrumbs.showFirst) or (loop.last and not breadcrumbs.showLast) -%}
+        {%- else %}
+            {% if breadcrumbs.showSeparator and ((breadcrumbs.showFirst and loop.index != 1) or (not breadcrumbs.showFirst and loop.index != 2)) %}
+                <li class="separator">
+                    <span>{{ breadcrumbs.separatorCharacter }}</span>
+                </li>
+            {% endif %}
+            <li class="crumb" data-crumb="{{ loop.index }}">
+                {% if not breadcrumbs.navigation or not crumb.uri or (loop.last and not breadcrumbs.lastAsLink) %}
+                    <span>{{ crumb.name }}</span>
+                {% else %}
+                    <a href="{{ crumb.uri }}">{{ crumb.name }}</a>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

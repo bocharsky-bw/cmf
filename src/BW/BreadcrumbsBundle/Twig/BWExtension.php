@@ -2,7 +2,8 @@
 
 namespace BW\BreadcrumbsBundle\Twig;
 
-use BW\BreadcrumbsBundle\Service\BreadcrumbService;
+use BW\BreadcrumbsBundle\Service\BreadcrumbsService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class BWExtension
@@ -11,31 +12,39 @@ use BW\BreadcrumbsBundle\Service\BreadcrumbService;
 class BWExtension extends \Twig_Extension
 {
     /**
-     * @var BreadcrumbService
+     * @var ContainerInterface
      */
-    private $breadcrumb;
+    private $container;
 
 
-    public function __construct(BreadcrumbService $breadcrumb)
+    public function __construct(ContainerInterface $container)
     {
-        $this->breadcrumb = $breadcrumb;
+        $this->container = $container;
     }
 
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('bw_render_breadcrumb', array($this, 'renderBreadcrumbFunction')),
+            new \Twig_SimpleFunction('bw_breadcrumbs', array($this, 'breadcrumbsFunction')),
+            new \Twig_SimpleFunction('bw_render_breadcrumbs', array($this, 'renderBreadcrumbsFunction')),
         );
     }
 
-    public function renderBreadcrumbFunction($template = 'BWBreadcrumbsBundle:Breadcrumb:unordered-list.html.twig')
+    public function breadcrumbsFunction()
     {
-        return $this->breadcrumb->render($template);
+        return $this->container->get('bw_breadcrumbs');
+    }
+
+    public function renderBreadcrumbsFunction(BreadcrumbsService $breadcrumbs, $template = 'BWBreadcrumbsBundle:Breadcrumbs:unordered-list.html.twig')
+    {
+        return $this->container->get('templating')->render($template, [
+            'breadcrumbs' => $breadcrumbs,
+        ]);
     }
 
     public function getName()
     {
-        return 'bw_breadcrumb.twig.bw_extension';
+        return 'bw_breadcrumbs.twig.bw_extension';
     }
 }
